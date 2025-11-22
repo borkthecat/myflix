@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Portfolio</title>
+    <link rel="stylesheet" href="/src/styles/home.css" />
+  </head>
+
+  <body>
+    <!-- Navbar -->
+    <header class="navbar">
+      <div class="navbar-left">
+        <img src="/src/images/logo.png" alt="MyFlix Logo" class="logo" />
+
+        <!-- Desktop links -->
+        <nav class="nav-links">
+          <a href="#">Home</a>
+          <a href="#">Professional</a>
+          <a href="#">Skills</a>
+          <a href="#">Projects</a>
+          <a href="#">Contact Me</a>
+        </nav>
+
+        <div class="browse-menu">
+          <button class="browse-btn">Browse</button>
+          <div class="browse-list">
+            <a href="#">Home</a>
+            <a href="#">Series</a>
+            <a href="#">Films</a>
+            <a href="#">Games</a>
+            <a href="#">New & Popular</a>
+            <a href="#">My List</a>
+            <a href="#">Browse by Language</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="navbar-right">
+        <!-- Search Wrapper -->
+        <div class="search-wrapper">
+          <input
+            type="text"
+            class="search-input"
+            placeholder="Search site..."
+          />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="icon search-toggle"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M10 2a8 8 0 015.292 13.708l4 4a1 1 0 01-1.414 1.414l-4-4A8 8 0 1110 2zm-6 8a6 6 0 1110.416 4.243A6 6 0 014 10z"
+            ></path>
+          </svg>
+        </div>
+
+        <!-- Notification Bell -->
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="icon"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M13.0002 4.07092C16.3924 4.55624 19 7.4736 19 11V15.2538C20.0489 15.3307 21.0851 15.4245 22.1072 15.5347L21.8928 17.5232C18.7222 17.1813 15.4092 17 12 17C8.59081 17 5.27788 17.1813 2.10723 17.5232L1.89282 15.5347C2.91498 15.4245 3.95119 15.3307 5.00003 15.2538V11C5.00003 7.47345 7.60784 4.55599 11.0002 4.07086V2H13.0002V4.07092ZM17 15.1287V11C17 8.23858 14.7614 6 12 6C9.2386 6 7.00003 8.23858 7.00003 11V15.1287C8.64066 15.0437 10.3091 15 12 15C13.691 15 15.3594 15.0437 17 15.1287ZM8.62593 19.3712C8.66235 20.5173 10.1512 22 11.9996 22C13.848 22 15.3368 20.5173 15.3732 19.3712C15.3803 19.1489 15.1758 19 14.9533 19H9.0458C8.82333 19 8.61886 19.1489 8.62593 19.3712Z"
+          ></path>
+        </svg>
+
+        <!-- Avatar -->
+        <img src="/src/images/user1.jpg" alt="Profile" class="avatar" />
+      </div>
+    </header>
+
+    <!-- Hero / About Section -->
+    <section class="hero">
+      <div class="overlay"></div>
+      <div class="hero-content">
+        <h1 class="hero-title">Arai Nanami Rachel</h1>
+        <p class="hero-desc">
+          Undergraduate at SUTD studying Computer Science and Design, with a
+          curiosity for technology and how it shapes the world. Outside of
+          school, I’m usually at the gym or listening to music — both help me
+          recharge and stay focused. I’m driven by learning, experimenting, and
+          finding ways to turn ideas into something real and impactful.
+        </p>
+        <div class="hero-buttons">
+          <button class="btn play">
+            <img src="/src/icons/play.svg" alt="Resume" class="btn-icon" />
+            Resume
+          </button>
+          <button class="btn info">
+            <img
+              src="/src/icons/information.svg"
+              alt="Email"
+              class="btn-icon"
+            />
+            Email
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="projects">
+      <h2>Projects</h2>
+      <div class="project-grid">
+        <div class="project-card" data-project="p1">
+          <div class="project-hover">
+            <h3>Project 1</h3>
+            <p>Python • OpenAI • Whisper</p>
+          </div>
+        </div>
+
+        <div class="project-card" data-project="p2">
+          <div class="project-hover">
+            <h3>Project 2</h3>
+            <p>Next.js • TypeScript</p>
+          </div>
+        </div>
+
+        <div class="project-card" data-project="p3">
+          <div class="project-hover">
+            <h3>Project 3</h3>
+            <p>React • Tailwind</p>
+          </div>
+        </div>
+
+        <div class="project-card" data-project="p4">
+          <div class="project-hover">
+            <h3>Project 4</h3>
+            <p>Python • Pytorch</p>
+          </div>
+        </div>
+
+        <div class="project-card" data-project="p5">
+          <div class="project-hover">
+            <h3>Project 5</h3>
+            <p>Data Science • LLM</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2 id="modal-title"></h2>
+        <p id="modal-tech"></p>
+        <p id="modal-desc"></p>
+
+        <div class="modal-buttons">
+          <button class="btn">Visit</button>
+          <button class="btn">Code</button>
+        </div>
+
+        <div class="modal-meta">
+          <div><strong>Type:</strong> <span id="modal-type"></span></div>
+          <div><strong>Stack:</strong> <span id="modal-stack"></span></div>
+          <div><strong>Status:</strong> <span id="modal-status"></span></div>
+          <div><strong>Owner:</strong> <span id="modal-owner"></span></div>
+        </div>
+      </div>
+    </div>
+    <footer class="footer">
+      <div class="footer-container">
+        <!-- Socials aligned left -->
+        <div class="socials">
+          <img src="/src/icons/mail.svg" alt="Phone" />
+          <img src="/src/icons/instagram.svg" alt="Instagram" />
+          <img src="/src/icons/contact.svg" alt="Contact" />
+        </div>
+
+        <!-- Links grid in the middle -->
+        <div class="links">
+          <a href="#">About</a>
+          <a href="#">Projects</a>
+          <a href="#">Skills</a>
+          <a href="#">Professional</a>
+          <a href="#">Contact Me</a>
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Support</a>
+        </div>
+
+        <!-- Copyright left -->
+        <div class="copyright">
+          © <span id="year"></span> Your Name. All rights reserved.
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Auto year update
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+
+    <script>
+      // Navbar scroll effect
+      window.addEventListener("scroll", () => {
+        const navbar = document.querySelector(".navbar");
+        if (window.scrollY > 50) {
+          navbar.classList.add("scrolled");
+        } else {
+          navbar.classList.remove("scrolled");
+        }
+      });
+
+      // Avatar switching
+      const userAvatars = {
+        user1: "/src/images/user1.jpg",
+        user2: "/src/images/user2.jpg",
+        user3: "/src/images/user3.jpg",
+        user4: "/src/images/user4.jpg",
+      };
+
+      const params = new URLSearchParams(window.location.search);
+      let user =
+        params.get("user") || localStorage.getItem("selectedUser") || "user1";
+      localStorage.setItem("selectedUser", user);
+
+      const avatarEl = document.querySelector(".avatar");
+      if (avatarEl && userAvatars[user]) {
+        avatarEl.src = userAvatars[user];
+      }
+
+      // Search toggle
+      const searchWrapper = document.querySelector(".search-wrapper");
+      const searchToggle = document.querySelector(".search-toggle");
+      const searchInput = document.querySelector(".search-input");
+
+      searchToggle.addEventListener("click", () => {
+        searchWrapper.classList.toggle("active");
+        if (searchWrapper.classList.contains("active")) {
+          searchInput.focus();
+        }
+      });
+
+      // Collapse search when clicking outside
+      document.addEventListener("click", (e) => {
+        if (!searchWrapper.contains(e.target)) {
+          searchWrapper.classList.remove("active");
+        }
+      });
+      const projects = {
+        p1: {
+          title: "Project 1",
+          tech: "Python • OpenAI • Whisper",
+          desc: "Example description for Project 1.",
+          type: "Project",
+          stack: "Python, OpenAI, Whisper",
+          status: "Live",
+          owner: "Your Name",
+        },
+        p2: {
+          title: "Project 2",
+          tech: "Next.js • TypeScript",
+          desc: "Example description for Project 2.",
+          type: "Project",
+          stack: "Next.js, TypeScript",
+          status: "Beta",
+          owner: "Your Name",
+        },
+        p3: {
+          title: "Project 3",
+          tech: "React • Tailwind",
+          desc: "Example description for Project 3.",
+          type: "Project",
+          stack: "React, Tailwind",
+          status: "Live",
+          owner: "Your Name",
+        },
+        p4: {
+          title: "Project 4",
+          tech: "Python • PyTorch",
+          desc: "Example description for Project 4.",
+          type: "Project",
+          stack: "Python, PyTorch",
+          status: "In Progress",
+          owner: "Your Name",
+        },
+        p5: {
+          title: "Project 5",
+          tech: "Data Science • LLM",
+          desc: "Example description for Project 5.",
+          type: "Project",
+          stack: "Python, Pandas, LLM",
+          status: "In Progress",
+          owner: "Your Name",
+        },
+      };
+
+      const modal = document.getElementById("modal");
+      const modalTitle = document.getElementById("modal-title");
+      const modalTech = document.getElementById("modal-tech");
+      const modalDesc = document.getElementById("modal-desc");
+      const modalType = document.getElementById("modal-type");
+      const modalStack = document.getElementById("modal-stack");
+      const modalStatus = document.getElementById("modal-status");
+      const modalOwner = document.getElementById("modal-owner");
+      const closeBtn = document.querySelector(".close");
+
+      document.querySelectorAll(".project-card").forEach((card) => {
+        card.addEventListener("click", () => {
+          const p = projects[card.dataset.project];
+          modalTitle.textContent = p.title;
+          modalTech.textContent = p.tech;
+          modalDesc.textContent = p.desc;
+          modalType.textContent = p.type;
+          modalStack.textContent = p.stack;
+          modalStatus.textContent = p.status;
+          modalOwner.textContent = p.owner;
+          modal.style.display = "flex";
+        });
+      });
+
+      closeBtn.addEventListener("click", () => (modal.style.display = "none"));
+      window.addEventListener("click", (e) => {
+        if (e.target === modal) modal.style.display = "none";
+      });
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const browseMenu = document.querySelector(".browse-menu");
+        const browseBtn = document.querySelector(".browse-btn");
+
+        browseBtn.addEventListener("click", () => {
+          browseMenu.classList.toggle("active");
+        });
+
+        // Close if clicked outside
+        document.addEventListener("click", (e) => {
+          if (!browseMenu.contains(e.target)) {
+            browseMenu.classList.remove("active");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
