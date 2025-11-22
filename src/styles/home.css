@@ -1,0 +1,528 @@
+body {
+  margin: 0;
+  background-color: #141414;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #fff;
+}
+
+/* Navbar */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px; /* smaller padding so avatar doesn’t go off screen */
+  background: linear-gradient(180deg, rgba(0,0,0,.7) 10%, transparent);
+  z-index: 1000;
+}
+
+.navbar.scrolled {
+  background: rgba(0, 0, 0, 0.95);
+  transition: background 0.3s ease;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+  flex: 1; /* take up available space */
+}
+
+.logo {
+  height: 35px;
+  margin-right: 25px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 0.95rem;
+}
+
+.nav-links a:hover {
+  color: #b3b3b3;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: flex-end;
+  flex-shrink: 0; /* don’t shrink offscreen */
+  padding-right:70px;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  color: #fff;
+  transition: color 0.3s ease;
+}
+
+.icon:hover {
+  color: #b3b3b3;
+}
+
+.avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  cursor: pointer;
+  object-fit: cover;
+}
+
+/* Hero */
+.hero {
+  position: relative;
+  height: 60vh;
+  background: url('/src/images/jellyfishfield1.gif') center center / cover no-repeat;
+  color: #fff;
+  display: flex;
+  align-items: flex-end;
+  padding: 60px;
+}
+
+.hero .overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+}
+
+.hero-content {
+  position: relative;
+  max-width: 500px;
+}
+
+.hero-title {
+  font-size: 3rem;
+  margin-bottom: 5px;
+}
+
+.hero-desc {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.hero-buttons .btn {
+  background-color: rgba(51, 51, 51, 0.8);
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  margin-right: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.hero-buttons .btn.play {
+  background-color: #fff;
+  color: #000;
+}
+
+.hero-buttons .btn:hover {
+  background-color: rgba(109, 109, 110, 0.7);
+}
+
+/* Rows */
+.rows {
+  padding: 20px 40px;
+  margin-top: -80px; /* pull up content to overlap hero */
+}
+
+.row {
+  margin-bottom: 40px;
+}
+
+.row h2 {
+  margin: 0 0 10px;
+}
+
+.row-posters {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+.row-posters img {
+  max-height: 160px;
+  object-fit: cover;
+  border-radius: 4px;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.row-posters img:hover {
+  transform: scale(1.1);
+}
+
+.search-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Input (collapsed by default) */
+.search-input {
+  width: 0;
+  opacity: 0;
+  padding: 6px 8px 6px 36px; /* space for icon when expanded */
+  border: 1px solid #fff;
+  background-color: rgba(0,0,0,0.75);
+  color: #fff;
+  font-size: 0.9rem;
+  transition: width 0.3s ease, opacity 0.3s ease;
+}
+
+/* Expanded state */
+.search-wrapper.active .search-input {
+  width: 220px;
+  opacity: 1;
+}
+
+/* Search icon default (when collapsed) */
+.search-toggle {
+  width: 24px;
+  height: 24px;
+  color: #fff;
+  fill: #fff;
+  cursor: pointer;
+  transition: transform 0.3s ease, left 0.3s ease;
+  position: relative;   /* normal flow by default */
+  margin-left: 10px;    /* keeps it away from screen edge */
+}
+
+/* Search icon when bar is expanded */
+.search-wrapper.active .search-toggle {
+  position: absolute;
+  left: 10px;   /* moves inside bar */
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 0; /* remove extra spacing */
+}
+
+.hero-buttons .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px; /* space between icon and text */
+  background-color: rgba(51, 51, 51, 0.8);
+  border: none;
+  color: #fff;
+  margin-right: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.hero-buttons .btn.play {
+  background-color: #fff;
+  color: #000;
+}
+
+.hero-buttons .btn:hover {
+  opacity: 0.85;  /* makes button slightly transparent on hover */
+}
+
+.hero-buttons img{
+height:25px;
+width:25px;
+}
+
+/* Projects Grid */
+.projects {
+  padding: 40px;
+}
+
+.projects h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+/* Expanded hover style like Netflix */
+.project-card {
+  position: relative;
+  background: #222; /* dark background */
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 150px; /* controls rectangle height */
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+
+.project-card:hover {
+  transform: scale(1.15) translateY(-20px);
+  z-index: 20;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.8);
+}
+
+/* placeholder look */
+.project-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #333, #444);
+}
+
+/* hover overlay */
+.project-hover {
+  position: relative;
+  width: 100%;
+  padding: 10px;
+  background: rgba(0,0,0,0.7);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+.project-card:hover .project-hover {
+  opacity: 1;
+}
+
+
+/* Buttons row */
+.hover-buttons {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.circle-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #2a2a2a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.circle-btn:hover {
+  background: #444;
+}
+
+.circle-btn img {
+  width: 18px;
+  height: 18px;
+  filter: brightness(0) invert(1);
+}
+
+/* Metadata row */
+.hover-meta, .hover-tags {
+  font-size: 0.8rem;
+  color: #bbb;
+  margin: 2px 0;
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.modal-content {
+  background: #1f1f1f;
+  padding: 30px;
+  border-radius: 10px;
+  max-width: 700px;
+  width: 90%;
+  position: relative;
+  color: #fff;
+}
+
+.modal-content h2 {
+  margin: 0 0 10px;
+}
+
+.close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #fff;
+}
+
+.modal-buttons {
+  margin: 20px 0;
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  background: #333;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  opacity: 0.85;
+}
+
+.modal-meta {
+  margin-top: 15px;
+  font-size: 0.9rem;
+  color: #bbb;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.modal-meta div {
+  background: #222;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+/* Footer */
+.footer {
+  background: #141414;
+  padding: 40px 40px;
+  color: #757575;
+  font-size: 0.85rem;
+}
+
+.footer-container {
+  max-width: 1000px; /* keeps footer in the middle */
+  margin: 0 auto;
+}
+
+.footer .socials {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.footer .socials img {
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) invert(1); /* white icons */
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.footer .links {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 8px 30px;
+  margin-bottom: 20px;
+}
+
+.footer .links a {
+  color: #757575;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  padding-bottom:10px;
+}
+
+.footer .links a:hover {
+  text-decoration:underline;
+}
+
+.footer .copyright {
+  font-size: 0.75rem;
+  color: #757575;
+}
+
+/* Browse menu wrapper */
+.browse-menu {
+  position: relative;
+  display: inline-block;
+}
+
+.browse-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px; /* space between text and arrow */
+}
+
+/* Add a ▼ arrow after the text */
+.browse-btn::after {
+  content: "▼";
+  font-size: 0.6rem;
+}
+
+
+/* Dropdown list (hidden by default) */
+.browse-list {
+  display: none;
+  position: absolute;
+  top: 30px;
+  left: 0;
+  background: rgba(0, 0, 0, 0.95);
+  border-top: 2px solid #fff;
+  padding: 10px 0;
+  border-radius: 4px;
+  min-width: 180px;
+  z-index: 1000;
+}
+
+.browse-list a {
+  display: block;
+  padding: 12px 15px;
+  color: #b3b3b3;
+  text-decoration: none;
+  font-size: 0.7rem;
+  text-align:center;
+}
+
+.browse-list a:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color:#fff;
+}
+
+/* Show when active */
+.browse-menu.active .browse-list {
+  display: block;
+}
+
+/* Default (Desktop): show nav links, hide browse dropdown */
+.browse-menu {
+  display: none;
+}
+
+.nav-links {
+  display: flex;
+}
+
+/* Mobile version */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none; /* hide normal nav links */
+  }
+
+  .browse-menu {
+    display: inline-block; /* show browse menu */
+  }
+}
