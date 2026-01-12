@@ -130,6 +130,18 @@ body {
   background-color: rgba(109, 109, 110, 0.7);
 }
 
+.hero-buttons .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hero-btn-icon {
+  width: 25px;
+  height: 25px;
+  display: block;
+}
+
 /* Rows */
 .rows {
   padding: 20px 40px;
@@ -208,33 +220,6 @@ body {
   margin-left: 0; /* remove extra spacing */
 }
 
-.hero-buttons .btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px; /* space between icon and text */
-  background-color: rgba(51, 51, 51, 0.8);
-  border: none;
-  color: #fff;
-  margin-right: 10px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 1rem;
-}
-
-.hero-buttons .btn.play {
-  background-color: #fff;
-  color: #000;
-}
-
-.hero-buttons .btn:hover {
-  opacity: 0.85;  /* makes button slightly transparent on hover */
-}
-
-.hero-buttons img{
-height:25px;
-width:25px;
-}
 
 /* Projects Grid */
 .projects {
@@ -244,6 +229,72 @@ width:25px;
 .projects h2 {
   font-size: 2rem;
   margin-bottom: 20px;
+}
+
+/* Skills Section */
+.skills {
+  padding: 40px;
+  overflow: hidden;
+}
+
+.skills h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.skills-scroll {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 10%,
+    black 90%,
+    transparent
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 10%,
+    black 90%,
+    transparent
+  );
+}
+
+.skills-track {
+  display: flex;
+  gap: 20px;
+  animation: scroll-skills 30s linear infinite;
+  width: fit-content;
+}
+
+@keyframes scroll-skills {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.skill-item {
+  background: rgba(42, 42, 42, 0.8);
+  padding: 12px 24px;
+  border-radius: 20px;
+  white-space: nowrap;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.skill-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
 }
 
 .project-grid {
@@ -548,7 +599,7 @@ width:25px;
   border-color: rgba(255, 255, 255, 0.5);
 }
 
-.btn-icon {
+.modal-actions .btn-icon {
   width: 40px;
   height: 40px;
   padding: 0;
@@ -557,7 +608,7 @@ width:25px;
   border-radius: 50%;
 }
 
-.btn-icon:hover {
+.modal-actions .btn-icon:hover {
   background: rgba(42, 42, 42, 0.9);
   border-color: rgba(255, 255, 255, 0.6);
   transform: scale(1.1);
