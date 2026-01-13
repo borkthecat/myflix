@@ -173,56 +173,10 @@ body {
 .hero-buttons .btn.play {
   background-color: #fff;
   color: #000;
-  position: relative;
-  overflow: hidden;
-}
-
-.hero-buttons .btn.play::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(229, 9, 20, 0.3);
-  transform: translate(-50%, -50%);
-  transition: width 0.6s, height 0.6s;
-}
-
-.hero-buttons .btn.play:hover::before {
-  width: 300px;
-  height: 300px;
-}
-
-.hero-buttons .btn.play:hover {
-  background-color: #fff;
-  box-shadow: 0 0 20px rgba(229, 9, 20, 0.5);
-}
-
-.hero-buttons .btn.info {
-  position: relative;
-  overflow: hidden;
-}
-
-.hero-buttons .btn.info::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  transition: left 0.5s;
-}
-
-.hero-buttons .btn.info:hover::after {
-  left: 100%;
 }
 
 .hero-buttons .btn:hover {
   background-color: rgba(109, 109, 110, 0.7);
-  transform: translateY(-2px);
 }
 
 .hero-buttons .btn {
@@ -383,21 +337,21 @@ body {
 
 .timeline-dot {
   position: absolute;
-  left: -35px;
+  left: 6px;
   top: 8px;
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
   background: #141414;
   border: 4px solid #E50914;
-  box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.2), 0 0 15px rgba(229, 9, 20, 0.4);
+  box-shadow: 0 0 0 2px rgba(229, 9, 20, 0.2), 0 0 10px rgba(229, 9, 20, 0.4);
   z-index: 1;
   transition: all 0.3s ease;
 }
 
 .timeline-item:hover .timeline-dot {
-  box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.4), 0 0 20px rgba(229, 9, 20, 0.6);
-  transform: scale(1.2);
+  box-shadow: 0 0 0 2px rgba(229, 9, 20, 0.4), 0 0 15px rgba(229, 9, 20, 0.6);
+  transform: scale(1.15);
 }
 
 .timeline-content {
@@ -442,175 +396,187 @@ body {
   line-height: 1.6;
 }
 
-/* Education Grid */
+/* Education Flow */
 .education-section {
   padding: 40px;
 }
 
-.education-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+.education-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-width: 600px;
+}
+
+.flow-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.flow-connector {
+  width: 2px;
+  height: 40px;
+  background: linear-gradient(180deg, #E50914, rgba(229, 9, 20, 0.3));
+  flex-shrink: 0;
+  margin-left: 25px;
+}
+
+.flow-item:last-child .flow-connector {
+  display: none;
+}
+
+.flow-card {
+  flex: 1;
+  background: rgba(34, 34, 34, 0.6);
+  border-left: 3px solid #E50914;
+  border-radius: 8px;
+  padding: 25px 30px;
+  display: flex;
+  align-items: center;
   gap: 25px;
-}
-
-.education-card {
-  background: linear-gradient(135deg, rgba(34, 34, 34, 0.8), rgba(20, 20, 20, 0.8));
-  border-radius: 12px;
-  padding: 35px 30px;
-  text-align: center;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
 }
 
-.education-card::before {
+.flow-card::before {
   content: '';
   position: absolute;
-  top: 0;
   left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, #E50914, transparent);
-  transform: scaleX(0);
-  transition: transform 0.4s ease;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: #fff;
+  transform: scaleY(0);
+  transition: transform 0.3s ease;
+  transform-origin: bottom;
 }
 
-.education-card:hover::before {
-  transform: scaleX(1);
+.flow-card:hover::before {
+  transform: scaleY(1);
+  transform-origin: top;
 }
 
-.education-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 15px 40px rgba(229, 9, 20, 0.25);
-  border-color: rgba(229, 9, 20, 0.3);
-  background: linear-gradient(135deg, rgba(34, 34, 34, 0.95), rgba(20, 20, 20, 0.95));
+.flow-card:hover {
+  background: rgba(34, 34, 34, 0.9);
+  transform: translateX(10px);
+  box-shadow: -5px 5px 20px rgba(0, 0, 0, 0.3);
 }
 
-.education-icon {
-  width: 60px;
-  height: 60px;
-  margin: 0 auto 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.flow-number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: rgba(229, 9, 20, 0.3);
+  line-height: 1;
+  min-width: 60px;
+  transition: color 0.3s ease;
+}
+
+.flow-card:hover .flow-number {
   color: #E50914;
-  background: rgba(229, 9, 20, 0.1);
-  border-radius: 12px;
-  transition: all 0.3s ease;
 }
 
-.education-icon svg {
-  width: 32px;
-  height: 32px;
+.flow-content {
+  flex: 1;
 }
 
-.education-card:hover .education-icon {
-  background: rgba(229, 9, 20, 0.2);
-  transform: scale(1.1) rotate(5deg);
-  color: #fff;
-}
-
-.education-card h3 {
+.flow-content h3 {
   font-size: 1.3rem;
-  font-weight: 600;
-  margin: 0 0 12px;
-  color: #fff;
-}
-
-.education-degree {
-  font-size: 1rem;
-  color: #b3b3b3;
-  margin: 0 0 10px;
-  line-height: 1.5;
-}
-
-.education-year {
-  font-size: 0.9rem;
-  color: #E50914;
-  margin: 0;
-  font-weight: 500;
-  letter-spacing: 0.5px;
-}
-
-/* Achievements Grid */
-.achievements-section {
-  padding: 40px;
-}
-
-.achievements-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
-}
-
-.achievement-badge {
-  background: linear-gradient(135deg, rgba(34, 34, 34, 0.8), rgba(20, 20, 20, 0.8));
-  border-radius: 16px;
-  padding: 30px 25px;
-  text-align: center;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  position: relative;
-  overflow: hidden;
-}
-
-.achievement-badge::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 16px;
-  padding: 2px;
-  background: linear-gradient(135deg, #E50914, #B20710, #E50914);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-.achievement-badge:hover::after {
-  opacity: 1;
-}
-
-.achievement-badge:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 15px 40px rgba(229, 9, 20, 0.3);
-  background: linear-gradient(135deg, rgba(34, 34, 34, 0.95), rgba(20, 20, 20, 0.95));
-}
-
-.badge-icon {
-  width: 50px;
-  height: 50px;
-  margin: 0 auto 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #E50914;
-  background: rgba(229, 9, 20, 0.1);
-  border-radius: 12px;
-  transition: all 0.3s ease;
-}
-
-.badge-icon svg {
-  width: 28px;
-  height: 28px;
-}
-
-.achievement-badge:hover .badge-icon {
-  background: rgba(229, 9, 20, 0.25);
-  transform: scale(1.15) rotate(-5deg);
-  color: #fff;
-}
-
-.achievement-badge h3 {
-  font-size: 1.15rem;
   font-weight: 600;
   margin: 0 0 8px;
   color: #fff;
 }
 
-.achievement-badge p {
+.flow-degree {
+  font-size: 1rem;
+  color: #b3b3b3;
+  margin: 0 0 6px;
+  line-height: 1.4;
+}
+
+.flow-year {
+  font-size: 0.9rem;
+  color: #E50914;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Achievements Showcase */
+.achievements-section {
+  padding: 40px;
+}
+
+.achievements-showcase {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+}
+
+.showcase-item {
+  text-align: center;
+  position: relative;
+  padding: 20px;
+  transition: transform 0.3s ease;
+}
+
+.showcase-item:hover {
+  transform: translateY(-5px);
+}
+
+.showcase-ring {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 20px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.showcase-ring::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  background: linear-gradient(135deg, #E50914, #B20710) padding-box,
+              linear-gradient(135deg, #E50914, #B20710) border-box;
+  background-clip: padding-box, border-box;
+  opacity: 0.3;
+  transition: all 0.3s ease;
+}
+
+.showcase-item:hover .showcase-ring::before {
+  opacity: 1;
+  transform: rotate(180deg);
+  box-shadow: 0 0 20px rgba(229, 9, 20, 0.5);
+}
+
+.showcase-ring svg {
+  width: 50px;
+  height: 50px;
+  color: #E50914;
+  position: relative;
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+
+.showcase-item:hover .showcase-ring svg {
+  color: #fff;
+  transform: scale(1.1);
+}
+
+.showcase-item h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 8px;
+  color: #fff;
+}
+
+.showcase-item p {
   font-size: 0.9rem;
   color: #b3b3b3;
   margin: 0;
