@@ -12,6 +12,32 @@
         background: #141414;
         margin: 0;
         overflow: hidden;
+        cursor: none;
+      }
+
+      .cursor-follower {
+        position: fixed;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        transition: transform 0.1s ease-out;
+        font-size: 14px;
+        color: #E50914;
+        font-weight: 600;
+        text-shadow: 0 0 10px rgba(229, 9, 20, 0.8);
+        white-space: nowrap;
+        opacity: 0;
+        animation: fadeInCursor 1s ease-out 0.5s forwards;
+      }
+
+      @keyframes fadeInCursor {
+        to {
+          opacity: 1;
+        }
+      }
+
+      .cursor-follower::before {
+        content: 'Click anywhere!';
       }
 
       .logo-wrapper {
@@ -51,12 +77,39 @@
   </head>
 
   <body>
+    <div class="cursor-follower" id="cursorFollower"></div>
     <div class="logo-wrapper">
       <img src="/images/title.png" alt="Intro Logo" class="logo-img" />
       <audio id="introSound" src="/tadum.mp3" preload="auto"></audio>
     </div>
 
     <script>
+      // Cursor follower
+      const cursorFollower = document.getElementById("cursorFollower");
+      let mouseX = 0;
+      let mouseY = 0;
+      let followerX = 0;
+      let followerY = 0;
+
+      document.addEventListener("mousemove", (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      });
+
+      function animateFollower() {
+        followerX += (mouseX - followerX) * 0.1;
+        followerY += (mouseY - followerY) * 0.1;
+        cursorFollower.style.left = followerX + "px";
+        cursorFollower.style.top = followerY + "px";
+        requestAnimationFrame(animateFollower);
+      }
+      animateFollower();
+
+      // Hide cursor follower on click
+      document.body.addEventListener("click", () => {
+        cursorFollower.style.opacity = "0";
+        cursorFollower.style.transition = "opacity 0.3s ease";
+      });
       const audio = document.getElementById("introSound");
       const logo = document.querySelector(".logo-img");
 

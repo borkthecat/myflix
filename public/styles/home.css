@@ -166,6 +166,7 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  font-family: inherit;
 }
 
 .hero-buttons .btn.play {
@@ -693,102 +694,177 @@ body {
   color: #e5e5e5;
 }
 
-.skills-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
+/* Soft Skills - Circular Wheel */
+.soft-skills-wheel {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  margin: 0 auto;
 }
 
-.skill-badge {
+.wheel-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120px;
+  height: 120px;
+  background: rgba(34, 34, 34, 0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fff;
+  z-index: 2;
+  border: 2px solid rgba(109, 109, 110, 0.3);
+}
+
+.wheel-item {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(var(--angle)) translateY(-110px) rotate(calc(-1 * var(--angle)));
+  padding: 8px 16px;
   background: rgba(42, 42, 42, 0.8);
-  padding: 10px 20px;
   border-radius: 20px;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   font-weight: 500;
   color: #fff;
   border: 1px solid rgba(255, 255, 255, 0.1);
   transition: all 0.3s ease;
-  position: relative;
-  isolation: isolate;
+  white-space: nowrap;
 }
 
-.skill-badge::before {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  border-radius: 22px;
-  background: linear-gradient(135deg, #E50914, #B20710, #E50914);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: -1;
+.wheel-item:hover {
+  background: rgba(42, 42, 42, 1);
+  transform: translate(-50%, -50%) rotate(var(--angle)) translateY(-110px) rotate(calc(-1 * var(--angle))) scale(1.15);
+  border-color: rgba(109, 109, 110, 0.5);
+  box-shadow: 0 0 15px rgba(109, 109, 110, 0.3);
 }
 
-.skill-badge:hover {
-  background: rgba(42, 42, 42, 0.95);
-  transform: scale(1.05);
-  border-color: transparent;
-}
-
-.skill-badge:hover::before {
-  opacity: 1;
-}
-
-.languages-display {
+/* Languages - Progress Bars */
+.languages-progress {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 25px;
   max-width: 500px;
 }
 
-.language-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 20px;
+.language-progress-item {
   background: rgba(34, 34, 34, 0.6);
-  border-radius: 8px;
-  border-left: 3px solid rgba(109, 109, 110, 0.5);
+  padding: 20px;
+  border-radius: 12px;
   transition: all 0.3s ease;
 }
 
-.language-item:hover {
+.language-progress-item:hover {
   background: rgba(34, 34, 34, 0.9);
-  border-left-color: rgba(109, 109, 110, 0.9);
   transform: translateX(5px);
 }
 
+.language-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
 .language-name {
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 600;
   color: #fff;
 }
 
-.language-level {
+.language-percent {
   font-size: 0.9rem;
-  color: #b3b3b3;
+  color: rgba(109, 109, 110, 0.9);
+  font-weight: 500;
 }
 
-.interests-display {
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: rgba(109, 109, 110, 0.2);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, rgba(109, 109, 110, 0.8), rgba(109, 109, 110, 0.6));
+  border-radius: 4px;
+  transition: width 0.8s ease;
+  box-shadow: 0 0 10px rgba(109, 109, 110, 0.4);
+}
+
+.language-detail {
+  font-size: 0.85rem;
+  color: #b3b3b3;
+  font-style: italic;
+}
+
+/* Interests - Icon Cards */
+.interests-cards {
   display: flex;
-  gap: 15px;
+  gap: 20px;
   flex-wrap: wrap;
 }
 
-.interest-item {
-  padding: 12px 24px;
-  background: rgba(34, 34, 34, 0.6);
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 500;
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.3s ease;
+.interest-card {
+  background: linear-gradient(135deg, rgba(34, 34, 34, 0.8), rgba(20, 20, 20, 0.8));
+  padding: 30px 40px;
+  border-radius: 16px;
+  text-align: center;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 2px solid transparent;
+  position: relative;
+  overflow: hidden;
+  min-width: 150px;
 }
 
-.interest-item:hover {
-  background: rgba(34, 34, 34, 0.9);
-  border-color: rgba(255, 255, 255, 0.3);
-  transform: translateY(-3px);
+.interest-card::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 16px;
+  padding: 2px;
+  background: linear-gradient(135deg, rgba(109, 109, 110, 0.3), rgba(109, 109, 110, 0.1));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.interest-card:hover::before {
+  opacity: 1;
+}
+
+.interest-card:hover {
+  transform: translateY(-8px) rotate(2deg);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+.interest-icon {
+  font-size: 3rem;
+  margin-bottom: 10px;
+  display: block;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  transition: transform 0.3s ease;
+}
+
+.interest-card:hover .interest-icon {
+  transform: scale(1.2) rotate(-5deg);
+}
+
+.interest-card h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+  color: #fff;
 }
 
 .skills-scroll {
