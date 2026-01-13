@@ -320,7 +320,7 @@ body {
   top: 0;
   bottom: 0;
   width: 3px;
-  background: linear-gradient(180deg, rgba(229, 9, 20, 0.3), #E50914, rgba(229, 9, 20, 0.3));
+  background: rgba(109, 109, 110, 0.5);
   border-radius: 2px;
 }
 
@@ -337,23 +337,23 @@ body {
 
 .timeline-dot {
   position: absolute;
-  left: 6px;
+  left: 16.5px;
   top: 8px;
-  width: 18px;
-  height: 18px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
-  background: #E50914;
-  border: 3px solid #141414;
-  box-shadow: 0 0 0 2px rgba(229, 9, 20, 0.2), 0 0 10px rgba(229, 9, 20, 0.4);
+  background: rgba(109, 109, 110, 0.8);
+  border: 2px solid #141414;
+  box-shadow: 0 0 0 2px rgba(109, 109, 110, 0.3);
   z-index: 2;
   transform: translateX(-50%);
-  margin-left: 15px;
   transition: all 0.3s ease;
 }
 
 .timeline-item:hover .timeline-dot {
-  box-shadow: 0 0 0 2px rgba(229, 9, 20, 0.4), 0 0 15px rgba(229, 9, 20, 0.6);
-  transform: translateX(-50%) scale(1.15);
+  box-shadow: 0 0 0 2px rgba(109, 109, 110, 0.5);
+  transform: translateX(-50%) scale(1.2);
+  background: rgba(109, 109, 110, 1);
 }
 
 .timeline-content {
@@ -379,7 +379,7 @@ body {
 
 .timeline-company {
   font-size: 1rem;
-  color: #E50914;
+  color: rgba(109, 109, 110, 0.9);
   margin: 0 0 6px;
   font-weight: 500;
 }
@@ -419,7 +419,7 @@ body {
 
 .flow-card {
   background: rgba(34, 34, 34, 0.6);
-  border-left: 3px solid #E50914;
+  border-left: 3px solid rgba(109, 109, 110, 0.5);
   border-radius: 8px;
   padding: 25px 30px;
   transition: all 0.3s ease;
@@ -435,7 +435,7 @@ body {
   top: 0;
   bottom: 0;
   width: 3px;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.6);
   transform: scaleY(0);
   transition: transform 0.3s ease;
   transform-origin: bottom;
@@ -455,14 +455,14 @@ body {
 .flow-number {
   font-size: 2rem;
   font-weight: 700;
-  color: rgba(229, 9, 20, 0.3);
+  color: rgba(109, 109, 110, 0.4);
   line-height: 1;
   margin-bottom: 15px;
   transition: color 0.3s ease;
 }
 
 .flow-card:hover .flow-number {
-  color: #E50914;
+  color: rgba(109, 109, 110, 0.8);
 }
 
 .flow-content {
@@ -485,7 +485,7 @@ body {
 
 .flow-year {
   font-size: 0.9rem;
-  color: #E50914;
+  color: rgba(109, 109, 110, 0.8);
   margin: 0;
   font-weight: 500;
 }
