@@ -25,7 +25,6 @@ body {
 .navbar.scrolled {
   background: rgba(0, 0, 0, 0.95);
   transition: background 0.3s ease;
-  position: relative;
 }
 
 .navbar.scrolled::after {
