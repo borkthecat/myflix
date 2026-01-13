@@ -27,12 +27,25 @@ body {
   transition: background 0.3s ease;
   backdrop-filter: blur(10px);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-  border-bottom: 2px solid transparent;
-  background-image: 
-    linear-gradient(rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.95)),
-    linear-gradient(90deg, transparent, #E50914, transparent);
-  background-origin: border-box;
-  background-clip: padding-box, border-box;
+  position: relative;
+}
+
+.navbar.scrolled::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: #E50914;
+  transform: translateX(-100%);
+  animation: slideInFromLeft 0.5s ease-out forwards;
+}
+
+@keyframes slideInFromLeft {
+  to {
+    transform: translateX(0);
+  }
 }
 
 .navbar-left {
@@ -694,82 +707,6 @@ body {
   color: #e5e5e5;
 }
 
-/* Soft Skills - Side Flow */
-.soft-skills-flow {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding-left: 40px;
-  max-width: 400px;
-}
-
-.flow-line {
-  position: absolute;
-  left: 15px;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: linear-gradient(180deg, rgba(109, 109, 110, 0.3), rgba(109, 109, 110, 0.6), rgba(109, 109, 110, 0.3));
-  border-radius: 2px;
-}
-
-.soft-skill-item {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  opacity: 0;
-  animation: slideInFromLeft 0.6s ease-out var(--delay) forwards;
-}
-
-@keyframes slideInFromLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.skill-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: rgba(109, 109, 110, 0.6);
-  border: 2px solid #141414;
-  flex-shrink: 0;
-  position: relative;
-  z-index: 1;
-  transition: all 0.3s ease;
-}
-
-.soft-skill-item:hover .skill-dot {
-  background: rgba(109, 109, 110, 1);
-  transform: scale(1.3);
-  box-shadow: 0 0 10px rgba(109, 109, 110, 0.5);
-}
-
-.skill-text {
-  padding: 10px 20px;
-  background: rgba(42, 42, 42, 0.6);
-  border-radius: 20px;
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.3s ease;
-  position: relative;
-}
-
-.soft-skill-item:hover .skill-text {
-  background: rgba(42, 42, 42, 0.9);
-  border-color: rgba(109, 109, 110, 0.5);
-  transform: translateX(10px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-}
 
 /* Languages - Progress Bars */
 .languages-progress {
