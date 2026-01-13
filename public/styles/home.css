@@ -694,54 +694,81 @@ body {
   color: #e5e5e5;
 }
 
-/* Soft Skills - Circular Wheel */
-.soft-skills-wheel {
+/* Soft Skills - Side Flow */
+.soft-skills-flow {
   position: relative;
-  width: 300px;
-  height: 300px;
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-left: 40px;
+  max-width: 400px;
 }
 
-.wheel-center {
+.flow-line {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 120px;
-  height: 120px;
-  background: rgba(34, 34, 34, 0.9);
-  border-radius: 50%;
+  left: 15px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, rgba(109, 109, 110, 0.3), rgba(109, 109, 110, 0.6), rgba(109, 109, 110, 0.3));
+  border-radius: 2px;
+}
+
+.soft-skill-item {
+  position: relative;
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #fff;
-  z-index: 2;
-  border: 2px solid rgba(109, 109, 110, 0.3);
+  gap: 15px;
+  opacity: 0;
+  animation: slideInFromLeft 0.6s ease-out var(--delay) forwards;
 }
 
-.wheel-item {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(var(--angle)) translateY(-110px) rotate(calc(-1 * var(--angle)));
-  padding: 8px 16px;
-  background: rgba(42, 42, 42, 0.8);
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.skill-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(109, 109, 110, 0.6);
+  border: 2px solid #141414;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+
+.soft-skill-item:hover .skill-dot {
+  background: rgba(109, 109, 110, 1);
+  transform: scale(1.3);
+  box-shadow: 0 0 10px rgba(109, 109, 110, 0.5);
+}
+
+.skill-text {
+  padding: 10px 20px;
+  background: rgba(42, 42, 42, 0.6);
   border-radius: 20px;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   font-weight: 500;
   color: #fff;
   border: 1px solid rgba(255, 255, 255, 0.1);
   transition: all 0.3s ease;
-  white-space: nowrap;
+  position: relative;
 }
 
-.wheel-item:hover {
-  background: rgba(42, 42, 42, 1);
-  transform: translate(-50%, -50%) rotate(var(--angle)) translateY(-110px) rotate(calc(-1 * var(--angle))) scale(1.15);
+.soft-skill-item:hover .skill-text {
+  background: rgba(42, 42, 42, 0.9);
   border-color: rgba(109, 109, 110, 0.5);
-  box-shadow: 0 0 15px rgba(109, 109, 110, 0.3);
+  transform: translateX(10px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 /* Languages - Progress Bars */
@@ -849,14 +876,24 @@ body {
 }
 
 .interest-icon {
-  font-size: 3rem;
-  margin-bottom: 10px;
-  display: block;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
-  transition: transform 0.3s ease;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(109, 109, 110, 0.8);
+  transition: all 0.3s ease;
+}
+
+.interest-icon svg {
+  width: 100%;
+  height: 100%;
+  stroke: currentColor;
 }
 
 .interest-card:hover .interest-icon {
+  color: #fff;
   transform: scale(1.2) rotate(-5deg);
 }
 
