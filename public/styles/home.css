@@ -355,63 +355,91 @@ body {
 
 .experience-timeline {
   position: relative;
-  padding-left: 30px;
+  padding-left: 50px;
+  max-width: 800px;
 }
 
 .experience-timeline::before {
   content: '';
   position: absolute;
-  left: 8px;
+  left: 15px;
   top: 0;
   bottom: 0;
-  width: 2px;
-  background: linear-gradient(180deg, #E50914, #B20710, #E50914);
+  width: 3px;
+  background: linear-gradient(180deg, rgba(229, 9, 20, 0.3), #E50914, rgba(229, 9, 20, 0.3));
+  border-radius: 2px;
 }
 
 .timeline-item {
   position: relative;
-  margin-bottom: 40px;
-  padding-left: 40px;
+  margin-bottom: 50px;
+  padding-left: 50px;
+  transition: transform 0.3s ease;
+}
+
+.timeline-item:hover {
+  transform: translateX(5px);
 }
 
 .timeline-dot {
   position: absolute;
-  left: -22px;
-  top: 5px;
-  width: 16px;
-  height: 16px;
+  left: -35px;
+  top: 8px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
-  background: #E50914;
-  border: 3px solid #141414;
-  box-shadow: 0 0 0 2px #E50914;
+  background: #141414;
+  border: 4px solid #E50914;
+  box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.2), 0 0 15px rgba(229, 9, 20, 0.4);
   z-index: 1;
+  transition: all 0.3s ease;
+}
+
+.timeline-item:hover .timeline-dot {
+  box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.4), 0 0 20px rgba(229, 9, 20, 0.6);
+  transform: scale(1.2);
+}
+
+.timeline-content {
+  background: rgba(34, 34, 34, 0.6);
+  padding: 25px;
+  border-radius: 8px;
+  border-left: 3px solid #E50914;
+  transition: all 0.3s ease;
+}
+
+.timeline-item:hover .timeline-content {
+  background: rgba(34, 34, 34, 0.8);
+  border-left-color: #fff;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
 }
 
 .timeline-content h3 {
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   font-weight: 600;
-  margin: 0 0 5px;
+  margin: 0 0 8px;
   color: #fff;
 }
 
 .timeline-company {
   font-size: 1rem;
   color: #E50914;
-  margin: 0 0 5px;
+  margin: 0 0 6px;
   font-weight: 500;
 }
 
 .timeline-date {
   font-size: 0.9rem;
   color: #b3b3b3;
-  margin: 0 0 8px;
+  margin: 0 0 12px;
+  font-weight: 400;
 }
 
 .timeline-desc {
   font-size: 0.95rem;
   color: #e5e5e5;
   margin: 0;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 /* Education Grid */
@@ -421,42 +449,80 @@ body {
 
 .education-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
 }
 
 .education-card {
-  background: #222;
-  border-radius: 8px;
-  padding: 30px;
+  background: linear-gradient(135deg, rgba(34, 34, 34, 0.8), rgba(20, 20, 20, 0.8));
+  border-radius: 12px;
+  padding: 35px 30px;
   text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.education-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #E50914, transparent);
+  transform: scaleX(0);
+  transition: transform 0.4s ease;
+}
+
+.education-card:hover::before {
+  transform: scaleX(1);
 }
 
 .education-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(229, 9, 20, 0.3);
-  border-color: #E50914;
+  transform: translateY(-8px);
+  box-shadow: 0 15px 40px rgba(229, 9, 20, 0.25);
+  border-color: rgba(229, 9, 20, 0.3);
+  background: linear-gradient(135deg, rgba(34, 34, 34, 0.95), rgba(20, 20, 20, 0.95));
 }
 
 .education-icon {
-  font-size: 3rem;
-  margin-bottom: 15px;
-  display: block;
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #E50914;
+  background: rgba(229, 9, 20, 0.1);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.education-icon svg {
+  width: 32px;
+  height: 32px;
+}
+
+.education-card:hover .education-icon {
+  background: rgba(229, 9, 20, 0.2);
+  transform: scale(1.1) rotate(5deg);
+  color: #fff;
 }
 
 .education-card h3 {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: 600;
-  margin: 0 0 10px;
+  margin: 0 0 12px;
   color: #fff;
 }
 
 .education-degree {
   font-size: 1rem;
   color: #b3b3b3;
-  margin: 0 0 8px;
+  margin: 0 0 10px;
+  line-height: 1.5;
 }
 
 .education-year {
@@ -464,6 +530,7 @@ body {
   color: #E50914;
   margin: 0;
   font-weight: 500;
+  letter-spacing: 0.5px;
 }
 
 /* Achievements Grid */
@@ -473,50 +540,71 @@ body {
 
 .achievements-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
 }
 
 .achievement-badge {
-  background: #222;
-  border-radius: 12px;
-  padding: 25px;
+  background: linear-gradient(135deg, rgba(34, 34, 34, 0.8), rgba(20, 20, 20, 0.8));
+  border-radius: 16px;
+  padding: 30px 25px;
   text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border: 2px solid transparent;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   position: relative;
   overflow: hidden;
 }
 
-.achievement-badge::before {
+.achievement-badge::after {
   content: '';
   position: absolute;
-  inset: -2px;
-  border-radius: 12px;
+  inset: 0;
+  border-radius: 16px;
+  padding: 2px;
   background: linear-gradient(135deg, #E50914, #B20710, #E50914);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
   opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: -1;
+  transition: opacity 0.4s ease;
 }
 
-.achievement-badge:hover::before {
+.achievement-badge:hover::after {
   opacity: 1;
 }
 
 .achievement-badge:hover {
-  transform: scale(1.05) rotate(2deg);
-  box-shadow: 0 10px 30px rgba(229, 9, 20, 0.4);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 15px 40px rgba(229, 9, 20, 0.3);
+  background: linear-gradient(135deg, rgba(34, 34, 34, 0.95), rgba(20, 20, 20, 0.95));
 }
 
 .badge-icon {
-  font-size: 3rem;
-  margin-bottom: 15px;
-  display: block;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  width: 50px;
+  height: 50px;
+  margin: 0 auto 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #E50914;
+  background: rgba(229, 9, 20, 0.1);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.badge-icon svg {
+  width: 28px;
+  height: 28px;
+}
+
+.achievement-badge:hover .badge-icon {
+  background: rgba(229, 9, 20, 0.25);
+  transform: scale(1.15) rotate(-5deg);
+  color: #fff;
 }
 
 .achievement-badge h3 {
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   font-weight: 600;
   margin: 0 0 8px;
   color: #fff;
@@ -526,6 +614,7 @@ body {
   font-size: 0.9rem;
   color: #b3b3b3;
   margin: 0;
+  line-height: 1.4;
 }
 
 /* hover overlay */
