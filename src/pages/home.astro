@@ -188,6 +188,186 @@
       </div>
     </section>
 
+    <!-- Featured Work Row -->
+    <section class="content-row">
+      <h2 class="row-title">Featured Work</h2>
+      <div class="row-container">
+        <div class="row-posters">
+          <div class="row-item" data-project="p1">
+            <div class="row-item-overlay">
+              <h3>Project 1</h3>
+              <p>AI Application</p>
+            </div>
+          </div>
+          <div class="row-item" data-project="p2">
+            <div class="row-item-overlay">
+              <h3>Project 2</h3>
+              <p>Web Application</p>
+            </div>
+          </div>
+          <div class="row-item" data-project="p3">
+            <div class="row-item-overlay">
+              <h3>Project 3</h3>
+              <p>UI/UX Project</p>
+            </div>
+          </div>
+          <div class="row-item" data-project="p4">
+            <div class="row-item-overlay">
+              <h3>Project 4</h3>
+              <p>Machine Learning</p>
+            </div>
+          </div>
+          <div class="row-item" data-project="p5">
+            <div class="row-item-overlay">
+              <h3>Project 5</h3>
+              <p>Data Science</p>
+            </div>
+          </div>
+          <div class="row-item">
+            <div class="row-item-overlay">
+              <h3>Project 6</h3>
+              <p>Full Stack</p>
+            </div>
+          </div>
+          <div class="row-item">
+            <div class="row-item-overlay">
+              <h3>Project 7</h3>
+              <p>Mobile App</p>
+            </div>
+          </div>
+          <div class="row-item">
+            <div class="row-item-overlay">
+              <h3>Project 8</h3>
+              <p>Cloud Platform</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience Row -->
+    <section class="content-row">
+      <h2 class="row-title">Experience</h2>
+      <div class="row-container">
+        <div class="row-posters">
+          <div class="row-item experience-item">
+            <div class="row-item-overlay">
+              <h3>Software Engineer</h3>
+              <p>Tech Company • 2024</p>
+            </div>
+          </div>
+          <div class="row-item experience-item">
+            <div class="row-item-overlay">
+              <h3>Frontend Developer</h3>
+              <p>Startup • 2023</p>
+            </div>
+          </div>
+          <div class="row-item experience-item">
+            <div class="row-item-overlay">
+              <h3>Research Intern</h3>
+              <p>University Lab • 2023</p>
+            </div>
+          </div>
+          <div class="row-item experience-item">
+            <div class="row-item-overlay">
+              <h3>Freelance Developer</h3>
+              <p>Independent • 2022-2023</p>
+            </div>
+          </div>
+          <div class="row-item experience-item">
+            <div class="row-item-overlay">
+              <h3>Teaching Assistant</h3>
+              <p>SUTD • 2022</p>
+            </div>
+          </div>
+          <div class="row-item experience-item">
+            <div class="row-item-overlay">
+              <h3>Hackathon Winner</h3>
+              <p>Tech Challenge • 2022</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Education Row -->
+    <section class="content-row">
+      <h2 class="row-title">Education</h2>
+      <div class="row-container">
+        <div class="row-posters">
+          <div class="row-item education-item">
+            <div class="row-item-overlay">
+              <h3>SUTD</h3>
+              <p>Computer Science & Design</p>
+            </div>
+          </div>
+          <div class="row-item education-item">
+            <div class="row-item-overlay">
+              <h3>Certifications</h3>
+              <p>AWS • Google Cloud</p>
+            </div>
+          </div>
+          <div class="row-item education-item">
+            <div class="row-item-overlay">
+              <h3>Online Courses</h3>
+              <p>Coursera • edX</p>
+            </div>
+          </div>
+          <div class="row-item education-item">
+            <div class="row-item-overlay">
+              <h3>Workshops</h3>
+              <p>ML • Web Dev</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Achievements Row -->
+    <section class="content-row">
+      <h2 class="row-title">Achievements</h2>
+      <div class="row-container">
+        <div class="row-posters">
+          <div class="row-item achievement-item">
+            <div class="row-item-overlay">
+              <h3>Dean's List</h3>
+              <p>Academic Excellence</p>
+            </div>
+          </div>
+          <div class="row-item achievement-item">
+            <div class="row-item-overlay">
+              <h3>Hackathon Winner</h3>
+              <p>1st Place 2023</p>
+            </div>
+          </div>
+          <div class="row-item achievement-item">
+            <div class="row-item-overlay">
+              <h3>Open Source</h3>
+              <p>500+ Contributions</p>
+            </div>
+          </div>
+          <div class="row-item achievement-item">
+            <div class="row-item-overlay">
+              <h3>Published Research</h3>
+              <p>AI Conference 2024</p>
+            </div>
+          </div>
+          <div class="row-item achievement-item">
+            <div class="row-item-overlay">
+              <h3>Scholarship</h3>
+              <p>Merit Award</p>
+            </div>
+          </div>
+          <div class="row-item achievement-item">
+            <div class="row-item-overlay">
+              <h3>Mentor</h3>
+              <p>Tech Community</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Modal -->
     <div class="modal" id="modal">
       <div class="modal-content">
@@ -390,28 +570,41 @@
       const modalHeroImage = document.getElementById("modal-hero-image");
       const closeBtn = document.querySelector(".close");
 
+      const openProjectModal = (projectId) => {
+        const p = projects[projectId];
+        if (!p) return;
+        
+        modalTitle.textContent = p.title;
+        modalTech.textContent = p.tech;
+        modalDesc.textContent = p.desc;
+        modalType.textContent = p.type;
+        modalStack.textContent = p.stack;
+        modalStatus.textContent = p.status;
+        modalOwner.textContent = p.owner;
+        
+        // Set status badge class
+        const statusLower = p.status.toLowerCase().replace(/\s+/g, '-');
+        modalStatus.className = `info-value status-badge ${statusLower}`;
+        
+        // Set hero image background
+        if (modalHeroImage && p.heroImage) {
+          modalHeroImage.style.background = p.heroImage;
+        }
+        
+        modal.style.display = "flex";
+        document.body.style.overflow = "hidden"; // Prevent background scrolling
+      };
+
       document.querySelectorAll(".project-card").forEach((card) => {
         card.addEventListener("click", () => {
-          const p = projects[card.dataset.project];
-          modalTitle.textContent = p.title;
-          modalTech.textContent = p.tech;
-          modalDesc.textContent = p.desc;
-          modalType.textContent = p.type;
-          modalStack.textContent = p.stack;
-          modalStatus.textContent = p.status;
-          modalOwner.textContent = p.owner;
-          
-          // Set status badge class
-          const statusLower = p.status.toLowerCase().replace(/\s+/g, '-');
-          modalStatus.className = `info-value status-badge ${statusLower}`;
-          
-          // Set hero image background
-          if (modalHeroImage && p.heroImage) {
-            modalHeroImage.style.background = p.heroImage;
-          }
-          
-          modal.style.display = "flex";
-          document.body.style.overflow = "hidden"; // Prevent background scrolling
+          openProjectModal(card.dataset.project);
+        });
+      });
+
+      // Make row items clickable
+      document.querySelectorAll(".row-item[data-project]").forEach((item) => {
+        item.addEventListener("click", () => {
+          openProjectModal(item.dataset.project);
         });
       });
 
