@@ -264,35 +264,27 @@ body {
   gap: 20px;
 }
 
-/* Skills Section - Top 10 Grid Style with Popups */
-.top10-title {
-  font-size: 2rem;
-  margin-bottom: 30px;
-  font-weight: 400;
-  color: #fff;
-  padding: 0 40px;
-}
-
+/* Skills Section - Top 10 Grid Style with Click Popups */
 .top10-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 30px;
-  padding: 20px 40px 60px;
-  max-width: 1400px;
-  margin: 0 auto;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+  position: relative;
 }
 
 .top10-item-grid {
   position: relative;
   cursor: pointer;
+  width: 260px;
+  height: 150px;
 }
 
 .top10-number-outline {
   position: absolute;
-  left: -50px;
+  left: -80px;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 12rem;
+  font-size: 10rem;
   font-weight: 900;
   line-height: 1;
   z-index: 1;
@@ -304,14 +296,15 @@ body {
   color: transparent;
 }
 
+.top10-item-grid.active .top10-number-outline,
 .top10-item-grid:hover .top10-number-outline {
   -webkit-text-stroke: 2px rgba(128, 128, 128, 0.5);
   transform: translateY(-50%) scale(1.05);
 }
 
 .top10-poster {
-  width: 200px;
-  height: 300px;
+  width: 260px;
+  height: 150px;
   background: linear-gradient(135deg, rgba(34, 34, 34, 0.8), rgba(42, 42, 42, 0.8));
   border-radius: 8px;
   display: flex;
@@ -321,19 +314,19 @@ body {
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
-  margin-left: 40px;
 }
 
+.top10-item-grid.active .top10-poster,
 .top10-item-grid:hover .top10-poster {
-  transform: scale(1.1);
+  transform: scale(1.05);
   border-color: rgba(128, 128, 128, 0.4);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   z-index: 10;
 }
 
 .top10-icon-horizontal {
-  width: 100px;
-  height: 100px;
+  width: 60px;
+  height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -344,36 +337,84 @@ body {
 }
 
 .top10-icon-horizontal svg {
-  width: 50px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
 }
 
-.top10-item-horizontal:hover .top10-icon-horizontal {
+.top10-item-grid.active .top10-icon-horizontal,
+.top10-item-grid:hover .top10-icon-horizontal {
   background: rgba(128, 128, 128, 0.2);
   color: #b3b3b3;
   transform: rotate(10deg) scale(1.1);
 }
 
 .top10-popup {
-  position: absolute;
-  top: 320px;
-  left: 40px;
-  width: 300px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  width: 400px;
+  max-width: 90vw;
   background: rgba(20, 20, 20, 0.98);
-  border-radius: 8px;
-  padding: 20px;
+  border-radius: 12px;
+  padding: 30px;
   opacity: 0;
-  transform: translateY(-20px);
+  visibility: hidden;
   transition: all 0.3s ease;
   pointer-events: none;
-  z-index: 20;
+  z-index: 1000;
   border: 1px solid rgba(128, 128, 128, 0.3);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
 }
 
-.top10-item-grid:hover .top10-popup {
+.top10-popup.active {
   opacity: 1;
-  transform: translateY(0);
+  visibility: visible;
+  transform: translate(-50%, -50%) scale(1);
+  pointer-events: auto;
+}
+
+.popup-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 2rem;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  line-height: 1;
+  padding: 0;
+}
+
+.popup-close:hover {
+  color: #b3b3b3;
+  transform: rotate(90deg);
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  pointer-events: none;
+}
+
+.popup-overlay.active {
+  opacity: 1;
+  visibility: visible;
   pointer-events: auto;
 }
 
@@ -1166,34 +1207,31 @@ body {
     gap: 15px;
   }
 
-  .top10-title {
-    padding: 0 20px;
-  }
-
   .top10-grid {
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 20px;
-    padding: 20px 20px 60px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
   }
 
   .top10-item-grid {
     width: 100%;
+    max-width: 260px;
+    height: 120px;
   }
 
   .top10-number-outline {
-    font-size: 8rem;
-    left: -30px;
+    font-size: 6rem;
+    left: -50px;
     -webkit-text-stroke: 1.5px rgba(128, 128, 128, 0.3);
   }
 
+  .top10-item-grid.active .top10-number-outline,
   .top10-item-grid:hover .top10-number-outline {
     -webkit-text-stroke: 1.5px rgba(128, 128, 128, 0.5);
   }
 
   .top10-poster {
-    width: 160px;
-    height: 240px;
-    margin-left: 20px;
+    width: 100%;
+    height: 100%;
   }
 
   .top10-icon-horizontal {

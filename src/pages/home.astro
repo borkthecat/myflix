@@ -142,9 +142,10 @@
       </div>
     </section>
 
-    <!-- Skills Section - Top 10 Grid Style with Popups -->
+    <!-- Skills Section - Top 10 Grid Style with Click Popups -->
     <section class="skills-section" id="skills">
-      <h2 class="top10-title">Top Skills</h2>
+      <h2>Top Skills</h2>
+      <div class="popup-overlay" id="popup-overlay"></div>
       <div class="top10-grid">
         <div class="top10-item-grid" data-skill="1">
           <div class="top10-number-outline">1</div>
@@ -157,7 +158,8 @@
               </svg>
             </div>
           </div>
-          <div class="top10-popup">
+          <div class="top10-popup" id="popup-1">
+            <button class="popup-close">&times;</button>
             <h3>Frontend Development</h3>
             <p>React • Next.js • TypeScript</p>
             <div class="top10-details">
@@ -180,7 +182,8 @@
               </svg>
             </div>
           </div>
-          <div class="top10-popup">
+          <div class="top10-popup" id="popup-2">
+            <button class="popup-close">&times;</button>
             <h3>Backend Development</h3>
             <p>Node.js • Python • Express</p>
             <div class="top10-details">
@@ -204,7 +207,8 @@
               </svg>
             </div>
           </div>
-          <div class="top10-popup">
+          <div class="top10-popup" id="popup-3">
+            <button class="popup-close">&times;</button>
             <h3>UI/UX Design</h3>
             <p>Figma • Adobe XD</p>
             <div class="top10-details">
@@ -228,7 +232,8 @@
               </svg>
             </div>
           </div>
-          <div class="top10-popup">
+          <div class="top10-popup" id="popup-4">
+            <button class="popup-close">&times;</button>
             <h3>Database Management</h3>
             <p>PostgreSQL • MongoDB</p>
             <div class="top10-details">
@@ -250,7 +255,8 @@
               </svg>
             </div>
           </div>
-          <div class="top10-popup">
+          <div class="top10-popup" id="popup-5">
+            <button class="popup-close">&times;</button>
             <h3>Communication</h3>
             <p>Collaboration • Leadership</p>
             <div class="top10-details">
@@ -274,7 +280,8 @@
               </svg>
             </div>
           </div>
-          <div class="top10-popup">
+          <div class="top10-popup" id="popup-6">
+            <button class="popup-close">&times;</button>
             <h3>Problem Solving</h3>
             <p>Analytical • Critical Thinking</p>
             <div class="top10-details">
@@ -620,6 +627,58 @@
       closeBtn.addEventListener("click", () => (modal.style.display = "none"));
       window.addEventListener("click", (e) => {
         if (e.target === modal) modal.style.display = "none";
+      });
+
+      // Skills popup functionality
+      const popupOverlay = document.getElementById("popup-overlay");
+      const skillItems = document.querySelectorAll(".top10-item-grid");
+      let activePopup = null;
+
+      skillItems.forEach((item) => {
+        const poster = item.querySelector(".top10-poster");
+        const popup = item.querySelector(".top10-popup");
+        const closeBtn = popup.querySelector(".popup-close");
+
+        poster.addEventListener("click", (e) => {
+          e.stopPropagation();
+          
+          // Close any active popup
+          if (activePopup) {
+            activePopup.classList.remove("active");
+            document.querySelector(".top10-item-grid.active")?.classList.remove("active");
+          }
+          
+          // Open this popup
+          item.classList.add("active");
+          popup.classList.add("active");
+          popupOverlay.classList.add("active");
+          activePopup = popup;
+        });
+
+        closeBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          closePopup();
+        });
+      });
+
+      popupOverlay.addEventListener("click", () => {
+        closePopup();
+      });
+
+      function closePopup() {
+        if (activePopup) {
+          activePopup.classList.remove("active");
+          document.querySelector(".top10-item-grid.active")?.classList.remove("active");
+          popupOverlay.classList.remove("active");
+          activePopup = null;
+        }
+      }
+
+      // Close on Escape key
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && activePopup) {
+          closePopup();
+        }
       });
 
       document.addEventListener("DOMContentLoaded", () => {
