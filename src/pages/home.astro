@@ -15,23 +15,23 @@
 
         <!-- Desktop links -->
         <nav class="nav-links">
-          <a href="#home">Home</a>
-          <a href="#experience">Professional</a>
+          <a href="/home">Home</a>
+          <a href="/about">About Me</a>
           <a href="#skills">Skills</a>
+          <a href="#languages">Languages</a>
           <a href="#projects">Projects</a>
-          <a href="#contact">Contact Me</a>
+          <a href="#">Contact Me</a>
         </nav>
 
         <div class="browse-menu">
           <button class="browse-btn">Browse</button>
           <div class="browse-list">
-            <a href="#">Home</a>
-            <a href="#">Series</a>
-            <a href="#">Films</a>
-            <a href="#">Games</a>
-            <a href="#">New & Popular</a>
-            <a href="#">My List</a>
-            <a href="#">Browse by Language</a>
+            <a href="/home">Home</a>
+            <a href="/about">About Me</a>
+            <a href="#skills">Skills</a>
+            <a href="#languages">Languages</a>
+            <a href="#projects">Projects</a>
+            <a href="#">Contact Me</a>
           </div>
         </div>
       </div>
@@ -73,12 +73,12 @@
         </svg>
 
         <!-- Avatar -->
-        <img src="/src/images/user1.jpg" alt="Profile" class="avatar" />
+        <img src="/images/user1.jpg" alt="Profile" class="avatar" />
       </div>
     </header>
 
     <!-- Hero / About Section -->
-    <section id="home" class="hero">
+    <section class="hero">
       <div class="overlay"></div>
       <div class="hero-content">
         <h1 class="hero-title">Arai Nanami Rachel</h1>
@@ -90,19 +90,91 @@
           finding ways to turn ideas into something real and impactful.
         </p>
         <div class="hero-buttons">
-          <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" class="btn play">
-            <img src="/icons/play.svg" alt="Resume" class="hero-btn-icon" />
+          <button class="btn play">
+            <img src="/icons/play.svg" alt="Resume" class="btn-icon" />
             Resume
-          </a>
-          <a href="mailto:readersfiction@gmail.com" class="btn info">
-            <img src="/icons/information.svg" alt="Email" class="hero-btn-icon" />
+          </button>
+          <button class="btn info">
+            <img src="/icons/information.svg" alt="Email" class="btn-icon" />
             Email
-          </a>
+          </button>
         </div>
       </div>
     </section>
 
-    <section id="projects" class="projects">
+    <section class="skills-section" id="skills">
+      <h2>Skills</h2>
+      <div class="card-grid">
+        <div class="skill-card">
+          <div class="card-hover">
+            <h3>Frontend Development</h3>
+            <p>React • Next.js • TypeScript</p>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="card-hover">
+            <h3>Backend Development</h3>
+            <p>Node.js • Python • Express</p>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="card-hover">
+            <h3>UI/UX Design</h3>
+            <p>Figma • Adobe XD • Prototyping</p>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="card-hover">
+            <h3>Database</h3>
+            <p>PostgreSQL • MongoDB • Firebase</p>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="card-hover">
+            <h3>Cloud & DevOps</h3>
+            <p>AWS • Docker • CI/CD</p>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="card-hover">
+            <h3>Machine Learning</h3>
+            <p>PyTorch • TensorFlow • OpenAI</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="languages-section" id="languages">
+      <h2>Languages</h2>
+      <div class="card-grid">
+        <div class="language-card">
+          <div class="card-hover">
+            <h3>English</h3>
+            <p>Native Proficiency</p>
+          </div>
+        </div>
+        <div class="language-card">
+          <div class="card-hover">
+            <h3>Japanese</h3>
+            <p>Business Level</p>
+          </div>
+        </div>
+        <div class="language-card">
+          <div class="card-hover">
+            <h3>Mandarin</h3>
+            <p>Conversational</p>
+          </div>
+        </div>
+        <div class="language-card">
+          <div class="card-hover">
+            <h3>Spanish</h3>
+            <p>Basic</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="projects" id="projects">
       <h2>Projects</h2>
       <div class="project-grid">
         <div class="project-card" data-project="p1">
@@ -142,293 +214,28 @@
       </div>
     </section>
 
-    <!-- Skills Section -->
-    <section id="skills" class="skills">
-      <h2>Skills</h2>
-      
-      <div class="skills-category">
-        <h3 class="category-title">Technical Skills</h3>
-        <div class="skills-scroll">
-          <div class="skills-track">
-            <div class="skill-item">HTML</div>
-            <div class="skill-item">CSS</div>
-            <div class="skill-item">Python</div>
-            <div class="skill-item">JavaScript</div>
-            <div class="skill-item">Cryptography</div>
-            <div class="skill-item">Ethical Hacking</div>
-            <div class="skill-item">Microsoft OS Security</div>
-            <div class="skill-item">Digital Forensics</div>
-            <div class="skill-item">Linux Administration</div>
-            <div class="skill-item">Secure Coding</div>
-            <div class="skill-item">Malware Reverse Engineering</div>
-            <div class="skill-item">Penetration Testing</div>
-            <div class="skill-item">Microsoft Cloud</div>
-            <div class="skill-item">PHP</div>
-            <div class="skill-item">WordPress</div>
-            <!-- Duplicate for seamless loop -->
-            <div class="skill-item">HTML</div>
-            <div class="skill-item">CSS</div>
-            <div class="skill-item">Python</div>
-            <div class="skill-item">JavaScript</div>
-            <div class="skill-item">Cryptography</div>
-            <div class="skill-item">Ethical Hacking</div>
-            <div class="skill-item">Microsoft OS Security</div>
-            <div class="skill-item">Digital Forensics</div>
-            <div class="skill-item">Linux Administration</div>
-            <div class="skill-item">Secure Coding</div>
-            <div class="skill-item">Malware Reverse Engineering</div>
-            <div class="skill-item">Penetration Testing</div>
-            <div class="skill-item">Microsoft Cloud</div>
-            <div class="skill-item">PHP</div>
-            <div class="skill-item">WordPress</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="skills-category">
-        <h3 class="category-title">Soft Skills</h3>
-        <div class="skills-scroll">
-          <div class="skills-track">
-            <div class="skill-item">Adaptability</div>
-            <div class="skill-item">Analytics</div>
-            <div class="skill-item">Initiative</div>
-            <div class="skill-item">Collaboration</div>
-            <div class="skill-item">Critical Thinking</div>
-            <div class="skill-item">Communication</div>
-            <div class="skill-item">Leadership</div>
-            <!-- Duplicate for seamless loop -->
-            <div class="skill-item">Adaptability</div>
-            <div class="skill-item">Analytics</div>
-            <div class="skill-item">Initiative</div>
-            <div class="skill-item">Collaboration</div>
-            <div class="skill-item">Critical Thinking</div>
-            <div class="skill-item">Communication</div>
-            <div class="skill-item">Leadership</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="skills-category">
-        <h3 class="category-title">Languages</h3>
-        <div class="languages-progress">
-          <div class="language-progress-item">
-            <div class="language-header">
-              <span class="language-name">English</span>
-              <span class="language-percent">100%</span>
-            </div>
-            <div class="progress-bar">
-              <div class="progress-fill" style="width: 100%"></div>
-            </div>
-            <span class="language-detail">Fluent</span>
-          </div>
-          <div class="language-progress-item">
-            <div class="language-header">
-              <span class="language-name">Mandarin</span>
-              <span class="language-percent">70%</span>
-            </div>
-            <div class="progress-bar">
-              <div class="progress-fill" style="width: 70%"></div>
-            </div>
-            <span class="language-detail">Fluent (Reading & Speaking)</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="skills-category">
-        <h3 class="category-title">Interests</h3>
-        <div class="interests-cards">
-          <div class="interest-card">
-            <div class="interest-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-              </svg>
-            </div>
-            <h4>Running</h4>
-          </div>
-          <div class="interest-card">
-            <div class="interest-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M6 9l6 6 6-6"/>
-                <path d="M6 21h12"/>
-                <path d="M6 3h12"/>
-              </svg>
-            </div>
-            <h4>Gym</h4>
-          </div>
-          <div class="interest-card">
-            <div class="interest-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M9 18V5l12-2v13"/>
-                <circle cx="6" cy="18" r="3"/>
-                <circle cx="18" cy="16" r="3"/>
-              </svg>
-            </div>
-            <h4>Music</h4>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Experience Section -->
-    <section id="experience" class="experience-section">
-      <h2 class="row-title">Experience</h2>
-      <div class="experience-timeline">
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-content">
-            <h3>Freelance Web Developer</h3>
-            <p class="timeline-company">Self-Employed</p>
-            <p class="timeline-date">December 2025 - Current</p>
-            <p class="timeline-desc">Developing and maintaining websites for clients</p>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-content">
-            <h3>Data Annotator</h3>
-            <p class="timeline-company">Klass Engineering & Solutions</p>
-            <p class="timeline-date">March 2025 - August 2025</p>
-            <p class="timeline-desc">Annotated and processed data for machine learning projects</p>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-content">
-            <h3>Web Developer Intern</h3>
-            <p class="timeline-company">iClick Media Pte Ltd</p>
-            <p class="timeline-date">September 2023 - February 2024</p>
-            <p class="timeline-desc">Developed web applications and maintained existing websites</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Education Section -->
-    <section class="education-section">
-      <h2 class="row-title">Education</h2>
-      <div class="education-flow">
-        <div class="flow-item">
-          <div class="flow-card">
-            <div class="flow-number">01</div>
-            <div class="flow-content">
-              <h3>School of Technology and Design (SUTD)</h3>
-              <p class="flow-degree">Bachelor of Engineering (Computer Science and Design)</p>
-              <p class="flow-year">Expected 2028</p>
-              <p class="flow-coursework">Relevant Coursework: Programming (Python), Object-Oriented Design, Data Analysis, Systems Thinking, User Experience Design</p>
-            </div>
-          </div>
-        </div>
-        <div class="flow-item">
-          <div class="flow-card">
-            <div class="flow-number">02</div>
-            <div class="flow-content">
-              <h3>Singapore Polytechnic</h3>
-              <p class="flow-degree">Diploma in Infocomm Security Management</p>
-              <p class="flow-year">2021 - 2024</p>
-            </div>
-          </div>
-        </div>
-        <div class="flow-item">
-          <div class="flow-card">
-            <div class="flow-number">03</div>
-            <div class="flow-content">
-              <h3>West Spring Secondary School</h3>
-              <p class="flow-degree">GCE 'O' Level</p>
-              <p class="flow-year">2017 - 2020</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Achievements Section -->
-    <section class="achievements-section">
-      <h2 class="row-title">Achievements</h2>
-      <div class="achievements-showcase">
-        <div class="showcase-item">
-          <div class="showcase-ring">
-            <svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-            </svg>
-          </div>
-          <h3>QISP Certificate</h3>
-          <p>Qualified Information Security Professional 2023</p>
-        </div>
-        <div class="showcase-item">
-          <div class="showcase-ring">
-            <svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-            </svg>
-          </div>
-          <h3>SOC Codeout 2021</h3>
-          <p>Silver Award</p>
-        </div>
-      </div>
-    </section>
-
     <!-- Modal -->
     <div class="modal" id="modal">
       <div class="modal-content">
-        <button class="close">&times;</button>
-        
-        <!-- Hero Image Section -->
-        <div class="modal-hero">
-          <div class="modal-hero-image" id="modal-hero-image"></div>
-          <div class="modal-hero-overlay"></div>
+        <span class="close">&times;</span>
+        <h2 id="modal-title"></h2>
+        <p id="modal-tech"></p>
+        <p id="modal-desc"></p>
+
+        <div class="modal-buttons">
+          <button class="btn">Visit</button>
+          <button class="btn">Code</button>
         </div>
 
-        <!-- Content Section -->
-        <div class="modal-body">
-          <div class="modal-header">
-            <h2 class="modal-title" id="modal-title"></h2>
-            <p class="modal-tech" id="modal-tech"></p>
-          </div>
-
-          <div class="modal-actions">
-            <button class="btn btn-primary">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M8 5v14l11-7z"/>
-              </svg>
-              Visit Project
-            </button>
-            <button class="btn btn-secondary">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
-              </svg>
-              View Code
-            </button>
-            <button class="btn btn-icon" aria-label="Add to list">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="12" y1="5" x2="12" y2="19"></line>
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-              </svg>
-            </button>
-          </div>
-
-          <p class="modal-desc" id="modal-desc"></p>
-
-          <div class="modal-info">
-            <div class="info-item">
-              <span class="info-label">Type</span>
-              <span class="info-value" id="modal-type"></span>
-            </div>
-            <div class="info-item">
-              <span class="info-label">Stack</span>
-              <span class="info-value" id="modal-stack"></span>
-            </div>
-            <div class="info-item">
-              <span class="info-label">Status</span>
-              <span class="info-value status-badge" id="modal-status"></span>
-            </div>
-            <div class="info-item">
-              <span class="info-label">Owner</span>
-              <span class="info-value" id="modal-owner"></span>
-            </div>
-          </div>
+        <div class="modal-meta">
+          <div><strong>Type:</strong> <span id="modal-type"></span></div>
+          <div><strong>Stack:</strong> <span id="modal-stack"></span></div>
+          <div><strong>Status:</strong> <span id="modal-status"></span></div>
+          <div><strong>Owner:</strong> <span id="modal-owner"></span></div>
         </div>
       </div>
     </div>
-    <footer id="contact" class="footer">
+    <footer class="footer">
       <div class="footer-container">
         <!-- Socials aligned left -->
         <div class="socials">
@@ -451,33 +258,17 @@
 
         <!-- Copyright left -->
         <div class="copyright">
-          © 2026 Arai Nanami Rachel. All rights reserved.
+          © <span id="year"></span> Your Name. All rights reserved.
         </div>
       </div>
     </footer>
 
+    <script>
+      // Auto year update
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
 
     <script>
-      // Smooth scroll with navbar offset
-      document.querySelectorAll('.nav-links a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-          e.preventDefault();
-          const targetId = this.getAttribute('href');
-          if (targetId === '#') return;
-          
-          const targetElement = document.querySelector(targetId);
-          if (targetElement) {
-            const navbarHeight = 70;
-            const targetPosition = targetElement.offsetTop - navbarHeight;
-            
-            window.scrollTo({
-              top: targetPosition,
-              behavior: 'smooth'
-            });
-          }
-        });
-      });
-
       // Navbar scroll effect
       window.addEventListener("scroll", () => {
         const navbar = document.querySelector(".navbar");
@@ -528,52 +319,47 @@
         p1: {
           title: "Project 1",
           tech: "Python • OpenAI • Whisper",
-          desc: "A cutting-edge AI-powered application that leverages OpenAI's advanced models and Whisper for speech recognition. This project demonstrates the integration of modern AI technologies to create intelligent, responsive systems that can understand and process natural language with remarkable accuracy.",
-          type: "AI Application",
+          desc: "Example description for Project 1.",
+          type: "Project",
           stack: "Python, OpenAI, Whisper",
           status: "Live",
           owner: "Your Name",
-          heroImage: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
         },
         p2: {
           title: "Project 2",
           tech: "Next.js • TypeScript",
-          desc: "A modern web application built with Next.js and TypeScript, featuring server-side rendering, optimized performance, and type-safe development. This project showcases best practices in React development and demonstrates scalable architecture for production-ready applications.",
-          type: "Web Application",
+          desc: "Example description for Project 2.",
+          type: "Project",
           stack: "Next.js, TypeScript",
           status: "Beta",
           owner: "Your Name",
-          heroImage: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
         },
         p3: {
           title: "Project 3",
           tech: "React • Tailwind",
-          desc: "A beautifully designed user interface built with React and Tailwind CSS. This project focuses on creating responsive, accessible, and visually stunning components that provide an exceptional user experience across all devices and screen sizes.",
-          type: "UI/UX Project",
+          desc: "Example description for Project 3.",
+          type: "Project",
           stack: "React, Tailwind",
           status: "Live",
           owner: "Your Name",
-          heroImage: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
         },
         p4: {
           title: "Project 4",
           tech: "Python • PyTorch",
-          desc: "An advanced machine learning project utilizing PyTorch for deep learning model development. This project explores neural network architectures, training methodologies, and model optimization techniques to solve complex computational problems.",
-          type: "Machine Learning",
+          desc: "Example description for Project 4.",
+          type: "Project",
           stack: "Python, PyTorch",
           status: "In Progress",
           owner: "Your Name",
-          heroImage: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
         },
         p5: {
           title: "Project 5",
           tech: "Data Science • LLM",
-          desc: "A comprehensive data science project that incorporates Large Language Models for advanced analytics and insights. This project demonstrates the power of combining traditional data science techniques with modern AI capabilities to extract meaningful patterns and predictions from complex datasets.",
-          type: "Data Science",
+          desc: "Example description for Project 5.",
+          type: "Project",
           stack: "Python, Pandas, LLM",
           status: "In Progress",
           owner: "Your Name",
-          heroImage: "linear-gradient(135deg, #fa709a 0%, #fee140 100%)",
         },
       };
 
@@ -585,62 +371,25 @@
       const modalStack = document.getElementById("modal-stack");
       const modalStatus = document.getElementById("modal-status");
       const modalOwner = document.getElementById("modal-owner");
-      const modalHeroImage = document.getElementById("modal-hero-image");
       const closeBtn = document.querySelector(".close");
-
-      const openProjectModal = (projectId) => {
-        const p = projects[projectId];
-        if (!p) return;
-        
-        modalTitle.textContent = p.title;
-        modalTech.textContent = p.tech;
-        modalDesc.textContent = p.desc;
-        modalType.textContent = p.type;
-        modalStack.textContent = p.stack;
-        modalStatus.textContent = p.status;
-        modalOwner.textContent = p.owner;
-        
-        // Set status badge class
-        const statusLower = p.status.toLowerCase().replace(/\s+/g, '-');
-        modalStatus.className = `info-value status-badge ${statusLower}`;
-        
-        // Set hero image background
-        if (modalHeroImage && p.heroImage) {
-          modalHeroImage.style.background = p.heroImage;
-        }
-        
-        modal.style.display = "flex";
-        document.body.style.overflow = "hidden"; // Prevent background scrolling
-      };
 
       document.querySelectorAll(".project-card").forEach((card) => {
         card.addEventListener("click", () => {
-          openProjectModal(card.dataset.project);
+          const p = projects[card.dataset.project];
+          modalTitle.textContent = p.title;
+          modalTech.textContent = p.tech;
+          modalDesc.textContent = p.desc;
+          modalType.textContent = p.type;
+          modalStack.textContent = p.stack;
+          modalStatus.textContent = p.status;
+          modalOwner.textContent = p.owner;
+          modal.style.display = "flex";
         });
       });
 
-      // Make row items clickable
-      document.querySelectorAll(".row-item[data-project]").forEach((item) => {
-        item.addEventListener("click", () => {
-          openProjectModal(item.dataset.project);
-        });
-      });
-
-      const closeModal = () => {
-        modal.style.display = "none";
-        document.body.style.overflow = ""; // Restore scrolling
-      };
-
-      closeBtn.addEventListener("click", closeModal);
+      closeBtn.addEventListener("click", () => (modal.style.display = "none"));
       window.addEventListener("click", (e) => {
-        if (e.target === modal) closeModal();
-      });
-
-      // Close modal on Escape key
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && modal.style.display === "flex") {
-          closeModal();
-        }
+        if (e.target === modal) modal.style.display = "none";
       });
 
       document.addEventListener("DOMContentLoaded", () => {
