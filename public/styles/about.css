@@ -218,40 +218,48 @@ body {
   position: relative;
 }
 
-.name-display {
+.name-display-enhanced {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-bottom: 30px;
+  gap: 5px;
+  margin-bottom: 40px;
+}
+
+.name-line {
+  overflow: hidden;
 }
 
 .name-first,
 .name-middle,
 .name-last {
-  font-size: 5rem;
-  font-weight: 300;
-  line-height: 1;
+  font-size: 6rem;
+  font-weight: 200;
+  line-height: 1.1;
   color: #fff;
-  letter-spacing: -2px;
+  letter-spacing: -3px;
   transition: all 0.3s ease;
   position: relative;
-  display: inline-block;
+  display: block;
+  background: linear-gradient(135deg, #fff 0%, #b3b3b3 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .name-first {
-  transform: translateX(-20px);
+  transform: translateX(-30px);
   opacity: 0;
   animation: slideInLeft 0.8s ease forwards;
 }
 
 .name-middle {
-  transform: translateX(-20px);
+  transform: translateX(-30px);
   opacity: 0;
   animation: slideInLeft 0.8s ease 0.2s forwards;
 }
 
 .name-last {
-  transform: translateX(-20px);
+  transform: translateX(-30px);
   opacity: 0;
   animation: slideInLeft 0.8s ease 0.4s forwards;
 }
@@ -263,26 +271,53 @@ body {
   }
 }
 
-.title-badge {
-  display: inline-block;
-  padding: 12px 24px;
-  background: rgba(128, 128, 128, 0.15);
-  border: 1px solid rgba(128, 128, 128, 0.3);
-  border-radius: 30px;
-  font-size: 0.9rem;
-  color: #b3b3b3;
-  letter-spacing: 1px;
-  text-transform: uppercase;
+.title-badge-enhanced {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px 30px;
+  background: rgba(128, 128, 128, 0.1);
+  border: 1px solid rgba(128, 128, 128, 0.2);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  max-width: 500px;
+}
+
+.badge-text {
+  font-size: 1.1rem;
+  color: #fff;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.badge-subtitle {
+  font-size: 0.85rem;
+  color: #808080;
+  font-weight: 400;
 }
 
 .hero-right {
   position: relative;
 }
 
-.hero-text {
+.hero-text-enhanced {
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 30px;
+}
+
+.intro-block {
+  padding: 25px;
+  background: rgba(128, 128, 128, 0.05);
+  border-left: 3px solid rgba(128, 128, 128, 0.2);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.intro-block:hover {
+  background: rgba(128, 128, 128, 0.08);
+  border-left-color: rgba(128, 128, 128, 0.4);
+  transform: translateX(5px);
 }
 
 .intro-text {
