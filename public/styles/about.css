@@ -330,8 +330,34 @@ body {
 }
 
 .story-icon {
-  font-size: 3rem;
-  margin-bottom: 20px;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(229, 9, 20, 0.2), rgba(178, 7, 16, 0.2));
+  border-radius: 50%;
+  border: 2px solid rgba(229, 9, 20, 0.3);
+  transition: all 0.3s ease;
+}
+
+.story-icon svg {
+  width: 40px;
+  height: 40px;
+  color: #E50914;
+  transition: all 0.3s ease;
+}
+
+.story-card:hover .story-icon {
+  background: linear-gradient(135deg, rgba(229, 9, 20, 0.4), rgba(178, 7, 16, 0.4));
+  border-color: rgba(229, 9, 20, 0.6);
+  transform: scale(1.1) rotate(5deg);
+}
+
+.story-card:hover .story-icon svg {
+  color: #fff;
+  transform: scale(1.1);
 }
 
 .story-card h3 {
@@ -375,14 +401,29 @@ body {
 .interest-image {
   width: 150px;
   flex-shrink: 0;
-  background: linear-gradient(135deg, #333, #444);
+  background: linear-gradient(135deg, rgba(229, 9, 20, 0.1), rgba(178, 7, 16, 0.1));
   display: flex;
   align-items: center;
   justify-content: center;
+  border-right: 2px solid rgba(229, 9, 20, 0.2);
+  transition: all 0.3s ease;
 }
 
-.interest-placeholder {
-  font-size: 4rem;
+.interest-image svg {
+  width: 60px;
+  height: 60px;
+  color: #E50914;
+  transition: all 0.3s ease;
+}
+
+.interest-card:hover .interest-image {
+  background: linear-gradient(135deg, rgba(229, 9, 20, 0.2), rgba(178, 7, 16, 0.2));
+  border-right-color: rgba(229, 9, 20, 0.5);
+}
+
+.interest-card:hover .interest-image svg {
+  color: #fff;
+  transform: scale(1.2) rotate(-5deg);
 }
 
 .interest-content {

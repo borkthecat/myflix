@@ -3,225 +3,37 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Profile - MyFlix</title>
+    <title>Profiles - MyFlix</title>
     <link rel="stylesheet" href="/styles/profiles.css" />
   </head>
 
   <body>
     <!-- Navbar -->
-    <header class="navbar">
-      <div class="navbar-left">
-        <img src="/images/logo.png" alt="MyFlix Logo" class="logo" />
-        <nav class="nav-links">
-          <a href="/home">Home</a>
-          <a href="/profiles">Profile</a>
-          <a href="#skills">Skills</a>
-          <a href="#languages">Languages</a>
-          <a href="#projects">Projects</a>
-        </nav>
-        <div class="browse-menu">
-          <button class="browse-btn">Browse</button>
-          <div class="browse-list">
-            <a href="/home">Home</a>
-            <a href="/profiles">Profile</a>
-            <a href="#skills">Skills</a>
-            <a href="#languages">Languages</a>
-            <a href="#projects">Projects</a>
-          </div>
-        </div>
-      </div>
-      <div class="navbar-right">
-        <div class="search-wrapper">
-          <input
-            type="text"
-            class="search-input"
-            placeholder="Search site..."
-          />
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="icon search-toggle"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-          >
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M10 2a8 8 0 015.292 13.708l4 4a1 1 0 01-1.414 1.414l-4-4A8 8 0 1110 2zm-6 8a6 6 0 1110.416 4.243A6 6 0 014 10z"
-            ></path>
-          </svg>
-        </div>
-        <img src="/images/user1.jpg" alt="Profile" class="avatar" />
-      </div>
+    <header class="nav">
+      <img src="/images/logo.png" alt="MyFlix Logo" class="logo" />
     </header>
 
     <!-- Main Content -->
-    <main class="main-content">
-      <!-- Profile Selection Section -->
-      <section class="profile-selection">
-        <h1 class="section-title">Who's watching?</h1>
-        <div class="profiles">
-          <a href="/home?user=user1" class="profile">
-            <img src="/images/user1.jpg" alt="User 1" />
-            <span>User 1</span>
-          </a>
-          <a href="/home?user=user2" class="profile">
-            <img src="/images/user2.jpg" alt="User 2" />
-            <span>User 2</span>
-          </a>
-          <a href="/home?user=user3" class="profile">
-            <img src="/images/user3.jpg" alt="User 3" />
-            <span>User 3</span>
-          </a>
-          <a href="/home?user=user4" class="profile">
-            <img src="/images/user4.jpg" alt="User 4" />
-            <span>User 4</span>
-          </a>
-        </div>
-      </section>
-
-      <!-- About Me Section -->
-      <section class="about-section" id="about">
-        <h2 class="section-title">About Me</h2>
-        <div class="about-content">
-          <div class="about-card">
-            <h3>Background</h3>
-            <p>
-              Undergraduate at SUTD studying Computer Science and Design, with a
-              curiosity for technology and how it shapes the world. Passionate
-              about creating innovative solutions that bridge the gap between
-              design and engineering.
-            </p>
-          </div>
-          <div class="about-card">
-            <h3>Interests</h3>
-            <p>
-              Outside of school, I'm usually at the gym or listening to music
-              — both help me recharge and stay focused. I'm driven by learning,
-              experimenting, and finding ways to turn ideas into something real
-              and impactful.
-            </p>
-          </div>
-          <div class="about-card">
-            <h3>Goals</h3>
-            <p>
-              My goal is to work on projects that make a difference, whether
-              it's through user experience design, software development, or
-              exploring the intersection of AI and creative technologies.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Skills Section -->
-      <section class="skills-section" id="skills">
-        <h2 class="section-title">Skills</h2>
-        <div class="card-grid">
-          <div class="skill-card">
-            <div class="card-hover">
-              <h3>Frontend Development</h3>
-              <p>React • Next.js • TypeScript</p>
-            </div>
-          </div>
-          <div class="skill-card">
-            <div class="card-hover">
-              <h3>Backend Development</h3>
-              <p>Node.js • Python • Express</p>
-            </div>
-          </div>
-          <div class="skill-card">
-            <div class="card-hover">
-              <h3>UI/UX Design</h3>
-              <p>Figma • Adobe XD • Prototyping</p>
-            </div>
-          </div>
-          <div class="skill-card">
-            <div class="card-hover">
-              <h3>Database</h3>
-              <p>PostgreSQL • MongoDB • Firebase</p>
-            </div>
-          </div>
-          <div class="skill-card">
-            <div class="card-hover">
-              <h3>Cloud & DevOps</h3>
-              <p>AWS • Docker • CI/CD</p>
-            </div>
-          </div>
-          <div class="skill-card">
-            <div class="card-hover">
-              <h3>Machine Learning</h3>
-              <p>PyTorch • TensorFlow • OpenAI</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Languages Section -->
-      <section class="languages-section" id="languages">
-        <h2 class="section-title">Languages</h2>
-        <div class="card-grid">
-          <div class="language-card">
-            <div class="card-hover">
-              <h3>English</h3>
-              <p>Native Proficiency</p>
-            </div>
-          </div>
-          <div class="language-card">
-            <div class="card-hover">
-              <h3>Japanese</h3>
-              <p>Business Level</p>
-            </div>
-          </div>
-          <div class="language-card">
-            <div class="card-hover">
-              <h3>Mandarin</h3>
-              <p>Conversational</p>
-            </div>
-          </div>
-          <div class="language-card">
-            <div class="card-hover">
-              <h3>Spanish</h3>
-              <p>Basic</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Projects Section -->
-      <section class="projects-section" id="projects">
-        <h2 class="section-title">Projects</h2>
-        <div class="card-grid">
-          <div class="project-card" data-project="p1">
-            <div class="card-hover">
-              <h3>AI Voice Assistant</h3>
-              <p>Python • OpenAI • Whisper</p>
-            </div>
-          </div>
-          <div class="project-card" data-project="p2">
-            <div class="card-hover">
-              <h3>E-Commerce Platform</h3>
-              <p>Next.js • TypeScript</p>
-            </div>
-          </div>
-          <div class="project-card" data-project="p3">
-            <div class="card-hover">
-              <h3>Design System</h3>
-              <p>React • Tailwind</p>
-            </div>
-          </div>
-          <div class="project-card" data-project="p4">
-            <div class="card-hover">
-              <h3>ML Model Training</h3>
-              <p>Python • PyTorch</p>
-            </div>
-          </div>
-          <div class="project-card" data-project="p5">
-            <div class="card-hover">
-              <h3>Data Analytics Dashboard</h3>
-              <p>Data Science • LLM</p>
-            </div>
-          </div>
-        </div>
-      </section>
+    <main class="container">
+      <h1 class="title">Who's watching?</h1>
+      <div class="profiles">
+        <a href="/home?user=user1" class="profile">
+          <img src="/images/user1.jpg" alt="User 1" />
+          <span>User 1</span>
+        </a>
+        <a href="/home?user=user2" class="profile">
+          <img src="/images/user2.jpg" alt="User 2" />
+          <span>User 2</span>
+        </a>
+        <a href="/home?user=user3" class="profile">
+          <img src="/images/user3.jpg" alt="User 3" />
+          <span>User 3</span>
+        </a>
+        <a href="/home?user=user4" class="profile">
+          <img src="/images/user4.jpg" alt="User 4" />
+          <span>User 4</span>
+        </a>
+      </div>
     </main>
 
     <script>
@@ -231,56 +43,6 @@
           const user = new URL(link.href).searchParams.get("user");
           localStorage.setItem("selectedUser", user);
         });
-      });
-
-      // Navbar scroll effect
-      window.addEventListener("scroll", () => {
-        const navbar = document.querySelector(".navbar");
-        if (window.scrollY > 50) {
-          navbar.classList.add("scrolled");
-        } else {
-          navbar.classList.remove("scrolled");
-        }
-      });
-
-      // Search toggle
-      const searchWrapper = document.querySelector(".search-wrapper");
-      const searchToggle = document.querySelector(".search-toggle");
-      const searchInput = document.querySelector(".search-input");
-
-      if (searchToggle) {
-        searchToggle.addEventListener("click", () => {
-          searchWrapper.classList.toggle("active");
-          if (searchWrapper.classList.contains("active")) {
-            searchInput.focus();
-          }
-        });
-      }
-
-      // Collapse search when clicking outside
-      document.addEventListener("click", (e) => {
-        if (searchWrapper && !searchWrapper.contains(e.target)) {
-          searchWrapper.classList.remove("active");
-        }
-      });
-
-      // Browse menu toggle
-      document.addEventListener("DOMContentLoaded", () => {
-        const browseMenu = document.querySelector(".browse-menu");
-        const browseBtn = document.querySelector(".browse-btn");
-
-        if (browseBtn) {
-          browseBtn.addEventListener("click", () => {
-            browseMenu.classList.toggle("active");
-          });
-
-          // Close if clicked outside
-          document.addEventListener("click", (e) => {
-            if (browseMenu && !browseMenu.contains(e.target)) {
-              browseMenu.classList.remove("active");
-            }
-          });
-        }
       });
     </script>
   </body>
