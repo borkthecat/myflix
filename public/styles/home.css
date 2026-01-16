@@ -92,7 +92,7 @@ body {
 .hero .overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.6), transparent);
 }
 
 .hero-content {
@@ -251,16 +251,220 @@ width:25px;
 }
 
 /* Uniform Card Grid - matches project cards */
-.card-grid,
 .project-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 20px;
 }
 
-/* Uniform Card Styling - matches project cards exactly */
-.skill-card,
-.language-card,
+/* Skills Grid - Creative Layout */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.skill-item {
+  position: relative;
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  border-radius: 8px;
+  height: 150px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  overflow: hidden;
+}
+
+.skill-item:hover {
+  transform: translateY(-10px);
+  border-color: #E50914;
+  box-shadow: 0 10px 30px rgba(229, 9, 20, 0.3);
+  z-index: 10;
+}
+
+.skill-content {
+  padding: 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.skill-icon {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+.skill-content h3 {
+  margin: 0 0 5px 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.skill-content p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #b3b3b3;
+}
+
+.skill-popup {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(20, 20, 20, 0.98);
+  padding: 20px;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 8px;
+  border: 2px solid #E50914;
+}
+
+.skill-item:hover .skill-popup {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.skill-popup h4 {
+  margin: 0 0 15px 0;
+  font-size: 1.3rem;
+  color: #E50914;
+  font-weight: 600;
+}
+
+.skill-popup ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.skill-popup li {
+  padding: 8px 0;
+  color: #e5e5e5;
+  font-size: 0.95rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.skill-popup li:last-child {
+  border-bottom: none;
+}
+
+/* Languages Grid - Creative Layout */
+.languages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.language-item {
+  position: relative;
+  background: linear-gradient(135deg, #0f3460, #16213e);
+  border-radius: 8px;
+  height: 150px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  overflow: hidden;
+}
+
+.language-item:hover {
+  transform: translateY(-10px);
+  border-color: #E50914;
+  box-shadow: 0 10px 30px rgba(229, 9, 20, 0.3);
+  z-index: 10;
+}
+
+.language-content {
+  padding: 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.language-flag {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+.language-content h3 {
+  margin: 0 0 10px 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.language-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.language-progress {
+  height: 100%;
+  background: linear-gradient(90deg, #E50914, #B20710);
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+
+.language-content p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #b3b3b3;
+}
+
+.language-popup {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(20, 20, 20, 0.98);
+  padding: 20px;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 8px;
+  border: 2px solid #E50914;
+  text-align: center;
+}
+
+.language-item:hover .language-popup {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.language-popup h4 {
+  margin: 0 0 10px 0;
+  font-size: 1.3rem;
+  color: #E50914;
+  font-weight: 600;
+}
+
+.language-popup p {
+  margin: 0;
+  color: #e5e5e5;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Project Cards */
 .project-card {
   position: relative;
   background: #222;
@@ -273,17 +477,12 @@ width:25px;
   overflow: hidden;
 }
 
-.skill-card:hover,
-.language-card:hover,
 .project-card:hover {
   transform: scale(1.15) translateY(-20px);
   z-index: 20;
   box-shadow: 0 12px 40px rgba(0,0,0,0.8);
 }
 
-/* Gradient background for cards */
-.skill-card::before,
-.language-card::before,
 .project-card::before {
   content: "";
   position: absolute;
@@ -291,8 +490,6 @@ width:25px;
   background: linear-gradient(135deg, #333, #444);
 }
 
-/* Hover overlay */
-.card-hover,
 .project-hover {
   position: relative;
   width: 100%;
@@ -303,20 +500,16 @@ width:25px;
   z-index: 1;
 }
 
-.skill-card:hover .card-hover,
-.language-card:hover .card-hover,
 .project-card:hover .project-hover {
   opacity: 1;
 }
 
-.card-hover h3,
 .project-hover h3 {
   margin: 0 0 5px 0;
   font-size: 1.1rem;
   font-weight: 500;
 }
 
-.card-hover p,
 .project-hover p {
   margin: 0;
   font-size: 0.85rem;
@@ -769,6 +962,11 @@ width:25px;
   gap: 5px;
 }
 
+.info-item-status {
+  grid-column: 1 / -1;
+  max-width: 200px;
+}
+
 .info-label {
   font-size: 0.85rem;
   color: #808080;
@@ -931,35 +1129,71 @@ width:25px;
     margin-bottom: 15px;
   }
 
-  .card-grid,
-  .project-grid {
+  .project-grid,
+  .skills-grid,
+  .languages-grid {
     grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
     gap: 15px;
   }
 
-  .skill-card,
-  .language-card,
+  .skill-item,
+  .language-item,
   .project-card {
     height: 120px;
   }
 
-  .card-hover,
+  .skill-content,
+  .language-content {
+    padding: 15px;
+  }
+
+  .skill-icon,
+  .language-flag {
+    font-size: 2rem;
+  }
+
+  .skill-content h3,
+  .language-content h3 {
+    font-size: 1rem;
+  }
+
+  .skill-content p,
+  .language-content p {
+    font-size: 0.75rem;
+  }
+
+  .skill-popup,
+  .language-popup {
+    padding: 15px;
+  }
+
+  .skill-popup h4,
+  .language-popup h4 {
+    font-size: 1.1rem;
+  }
+
+  .skill-popup li {
+    font-size: 0.85rem;
+    padding: 6px 0;
+  }
+
   .project-hover {
     padding: 8px;
   }
 
-  .card-hover h3,
   .project-hover h3 {
     font-size: 0.95rem;
   }
 
-  .card-hover p,
   .project-hover p {
     font-size: 0.75rem;
   }
 
-  .skill-card:hover,
-  .language-card:hover,
+  .skill-item:hover,
+  .language-item:hover {
+    transform: translateY(-5px);
+  }
+
   .project-card:hover {
     transform: scale(1.1) translateY(-10px);
   }

@@ -90,86 +90,14 @@
           finding ways to turn ideas into something real and impactful.
         </p>
         <div class="hero-buttons">
-          <button class="btn play">
+          <a href="/resume.pdf" class="btn play" download target="_blank">
             <img src="/icons/play.svg" alt="Resume" class="btn-icon" />
             Resume
-          </button>
-          <button class="btn info">
-            <img src="/icons/information.svg" alt="Email" class="btn-icon" />
+          </a>
+          <a href="mailto:contact@example.com" class="btn info">
+            <img src="/icons/mail.svg" alt="Email" class="btn-icon" />
             Email
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <section class="skills-section" id="skills">
-      <h2>Skills</h2>
-      <div class="card-grid">
-        <div class="skill-card">
-          <div class="card-hover">
-            <h3>Frontend Development</h3>
-            <p>React • Next.js • TypeScript</p>
-          </div>
-        </div>
-        <div class="skill-card">
-          <div class="card-hover">
-            <h3>Backend Development</h3>
-            <p>Node.js • Python • Express</p>
-          </div>
-        </div>
-        <div class="skill-card">
-          <div class="card-hover">
-            <h3>UI/UX Design</h3>
-            <p>Figma • Adobe XD • Prototyping</p>
-          </div>
-        </div>
-        <div class="skill-card">
-          <div class="card-hover">
-            <h3>Database</h3>
-            <p>PostgreSQL • MongoDB • Firebase</p>
-          </div>
-        </div>
-        <div class="skill-card">
-          <div class="card-hover">
-            <h3>Cloud & DevOps</h3>
-            <p>AWS • Docker • CI/CD</p>
-          </div>
-        </div>
-        <div class="skill-card">
-          <div class="card-hover">
-            <h3>Machine Learning</h3>
-            <p>PyTorch • TensorFlow • OpenAI</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="languages-section" id="languages">
-      <h2>Languages</h2>
-      <div class="card-grid">
-        <div class="language-card">
-          <div class="card-hover">
-            <h3>English</h3>
-            <p>Native Proficiency</p>
-          </div>
-        </div>
-        <div class="language-card">
-          <div class="card-hover">
-            <h3>Japanese</h3>
-            <p>Business Level</p>
-          </div>
-        </div>
-        <div class="language-card">
-          <div class="card-hover">
-            <h3>Mandarin</h3>
-            <p>Conversational</p>
-          </div>
-        </div>
-        <div class="language-card">
-          <div class="card-hover">
-            <h3>Spanish</h3>
-            <p>Basic</p>
-          </div>
+          </a>
         </div>
       </div>
     </section>
@@ -209,6 +137,172 @@
           <div class="project-hover">
             <h3>Project 5</h3>
             <p>Data Science • LLM</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills-section" id="skills">
+      <h2>Skills</h2>
+      <div class="skills-grid">
+        <div class="skill-item" data-skill="frontend">
+          <div class="skill-content">
+            <div class="skill-icon">⚛️</div>
+            <h3>Frontend</h3>
+            <p>React • Next.js • TypeScript</p>
+          </div>
+          <div class="skill-popup">
+            <h4>Frontend Development</h4>
+            <ul>
+              <li>React & Next.js</li>
+              <li>TypeScript</li>
+              <li>Tailwind CSS</li>
+              <li>Responsive Design</li>
+            </ul>
+          </div>
+        </div>
+        <div class="skill-item" data-skill="backend">
+          <div class="skill-content">
+            <div class="skill-icon">⚙️</div>
+            <h3>Backend</h3>
+            <p>Node.js • Python • Express</p>
+          </div>
+          <div class="skill-popup">
+            <h4>Backend Development</h4>
+            <ul>
+              <li>Node.js & Express</li>
+              <li>Python</li>
+              <li>RESTful APIs</li>
+              <li>Server Architecture</li>
+            </ul>
+          </div>
+        </div>
+        <div class="skill-item" data-skill="design">
+          <div class="skill-content">
+            <div class="skill-icon">🎨</div>
+            <h3>UI/UX</h3>
+            <p>Figma • Adobe XD</p>
+          </div>
+          <div class="skill-popup">
+            <h4>UI/UX Design</h4>
+            <ul>
+              <li>Figma</li>
+              <li>Adobe XD</li>
+              <li>Prototyping</li>
+              <li>User Research</li>
+            </ul>
+          </div>
+        </div>
+        <div class="skill-item" data-skill="database">
+          <div class="skill-content">
+            <div class="skill-icon">🗄️</div>
+            <h3>Database</h3>
+            <p>PostgreSQL • MongoDB</p>
+          </div>
+          <div class="skill-popup">
+            <h4>Database Management</h4>
+            <ul>
+              <li>PostgreSQL</li>
+              <li>MongoDB</li>
+              <li>Firebase</li>
+              <li>Data Modeling</li>
+            </ul>
+          </div>
+        </div>
+        <div class="skill-item" data-skill="cloud">
+          <div class="skill-content">
+            <div class="skill-icon">☁️</div>
+            <h3>Cloud & DevOps</h3>
+            <p>AWS • Docker • CI/CD</p>
+          </div>
+          <div class="skill-popup">
+            <h4>Cloud & DevOps</h4>
+            <ul>
+              <li>AWS Services</li>
+              <li>Docker</li>
+              <li>CI/CD Pipelines</li>
+              <li>Infrastructure</li>
+            </ul>
+          </div>
+        </div>
+        <div class="skill-item" data-skill="ml">
+          <div class="skill-content">
+            <div class="skill-icon">🤖</div>
+            <h3>Machine Learning</h3>
+            <p>PyTorch • TensorFlow</p>
+          </div>
+          <div class="skill-popup">
+            <h4>Machine Learning</h4>
+            <ul>
+              <li>PyTorch</li>
+              <li>TensorFlow</li>
+              <li>OpenAI API</li>
+              <li>Neural Networks</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Languages Section -->
+    <section class="languages-section" id="languages">
+      <h2>Languages</h2>
+      <div class="languages-grid">
+        <div class="language-item" data-lang="english">
+          <div class="language-content">
+            <div class="language-flag">🇬🇧</div>
+            <h3>English</h3>
+            <div class="language-bar">
+              <div class="language-progress" style="width: 100%"></div>
+            </div>
+            <p>Native</p>
+          </div>
+          <div class="language-popup">
+            <h4>English</h4>
+            <p>Native proficiency in reading, writing, and speaking</p>
+          </div>
+        </div>
+        <div class="language-item" data-lang="japanese">
+          <div class="language-content">
+            <div class="language-flag">🇯🇵</div>
+            <h3>Japanese</h3>
+            <div class="language-bar">
+              <div class="language-progress" style="width: 75%"></div>
+            </div>
+            <p>Business Level</p>
+          </div>
+          <div class="language-popup">
+            <h4>Japanese</h4>
+            <p>Business level proficiency. Can communicate effectively in professional settings</p>
+          </div>
+        </div>
+        <div class="language-item" data-lang="mandarin">
+          <div class="language-content">
+            <div class="language-flag">🇨🇳</div>
+            <h3>Mandarin</h3>
+            <div class="language-bar">
+              <div class="language-progress" style="width: 60%"></div>
+            </div>
+            <p>Conversational</p>
+          </div>
+          <div class="language-popup">
+            <h4>Mandarin</h4>
+            <p>Conversational level. Can hold everyday conversations</p>
+          </div>
+        </div>
+        <div class="language-item" data-lang="spanish">
+          <div class="language-content">
+            <div class="language-flag">🇪🇸</div>
+            <h3>Spanish</h3>
+            <div class="language-bar">
+              <div class="language-progress" style="width: 30%"></div>
+            </div>
+            <p>Basic</p>
+          </div>
+          <div class="language-popup">
+            <h4>Spanish</h4>
+            <p>Basic level. Learning and improving</p>
           </div>
         </div>
       </div>
@@ -323,7 +417,7 @@
               <span class="info-label">Stack</span>
               <span class="info-value" id="modal-stack"></span>
             </div>
-            <div class="info-item">
+            <div class="info-item info-item-status">
               <span class="info-label">Status</span>
               <span class="info-value status-badge" id="modal-status"></span>
             </div>

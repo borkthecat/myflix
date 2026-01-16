@@ -54,18 +54,21 @@
       </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero-section">
-      <div class="hero-background"></div>
-      <div class="hero-content">
-        <div class="hero-image">
-          <img src="/images/user1.jpg" alt="Profile" />
-        </div>
-        <div class="hero-text">
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Hero Section -->
+      <section class="about-hero">
+        <div class="hero-text-content">
           <h1 class="hero-title">Arai Nanami Rachel</h1>
           <p class="hero-subtitle">Computer Science & Design Student</p>
+          <p class="hero-description">
+            Undergraduate at SUTD studying Computer Science and Design, with a
+            curiosity for technology and how it shapes the world. Passionate
+            about creating innovative solutions that bridge the gap between
+            design and engineering.
+          </p>
           <div class="hero-buttons">
-            <a href="/public/resume.pdf" class="btn btn-primary" download>
+            <a href="/resume.pdf" class="btn btn-primary" download target="_blank">
               <img src="/icons/play.svg" alt="Resume" class="btn-icon" />
               Download Resume
             </a>
@@ -75,57 +78,46 @@
             </a>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Main Content -->
-    <main class="main-content">
       <!-- Story Section -->
       <section class="story-section">
-        <h2 class="section-title">My Story</h2>
-        <div class="story-grid">
-          <div class="story-card">
-            <div class="story-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
-                <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
-                <path d="M12 14v7"></path>
-              </svg>
+        <h2 class="section-title">My Journey</h2>
+        <div class="story-timeline">
+          <div class="timeline-card">
+            <div class="timeline-number">01</div>
+            <div class="timeline-content">
+              <h3>Education</h3>
+              <p>
+                Currently pursuing my undergraduate degree at SUTD, where I'm
+                studying Computer Science and Design. This unique combination
+                allows me to bridge the gap between technical excellence and
+                creative problem-solving.
+              </p>
             </div>
-            <h3>Education</h3>
-            <p>
-              Currently pursuing my undergraduate degree at SUTD, where I'm
-              studying Computer Science and Design. This unique combination
-              allows me to bridge the gap between technical excellence and
-              creative problem-solving.
-            </p>
           </div>
-          <div class="story-card">
-            <div class="story-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
-              </svg>
+          <div class="timeline-card">
+            <div class="timeline-number">02</div>
+            <div class="timeline-content">
+              <h3>Passion</h3>
+              <p>
+                I'm deeply curious about how technology shapes our world and
+                impacts human experiences. My passion lies in creating innovative
+                solutions that are both technically sound and beautifully
+                designed.
+              </p>
             </div>
-            <h3>Passion</h3>
-            <p>
-              I'm deeply curious about how technology shapes our world and
-              impacts human experiences. My passion lies in creating innovative
-              solutions that are both technically sound and beautifully
-              designed.
-            </p>
           </div>
-          <div class="story-card">
-            <div class="story-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-              </svg>
+          <div class="timeline-card">
+            <div class="timeline-number">03</div>
+            <div class="timeline-content">
+              <h3>Goals</h3>
+              <p>
+                My goal is to work on projects that make a real difference,
+                whether through user experience design, software development, or
+                exploring the intersection of AI and creative technologies.
+              </p>
             </div>
-            <h3>Goals</h3>
-            <p>
-              My goal is to work on projects that make a real difference,
-              whether through user experience design, software development, or
-              exploring the intersection of AI and creative technologies.
-            </p>
           </div>
         </div>
       </section>
@@ -133,55 +125,49 @@
       <!-- Interests Section -->
       <section class="interests-section">
         <h2 class="section-title">Beyond the Screen</h2>
-        <div class="interests-grid">
-          <div class="interest-card">
-            <div class="interest-image">
+        <div class="interests-mosaic">
+          <div class="mosaic-item mosaic-large">
+            <div class="mosaic-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M6.5 6.5h11v11h-11z"></path>
                 <path d="M6.5 6.5l5.5 5.5 5.5-5.5"></path>
                 <path d="M12 12v6"></path>
               </svg>
             </div>
-            <div class="interest-content">
-              <h3>Fitness & Wellness</h3>
-              <p>
-                The gym is my sanctuary. It's where I recharge, stay focused,
-                and maintain balance. Physical fitness keeps my mind sharp and
-                ready for the next challenge.
-              </p>
-            </div>
+            <h3>Fitness & Wellness</h3>
+            <p>
+              The gym is my sanctuary. It's where I recharge, stay focused,
+              and maintain balance. Physical fitness keeps my mind sharp and
+              ready for the next challenge.
+            </p>
           </div>
-          <div class="interest-card">
-            <div class="interest-image">
+          <div class="mosaic-item">
+            <div class="mosaic-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M9 18V5l12-2v13"></path>
                 <circle cx="6" cy="18" r="3"></circle>
                 <circle cx="18" cy="16" r="3"></circle>
               </svg>
             </div>
-            <div class="interest-content">
-              <h3>Music</h3>
-              <p>
-                Music is my constant companion. Whether I'm coding, designing, or
-                just reflecting, the right soundtrack helps me find flow and
-                inspiration.
-              </p>
-            </div>
+            <h3>Music</h3>
+            <p>
+              Music is my constant companion. Whether I'm coding, designing, or
+              just reflecting, the right soundtrack helps me find flow and
+              inspiration.
+            </p>
           </div>
-          <div class="interest-card">
-            <div class="interest-image">
+          <div class="mosaic-item">
+            <div class="mosaic-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
               </svg>
             </div>
-            <div class="interest-content">
-              <h3>Experimentation</h3>
-              <p>
-                I love learning by doing. Experimenting with new technologies,
-                trying different approaches, and turning ideas into reality is
-                what drives me forward.
-              </p>
-            </div>
+            <h3>Experimentation</h3>
+            <p>
+              I love learning by doing. Experimenting with new technologies,
+              trying different approaches, and turning ideas into reality is
+              what drives me forward.
+            </p>
           </div>
         </div>
       </section>
@@ -200,11 +186,11 @@
           <div class="philosophy-highlights">
             <div class="highlight">
               <span class="highlight-number">100+</span>
-              <span class="highlight-label">Projects Completed</span>
+              <span class="highlight-label">Projects</span>
             </div>
             <div class="highlight">
               <span class="highlight-number">50+</span>
-              <span class="highlight-label">Technologies Mastered</span>
+              <span class="highlight-label">Technologies</span>
             </div>
             <div class="highlight">
               <span class="highlight-number">∞</span>
@@ -236,10 +222,8 @@
     </footer>
 
     <script>
-      // Auto year update
       document.getElementById("year").textContent = new Date().getFullYear();
 
-      // Navbar scroll effect
       window.addEventListener("scroll", () => {
         const navbar = document.querySelector(".navbar");
         if (window.scrollY > 50) {
@@ -249,7 +233,6 @@
         }
       });
 
-      // Search toggle
       const searchWrapper = document.querySelector(".search-wrapper");
       const searchToggle = document.querySelector(".search-toggle");
       const searchInput = document.querySelector(".search-input");
@@ -263,14 +246,12 @@
         });
       }
 
-      // Collapse search when clicking outside
       document.addEventListener("click", (e) => {
         if (searchWrapper && !searchWrapper.contains(e.target)) {
           searchWrapper.classList.remove("active");
         }
       });
 
-      // Browse menu toggle
       document.addEventListener("DOMContentLoaded", () => {
         const browseMenu = document.querySelector(".browse-menu");
         const browseBtn = document.querySelector(".browse-btn");
@@ -290,4 +271,3 @@
     </script>
   </body>
 </html>
-
