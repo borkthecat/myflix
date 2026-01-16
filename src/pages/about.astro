@@ -57,7 +57,7 @@
     <!-- Main Content -->
     <main class="main-content">
       <!-- Hero Section -->
-      <section class="about-hero parallax-section">
+      <section class="about-hero">
         <div class="hero-text-content">
           <h1 class="hero-title">Arai Nanami Rachel</h1>
           <p class="hero-subtitle">Computer Science & Design Student</p>
@@ -73,7 +73,7 @@
               Resume
             </a>
             <a href="mailto:contact@example.com" class="btn btn-secondary">
-              <img src="/icons/mail.svg" alt="Email" class="btn-icon" />
+              <img src="/icons/mail.svg" alt="Email" class="btn-icon btn-icon-white" />
               Email
             </a>
           </div>
@@ -81,7 +81,7 @@
       </section>
 
       <!-- Story Section -->
-      <section class="story-section parallax-section">
+      <section class="story-section">
         <h2 class="section-title">Who I Am</h2>
         <div class="story-cards">
           <div class="story-card">
@@ -131,7 +131,7 @@
       </section>
 
       <!-- Interests Section -->
-      <section class="interests-section parallax-section">
+      <section class="interests-section">
         <h2 class="section-title">Beyond the Screen</h2>
         <div class="interests-grid">
           <div class="interest-card">
@@ -181,7 +181,7 @@
       </section>
 
       <!-- Philosophy Section -->
-      <section class="philosophy-section parallax-section">
+      <section class="philosophy-section">
         <div class="philosophy-content">
           <h2 class="philosophy-title">My Philosophy</h2>
           <p class="philosophy-text">
@@ -250,24 +250,36 @@
       // Smooth scrolling
       document.documentElement.style.scrollBehavior = 'smooth';
 
-      // Parallax effect
-      const parallaxSections = document.querySelectorAll('.parallax-section');
-      
+      // Navbar scroll effect
       window.addEventListener('scroll', () => {
-        const scrolled = window.pageYOffset;
-        
-        parallaxSections.forEach((section, index) => {
-          const rate = scrolled * (0.3 + index * 0.1);
-          section.style.transform = `translateY(${rate}px)`;
-        });
-
-        // Navbar scroll effect
         const navbar = document.querySelector(".navbar");
         if (window.scrollY > 50) {
           navbar.classList.add("scrolled");
         } else {
           navbar.classList.remove("scrolled");
         }
+      });
+
+      // Animate elements on scroll
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll('.story-card, .interest-card, .philosophy-section').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(el);
       });
 
       const searchWrapper = document.querySelector(".search-wrapper");
