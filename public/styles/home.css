@@ -628,12 +628,15 @@ body {
 /* Experience Section */
 .experience-section {
   padding: 40px;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 .experience-timeline {
   position: relative;
   padding-left: 50px;
   max-width: 900px;
+  margin: 0;
 }
 
 .experience-timeline::before {
