@@ -177,77 +177,124 @@ body {
 
 /* Main Content */
 .main-content {
-  padding: 60px 40px;
+  padding: 0;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Hero Section - Split Screen Creative */
+.about-hero {
+  padding: 100px 40px;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.about-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(20, 20, 20, 0.9) 0%, rgba(34, 34, 34, 0.7) 50%, rgba(20, 20, 20, 0.9) 100%);
+  z-index: -1;
+}
+
+.hero-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
+}
+
+.hero-left {
   position: relative;
 }
 
-.section-title {
-  font-size: 2.5rem;
-  margin-bottom: 40px;
-  font-weight: 400;
+.name-display {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 30px;
 }
 
-/* Smooth animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.btn-icon-white {
-  filter: brightness(0) invert(1);
-}
-
-/* About Hero */
-.about-hero {
-  padding: 80px 0;
-  text-align: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  margin-bottom: 60px;
-  animation: fadeInUp 0.8s ease-out;
-}
-
-.hero-text-content {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.hero-title {
-  font-size: 4rem;
-  margin: 0 0 15px 0;
+.name-first,
+.name-middle,
+.name-last {
+  font-size: 5rem;
   font-weight: 300;
-  background: linear-gradient(135deg, #fff, #b3b3b3);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  line-height: 1;
+  color: #fff;
+  letter-spacing: -2px;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
 }
 
-.hero-subtitle {
-  font-size: 1.5rem;
-  color: #808080;
-  margin: 0 0 25px 0;
-  font-weight: 500;
+.name-first {
+  transform: translateX(-20px);
+  opacity: 0;
+  animation: slideInLeft 0.8s ease forwards;
 }
 
-.hero-description {
+.name-middle {
+  transform: translateX(-20px);
+  opacity: 0;
+  animation: slideInLeft 0.8s ease 0.2s forwards;
+}
+
+.name-last {
+  transform: translateX(-20px);
+  opacity: 0;
+  animation: slideInLeft 0.8s ease 0.4s forwards;
+}
+
+@keyframes slideInLeft {
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.title-badge {
+  display: inline-block;
+  padding: 12px 24px;
+  background: rgba(128, 128, 128, 0.15);
+  border: 1px solid rgba(128, 128, 128, 0.3);
+  border-radius: 30px;
+  font-size: 0.9rem;
+  color: #b3b3b3;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.hero-right {
+  position: relative;
+}
+
+.hero-text {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.intro-text {
   font-size: 1.2rem;
   line-height: 1.8;
   color: #b3b3b3;
-  margin: 0 0 35px 0;
+  margin: 0;
 }
 
 .hero-buttons {
   display: flex;
   gap: 15px;
-  justify-content: center;
-  flex-wrap: wrap;
+  margin-top: 10px;
 }
 
 .btn {
@@ -295,255 +342,343 @@ body {
   filter: brightness(0);
 }
 
-/* Story Section */
-.story-section {
-  margin-bottom: 80px;
+.btn-icon-white {
+  filter: brightness(0) invert(1);
 }
 
-.story-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 30px;
-}
-
-.story-card {
-  background: linear-gradient(135deg, rgba(34, 34, 34, 0.8), rgba(42, 42, 42, 0.8));
-  padding: 40px;
-  border-radius: 12px;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  border: 1px solid rgba(128, 128, 128, 0.2);
+/* Journey Section - Diagonal Creative Layout */
+.journey-section {
+  padding: 100px 40px;
+  background: linear-gradient(135deg, rgba(20, 20, 20, 0.5), rgba(34, 34, 34, 0.5));
   position: relative;
   overflow: hidden;
 }
 
-.story-card::before {
+.journey-section::before {
   content: '';
   position: absolute;
   top: 0;
-  left: -100%;
-  width: 100%;
+  left: -50%;
+  width: 200%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(128, 128, 128, 0.1), transparent);
-  transition: left 0.5s ease;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 100px,
+    rgba(128, 128, 128, 0.02) 100px,
+    rgba(128, 128, 128, 0.02) 200px
+  );
+  animation: slideDiagonal 20s linear infinite;
 }
 
-.story-card:hover::before {
-  left: 100%;
+@keyframes slideDiagonal {
+  0% { transform: translateX(0) translateY(0); }
+  100% { transform: translateX(100px) translateY(100px); }
 }
 
-.story-card:hover {
-  transform: translateY(-10px) scale(1.02);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-  border-color: rgba(128, 128, 128, 0.4);
-}
-
-.story-icon {
-  width: 80px;
-  height: 80px;
-  margin: 0 auto 20px;
+.journey-container {
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(128, 128, 128, 0.1);
-  border-radius: 50%;
-  border: 2px solid rgba(128, 128, 128, 0.3);
-  transition: all 0.3s ease;
+  flex-direction: column;
+  gap: 60px;
+  position: relative;
+  z-index: 1;
 }
 
-.story-icon svg {
-  width: 40px;
-  height: 40px;
-  color: #808080;
-  transition: all 0.3s ease;
+.journey-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 40px;
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: all 0.6s ease;
 }
 
-.story-card:hover .story-icon {
-  background: rgba(128, 128, 128, 0.2);
-  border-color: rgba(128, 128, 128, 0.5);
-  transform: scale(1.1) rotate(5deg);
+.journey-item.animate-in {
+  opacity: 1;
+  transform: translateX(0);
 }
 
-.story-card:hover .story-icon svg {
-  color: #b3b3b3;
-  transform: scale(1.1);
+.journey-item-1 {
+  transition-delay: 0.1s;
 }
 
-.story-card h3 {
-  font-size: 1.5rem;
-  margin: 0 0 15px 0;
-  font-weight: 600;
-  color: #fff;
-  text-align: center;
+.journey-item-2 {
+  flex-direction: row-reverse;
+  transition-delay: 0.2s;
 }
 
-.story-card p {
-  font-size: 1rem;
-  line-height: 1.6;
-  color: #b3b3b3;
-  margin: 0;
-  text-align: center;
+.journey-item-3 {
+  transition-delay: 0.3s;
 }
 
-/* Interests Section */
-.interests-section {
-  margin-bottom: 80px;
-}
-
-.interests-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 30px;
-}
-
-.interest-card {
-  background: linear-gradient(135deg, rgba(34, 34, 34, 0.8), rgba(42, 42, 42, 0.8));
-  padding: 40px;
-  border-radius: 12px;
-  border: 1px solid rgba(128, 128, 128, 0.2);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+.journey-number {
+  font-size: 8rem;
+  font-weight: 700;
+  color: rgba(128, 128, 128, 0.2);
+  line-height: 1;
+  flex-shrink: 0;
+  width: 150px;
   text-align: center;
   position: relative;
-  overflow: hidden;
 }
 
-.interest-card::after {
+.journey-number::after {
   content: '';
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(128, 128, 128, 0.1);
   transform: translate(-50%, -50%);
-  transition: width 0.6s ease, height 0.6s ease;
-}
-
-.interest-card:hover::after {
-  width: 300px;
-  height: 300px;
-}
-
-.interest-card:hover {
-  transform: translateY(-8px) scale(1.03);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-  border-color: rgba(128, 128, 128, 0.4);
-}
-
-.interest-icon {
-  width: 80px;
-  height: 80px;
-  margin: 0 auto 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(128, 128, 128, 0.1);
+  width: 120px;
+  height: 120px;
+  border: 2px solid rgba(128, 128, 128, 0.2);
   border-radius: 50%;
-  border: 2px solid rgba(128, 128, 128, 0.3);
-  transition: all 0.3s ease;
 }
 
-.interest-icon svg {
-  width: 40px;
-  height: 40px;
-  color: #808080;
-  transition: all 0.3s ease;
+.journey-content {
+  flex: 1;
+  padding: 30px;
+  background: rgba(34, 34, 34, 0.6);
+  border-left: 3px solid rgba(128, 128, 128, 0.3);
+  border-radius: 8px;
+  transition: all 0.4s ease;
 }
 
-.interest-card:hover .interest-icon {
-  background: rgba(128, 128, 128, 0.2);
-  border-color: rgba(128, 128, 128, 0.5);
-  transform: scale(1.1) rotate(-5deg);
+.journey-item-2 .journey-content {
+  border-left: none;
+  border-right: 3px solid rgba(128, 128, 128, 0.3);
 }
 
-.interest-card:hover .interest-icon svg {
-  color: #b3b3b3;
-  transform: scale(1.1);
+.journey-item:hover .journey-content {
+  background: rgba(34, 34, 34, 0.8);
+  border-left-color: rgba(128, 128, 128, 0.6);
+  transform: translateX(10px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
-.interest-card h3 {
-  font-size: 1.5rem;
+.journey-item-2:hover .journey-content {
+  transform: translateX(-10px);
+  border-right-color: rgba(128, 128, 128, 0.6);
+}
+
+.journey-content h3 {
+  font-size: 2rem;
   margin: 0 0 15px 0;
   font-weight: 600;
   color: #fff;
 }
 
-.interest-card p {
-  font-size: 1rem;
-  line-height: 1.6;
+.journey-content p {
+  font-size: 1.1rem;
+  line-height: 1.7;
   color: #b3b3b3;
   margin: 0;
 }
 
-/* Philosophy Section */
-.philosophy-section {
-  background: linear-gradient(135deg, rgba(34, 34, 34, 0.6), rgba(42, 42, 42, 0.6));
-  padding: 60px 40px;
-  border-radius: 12px;
-  margin-bottom: 40px;
+/* Interests Section - Asymmetric Grid */
+.interests-section {
+  padding: 100px 40px;
+}
+
+.section-title {
+  font-size: 3rem;
+  margin-bottom: 60px;
+  font-weight: 300;
+  text-align: center;
+  color: #fff;
+}
+
+.interests-asymmetric {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 30px;
+  height: 600px;
+}
+
+.interest-large {
+  grid-row: 1 / -1;
+  background: linear-gradient(135deg, rgba(34, 34, 34, 0.8), rgba(42, 42, 42, 0.8));
+  border-radius: 16px;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   border: 1px solid rgba(128, 128, 128, 0.2);
+  transition: all 0.4s ease;
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+.interest-large.animate-in {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.interest-large:hover {
+  transform: scale(1.02);
+  border-color: rgba(128, 128, 128, 0.4);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+}
+
+.interest-visual {
+  width: 120px;
+  height: 120px;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(128, 128, 128, 0.1);
+  border-radius: 50%;
+  border: 2px solid rgba(128, 128, 128, 0.2);
+  transition: all 0.4s ease;
+}
+
+.interest-visual svg {
+  width: 60px;
+  height: 60px;
+  color: #808080;
+  transition: all 0.4s ease;
+}
+
+.interest-large:hover .interest-visual {
+  background: rgba(128, 128, 128, 0.2);
+  border-color: rgba(128, 128, 128, 0.4);
+  transform: rotate(360deg);
+}
+
+.interest-large:hover .interest-visual svg {
+  color: #b3b3b3;
+  transform: scale(1.2);
+}
+
+.interest-text h3,
+.interest-small h3 {
+  font-size: 2rem;
+  margin: 0 0 20px 0;
+  font-weight: 600;
+  color: #fff;
+}
+
+.interest-text p,
+.interest-small p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #b3b3b3;
+  margin: 0;
+}
+
+.interest-small {
+  background: linear-gradient(135deg, rgba(34, 34, 34, 0.8), rgba(42, 42, 42, 0.8));
+  border-radius: 16px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid rgba(128, 128, 128, 0.2);
+  transition: all 0.4s ease;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.interest-small.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.interest-small:hover {
+  transform: translateY(-5px);
+  border-color: rgba(128, 128, 128, 0.4);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.interest-small .interest-visual {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 20px;
+}
+
+.interest-small .interest-visual svg {
+  width: 40px;
+  height: 40px;
+}
+
+.interest-small:hover .interest-visual {
+  transform: rotate(-360deg);
+}
+
+/* Philosophy Section - Creative Typography */
+.philosophy-section {
+  padding: 100px 40px;
+  background: linear-gradient(135deg, rgba(20, 20, 20, 0.8), rgba(34, 34, 34, 0.8));
   position: relative;
   overflow: hidden;
 }
 
-.philosophy-section::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  right: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(128, 128, 128, 0.05) 0%, transparent 70%);
-  animation: rotate 20s linear infinite;
-}
-
-@keyframes rotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-.philosophy-content {
-  max-width: 900px;
+.philosophy-wrapper {
+  max-width: 1000px;
   margin: 0 auto;
   text-align: center;
 }
 
-.philosophy-title {
-  font-size: 2.5rem;
-  margin-bottom: 30px;
-  font-weight: 400;
+.philosophy-quote {
+  margin-bottom: 80px;
+  position: relative;
 }
 
-.philosophy-text {
-  font-size: 1.2rem;
-  line-height: 1.8;
+.quote-mark {
+  font-size: 10rem;
+  font-weight: 300;
+  color: rgba(128, 128, 128, 0.2);
+  line-height: 1;
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: Georgia, serif;
+}
+
+.quote-text {
+  font-size: 2rem;
+  line-height: 1.6;
   color: #b3b3b3;
-  margin-bottom: 50px;
+  font-style: italic;
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  padding: 0 40px;
 }
 
-.philosophy-highlights {
+.philosophy-stats {
   display: flex;
   justify-content: center;
-  gap: 60px;
+  gap: 100px;
   flex-wrap: wrap;
 }
 
-.highlight {
+.stat-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 15px;
 }
 
-.highlight-number {
-  font-size: 3rem;
+.stat-number {
+  font-size: 5rem;
   font-weight: 700;
   color: #808080;
+  line-height: 1;
+  font-family: 'Arial', sans-serif;
 }
 
-.highlight-label {
-  font-size: 1rem;
+.stat-label {
+  font-size: 1.1rem;
   color: #b3b3b3;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
 /* Footer */
@@ -615,14 +750,6 @@ body {
     padding: 0 15px;
   }
 
-  .navbar-left {
-    gap: 15px;
-  }
-
-  .logo {
-    height: 30px;
-  }
-
   .nav-links {
     display: none;
   }
@@ -631,78 +758,101 @@ body {
     display: inline-block;
   }
 
-  .main-content {
-    padding: 40px 20px;
+  .about-hero {
+    padding: 60px 20px;
+    min-height: auto;
+  }
+
+  .hero-split {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .name-first,
+  .name-middle,
+  .name-last {
+    font-size: 3rem;
+  }
+
+  .journey-section {
+    padding: 60px 20px;
+  }
+
+  .journey-item {
+    flex-direction: column !important;
+    gap: 20px;
+  }
+
+  .journey-number {
+    font-size: 5rem;
+    width: auto;
+  }
+
+  .journey-content {
+    border-left: 3px solid rgba(128, 128, 128, 0.3) !important;
+    border-right: none !important;
+  }
+
+  .journey-content h3 {
+    font-size: 1.5rem;
+  }
+
+  .interests-section {
+    padding: 60px 20px;
+  }
+
+  .interests-asymmetric {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    height: auto;
+    gap: 20px;
+  }
+
+  .interest-large {
+    grid-row: auto;
+    padding: 30px;
   }
 
   .section-title {
     font-size: 2rem;
-    margin-bottom: 30px;
-  }
-
-  .about-hero {
-    padding: 40px 0;
-  }
-
-  .hero-title {
-    font-size: 2.5rem;
-  }
-
-  .hero-subtitle {
-    font-size: 1.2rem;
-  }
-
-  .hero-description {
-    font-size: 1rem;
-  }
-
-  .hero-buttons {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .story-cards,
-  .interests-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-
-  .story-card,
-  .interest-card {
-    padding: 30px;
+    margin-bottom: 40px;
   }
 
   .philosophy-section {
-    padding: 40px 20px;
+    padding: 60px 20px;
   }
 
-  .philosophy-title {
-    font-size: 2rem;
+  .quote-mark {
+    font-size: 6rem;
+    top: -30px;
   }
 
-  .philosophy-text {
-    font-size: 1rem;
+  .quote-text {
+    font-size: 1.3rem;
+    padding: 0 20px;
   }
 
-  .philosophy-highlights {
-    gap: 40px;
+  .philosophy-stats {
+    gap: 50px;
   }
 
-  .highlight-number {
-    font-size: 2.5rem;
+  .stat-number {
+    font-size: 3rem;
   }
 }
 
 @media (max-width: 480px) {
-  .hero-title {
+  .name-first,
+  .name-middle,
+  .name-last {
     font-size: 2rem;
   }
 
-  .section-title {
-    font-size: 1.5rem;
+  .journey-number {
+    font-size: 4rem;
   }
 
-  .philosophy-highlights {
+  .philosophy-stats {
     flex-direction: column;
     gap: 30px;
   }
