@@ -560,6 +560,11 @@ body {
   position: absolute;
   inset: 0;
   background: linear-gradient(135deg, #333, #444);
+  z-index: 0;
+}
+
+.project-card[style*="background-image"]::before {
+  background: rgba(0, 0, 0, 0.3);
 }
 
 .project-hover {
