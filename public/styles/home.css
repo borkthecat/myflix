@@ -103,14 +103,51 @@ body {
   pointer-events: auto;
 }
 
+.globe-wrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 55%;
+  height: 100%;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+}
+
 .globe-canvas {
   width: 100% !important;
   height: 100% !important;
   display: block;
   cursor: grab;
   background: transparent;
-  transform: translateY(-50%);
-  width: 100%;
+}
+
+.globe-canvas:active {
+  cursor: grabbing;
+}
+
+.globe-hint {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.8rem;
+  pointer-events: none;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 8px 14px;
+  border-radius: 6px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  animation: fadeInOut 3s ease-in-out infinite;
+}
+
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
   height: 100%;
   z-index: 0;
   pointer-events: auto;
