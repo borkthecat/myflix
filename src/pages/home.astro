@@ -455,57 +455,50 @@
         renderer.setPixelRatio(window.devicePixelRatio);
         
         // Create low-poly globe geometry (fewer segments for low-poly look)
-        const geometry = new THREE.SphereGeometry(2.5, 32, 32);
+        const geometry = new THREE.SphereGeometry(3, 24, 24);
         
-        // Create material with earth-like colors (brown/orange land, blue ocean)
+        // Create material with earth-like colors
         const material = new THREE.MeshPhongMaterial({
-          color: 0x4a7c59, // Green/brown land color
-          shininess: 20,
-          specular: 0x111111,
-          flatShading: true // Low-poly flat shading
+          color: 0x5a7c69,
+          shininess: 30,
+          specular: 0x222222,
+          flatShading: true
         });
         
         const globe = new THREE.Mesh(geometry, material);
         scene.add(globe);
         
-        // Add subtle wireframe for low-poly aesthetic
+        // Add wireframe for low-poly aesthetic
         const wireframe = new THREE.WireframeGeometry(geometry);
         const line = new THREE.LineSegments(wireframe, new THREE.LineBasicMaterial({ 
-          color: 0x2d3748, 
-          opacity: 0.2, 
+          color: 0x4a5568, 
+          opacity: 0.4, 
           transparent: true 
         }));
         globe.add(line);
         
-        // Add ocean color variation using vertex colors
-        const colors = [];
-        const positions = geometry.attributes.position;
-        for (let i = 0; i < positions.count; i++) {
-          const vertex = new THREE.Vector3().fromBufferAttribute(positions, i);
-          const distance = vertex.length();
-          // Mix colors based on position for land/ocean effect
-          if (vertex.y > 0.3 || vertex.y < -0.3) {
-            colors.push(0.3, 0.5, 0.7); // Blue ocean
-          } else {
-            colors.push(0.6, 0.4, 0.2); // Brown/orange land
-          }
-        }
-        geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
-        material.vertexColors = true;
-        
-        // Add lighting
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+        // Add lighting for better visibility
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
         scene.add(ambientLight);
         
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
         directionalLight.position.set(5, 5, 5);
         scene.add(directionalLight);
         
-        // Position camera - slightly to the right to show globe better
-        camera.position.z = 6;
-        camera.position.y = 0.8;
-        camera.position.x = 1;
+        const pointLight = new THREE.PointLight(0xffffff, 0.5);
+        pointLight.position.set(-5, 0, 5);
+        scene.add(pointLight);
+        
+        // Position camera - to the right side to show globe
+        camera.position.z = 7;
+        camera.position.y = 1;
+        camera.position.x = 2.5;
         camera.lookAt(0, 0, 0);
+        
+        // Store initial positions for parallax
+        const initialZ = camera.position.z;
+        const initialY = camera.position.y;
+        const initialX = camera.position.x;
         
         // Mouse interaction
         let mouseX = 0;
@@ -539,18 +532,26 @@
           // Auto rotation
           globe.rotation.y += 0.002;
           
-          // Parallax effect based on scroll
-          scrollY += (targetScrollY - scrollY) * 0.1;
-          
-          // Update camera based on scroll for parallax
+          // Parallax effect - globe disappears as you scroll
           const heroSection = document.querySelector('.hero');
           if (heroSection) {
             const rect = heroSection.getBoundingClientRect();
-            const parallaxOffset = (rect.top / window.innerHeight) * 3;
-            camera.position.y = 0.8 + parallaxOffset;
-            camera.position.z = 6 + (parallaxOffset * 0.5);
-            // Rotate globe slightly as you scroll
-            globe.rotation.x = parallaxOffset * 0.1;
+            const heroHeight = heroSection.offsetHeight;
+            const scrollProgress = Math.max(0, Math.min(1, (heroHeight - rect.top) / heroHeight));
+            
+            // Move globe away and fade out as you scroll
+            camera.position.z = initialZ + (scrollProgress * 15); // Move away
+            camera.position.y = initialY + (scrollProgress * 5);
+            camera.position.x = initialX + (scrollProgress * 3);
+            
+            // Fade out the globe
+            const opacity = 1 - scrollProgress;
+            material.opacity = opacity;
+            material.transparent = opacity < 1;
+            line.material.opacity = 0.4 * opacity;
+            
+            // Rotate globe as you scroll
+            globe.rotation.x = scrollProgress * 0.5;
           }
           
           renderer.render(scene, camera);
