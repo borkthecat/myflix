@@ -67,28 +67,40 @@
         </div>
         <div class="hero-wrapper">
           <div class="hero-content">
-            <!-- Animated Talking Player -->
+            <!-- Minecraft-Style Animated Player -->
             <div class="talking-player">
-              <div class="player-body">
-                <div class="player-face">
-                  <div class="player-eyes">
-                    <div class="eye eye-left">
-                      <div class="pupil"></div>
+              <div class="minecraft-player">
+                <!-- Head -->
+                <div class="mc-head">
+                  <div class="mc-face">
+                    <div class="mc-eyes">
+                      <div class="mc-eye mc-eye-left">
+                        <div class="mc-pupil"></div>
+                      </div>
+                      <div class="mc-eye mc-eye-right">
+                        <div class="mc-pupil"></div>
+                      </div>
                     </div>
-                    <div class="eye eye-right">
-                      <div class="pupil"></div>
-                    </div>
-                  </div>
-                  <div class="player-mouth">
-                    <div class="mouth-shape"></div>
+                    <div class="mc-mouth"></div>
                   </div>
                 </div>
-                <div class="player-screen">
-                  <div class="screen-content">
-                    <div class="screen-line"></div>
-                    <div class="screen-line"></div>
-                    <div class="screen-line"></div>
+                <!-- Body -->
+                <div class="mc-body">
+                  <div class="mc-chest"></div>
+                </div>
+                <!-- Arms -->
+                <div class="mc-arms">
+                  <div class="mc-arm mc-arm-left">
+                    <div class="mc-hand"></div>
                   </div>
+                  <div class="mc-arm mc-arm-right">
+                    <div class="mc-hand"></div>
+                  </div>
+                </div>
+                <!-- Legs -->
+                <div class="mc-legs">
+                  <div class="mc-leg mc-leg-left"></div>
+                  <div class="mc-leg mc-leg-right"></div>
                 </div>
               </div>
               <div class="speech-bubble-main" id="speech-bubble">
@@ -456,14 +468,35 @@
         observer.observe(el);
       });
 
-      // Horizontal text hover images
+      // Horizontal text hover images - follow cursor
       const horizontalWords = document.querySelectorAll('.horizontal-word');
+      const cursorImage = document.createElement('div');
+      cursorImage.className = 'cursor-hover-image';
+      cursorImage.style.display = 'none';
+      document.body.appendChild(cursorImage);
+      
+      let currentImageUrl = '';
+      
       horizontalWords.forEach(word => {
         const imageUrl = word.getAttribute('data-image');
-        const hoverImage = word.querySelector('.hover-image');
-        if (hoverImage && imageUrl) {
-          hoverImage.style.backgroundImage = `url(${imageUrl})`;
-        }
+        
+        word.addEventListener('mouseenter', () => {
+          currentImageUrl = imageUrl;
+          cursorImage.style.backgroundImage = `url(${imageUrl})`;
+          cursorImage.style.display = 'block';
+        });
+        
+        word.addEventListener('mouseleave', () => {
+          cursorImage.style.display = 'none';
+          currentImageUrl = '';
+        });
+        
+        word.addEventListener('mousemove', (e) => {
+          if (currentImageUrl === imageUrl) {
+            cursorImage.style.left = e.clientX + 20 + 'px';
+            cursorImage.style.top = e.clientY + 20 + 'px';
+          }
+        });
       });
 
       // Talking Player Animation
