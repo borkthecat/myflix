@@ -472,7 +472,16 @@
           };
         };
         
-        const { width, height } = getSize();
+        let { width, height } = getSize();
+        
+        // Ensure minimum dimensions
+        if (width === 0 || height === 0) {
+          width = 800;
+          height = 600;
+          canvas.style.width = '100%';
+          canvas.style.height = '100%';
+        }
+        
         const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer({ 
           canvas: canvas, 
@@ -484,39 +493,83 @@
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         renderer.setClearColor(0x000000, 0);
         
+        // Make canvas visible
+        canvas.style.display = 'block';
+        canvas.style.visibility = 'visible';
+        canvas.style.opacity = '1';
+        
         // Create Earth texture loader
         const textureLoader = new THREE.TextureLoader();
         
-        // Load Earth texture
-        const earthTexture = textureLoader.load('https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_atmos_2048.jpg');
-        const earthBump = textureLoader.load('https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_normal_2048.jpg');
-        const earthSpecular = textureLoader.load('https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_specular_2048.jpg');
+        // Create Earth material with fallback if textures fail
+        let earthMaterial;
+        let earth;
+        let clouds;
         
-        // Create Earth material
-        const earthMaterial = new THREE.MeshPhongMaterial({
-          map: earthTexture,
-          bumpMap: earthBump,
-          bumpScale: 0.05,
-          specularMap: earthSpecular,
-          specular: new THREE.Color(0x333333),
-          shininess: 5
-        });
+        // Try to load textures, fallback to colored material if they fail
+        try {
+          const earthTexture = textureLoader.load(
+            'https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_atmos_2048.jpg',
+            () => console.log('Earth texture loaded'),
+            undefined,
+            () => {
+              console.warn('Earth texture failed, using fallback');
+              createFallbackGlobe();
+            }
+          );
+          
+          const earthBump = textureLoader.load('https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_normal_2048.jpg');
+          const earthSpecular = textureLoader.load('https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_specular_2048.jpg');
+          
+          earthMaterial = new THREE.MeshPhongMaterial({
+            map: earthTexture,
+            bumpMap: earthBump,
+            bumpScale: 0.05,
+            specularMap: earthSpecular,
+            specular: new THREE.Color(0x333333),
+            shininess: 5
+          });
+          
+          // Create Earth geometry
+          const earthGeometry = new THREE.SphereGeometry(5, 64, 64);
+          earth = new THREE.Mesh(earthGeometry, earthMaterial);
+          scene.add(earth);
+          
+          // Add clouds
+          const cloudTexture = textureLoader.load('https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_clouds_1024.jpg');
+          const cloudMaterial = new THREE.MeshPhongMaterial({
+            map: cloudTexture,
+            transparent: true,
+            opacity: 0.4
+          });
+          const cloudGeometry = new THREE.SphereGeometry(5.05, 64, 64);
+          clouds = new THREE.Mesh(cloudGeometry, cloudMaterial);
+          scene.add(clouds);
+        } catch (e) {
+          console.error('Error loading textures:', e);
+          createFallbackGlobe();
+        }
         
-        // Create Earth geometry
-        const earthGeometry = new THREE.SphereGeometry(5, 64, 64);
-        const earth = new THREE.Mesh(earthGeometry, earthMaterial);
-        scene.add(earth);
-        
-        // Add clouds
-        const cloudTexture = textureLoader.load('https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_clouds_1024.jpg');
-        const cloudMaterial = new THREE.MeshPhongMaterial({
-          map: cloudTexture,
-          transparent: true,
-          opacity: 0.4
-        });
-        const cloudGeometry = new THREE.SphereGeometry(5.05, 64, 64);
-        const clouds = new THREE.Mesh(cloudGeometry, cloudMaterial);
-        scene.add(clouds);
+        function createFallbackGlobe() {
+          // Fallback: Create a visible colored globe
+          const fallbackMaterial = new THREE.MeshPhongMaterial({
+            color: 0x4a90e2,
+            shininess: 30,
+            specular: 0x222222
+          });
+          const earthGeometry = new THREE.SphereGeometry(5, 64, 64);
+          earth = new THREE.Mesh(earthGeometry, fallbackMaterial);
+          scene.add(earth);
+          
+          // Add wireframe for visibility
+          const wireframe = new THREE.WireframeGeometry(earthGeometry);
+          const line = new THREE.LineSegments(wireframe, new THREE.LineBasicMaterial({
+            color: 0x6ba3d8,
+            opacity: 0.3,
+            transparent: true
+          }));
+          earth.add(line);
+        }
         
         // Add stars background
         const starsGeometry = new THREE.BufferGeometry();
