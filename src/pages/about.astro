@@ -482,103 +482,94 @@
         });
       });
 
-      // Talking Player Animation
-      const speechText = document.getElementById('speech-text');
-      const speechBubble = document.getElementById('speech-bubble');
-      const typingIndicator = speechBubble?.querySelector('.typing-indicator');
+      // Terminal Animation
+      const terminalCommand = document.getElementById('terminal-command');
+      const terminalOutput = document.getElementById('terminal-output');
+      const terminalCursor = document.getElementById('terminal-cursor');
       
-      const messages = [
-        "Hello! Welcome to my portfolio...",
-        "I'm passionate about design and code.",
-        "Let's build something amazing together!",
-        "Scroll down to see my work...",
-        "Thanks for visiting!"
+      const commands = [
+        { cmd: "whoami", output: "Arai Nanami Rachel\nDesigner & Developer" },
+        { cmd: "cat about.txt", output: "Passionate about creating innovative solutions\nthat bridge design and engineering." },
+        { cmd: "ls projects/", output: "MyVinyl/  Project2/  Project3/  Project4/  Project5/" },
+        { cmd: "echo $PASSION", output: "Learning, experimenting, and turning ideas\ninto something real and impactful." },
+        { cmd: "git status", output: "On branch main\nYour portfolio is up to date!" }
       ];
       
-      let currentMessageIndex = 0;
+      let currentCommandIndex = 0;
       let isTyping = false;
       
-      function typeMessage(message, callback) {
+      function typeCommand(command, callback) {
         if (isTyping) return;
         isTyping = true;
         
-        if (typingIndicator) {
-          typingIndicator.classList.add('active');
-        }
-        
         let charIndex = 0;
-        messageText.textContent = '';
+        terminalCommand.textContent = '';
+        terminalOutput.textContent = '';
+        terminalCursor.style.opacity = '1';
         
         const typeInterval = setInterval(() => {
-          if (charIndex < message.length) {
-            messageText.textContent += message[charIndex];
+          if (charIndex < command.length) {
+            terminalCommand.textContent += command[charIndex];
             charIndex++;
           } else {
             clearInterval(typeInterval);
-            if (typingIndicator) {
-              typingIndicator.classList.remove('active');
-            }
-            isTyping = false;
-            if (callback) callback();
+            setTimeout(() => {
+              terminalCursor.style.opacity = '0';
+              if (callback) callback();
+            }, 500);
           }
-        }, 50);
+        }, 60);
       }
       
-      function showNextMessage() {
-        if (currentMessageIndex < messages.length) {
-          typeMessage(messages[currentMessageIndex], () => {
+      function showOutput(output, callback) {
+        setTimeout(() => {
+          terminalOutput.textContent = output;
+          terminalOutput.style.opacity = '0';
+          terminalOutput.style.transform = 'translateY(10px)';
+          
+          setTimeout(() => {
+            terminalOutput.style.transition = 'all 0.3s ease';
+            terminalOutput.style.opacity = '1';
+            terminalOutput.style.transform = 'translateY(0)';
+            
             setTimeout(() => {
-              currentMessageIndex = (currentMessageIndex + 1) % messages.length;
-              showNextMessage();
-            }, 3000);
+              if (callback) callback();
+            }, 2500);
+          }, 50);
+        }, 300);
+      }
+      
+      function runNextCommand() {
+        if (currentCommandIndex < commands.length) {
+          const { cmd, output } = commands[currentCommandIndex];
+          
+          typeCommand(cmd, () => {
+            showOutput(output, () => {
+              isTyping = false;
+              currentCommandIndex = (currentCommandIndex + 1) % commands.length;
+              setTimeout(() => {
+                runNextCommand();
+              }, 1000);
+            });
           });
         }
       }
       
-      // Start talking when page loads
+      // Start terminal when page loads
       setTimeout(() => {
-        showNextMessage();
+        runNextCommand();
       }, 1000);
       
-      // Media Player Interactions
-      const mediaPlayer = document.querySelector('.media-player-container');
-      const playBtn = document.getElementById('play-btn');
-      const progressFill = document.getElementById('progress-fill');
-      let isPlaying = false;
-
-      if (playBtn) {
-        playBtn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          isPlaying = !isPlaying;
-          const playIcon = playBtn.querySelector('.play-icon');
-          const pauseIcon = playBtn.querySelector('.pause-icon');
-          
-          if (isPlaying) {
-            playIcon.style.display = 'none';
-            pauseIcon.style.display = 'block';
-            progressFill.style.animation = 'progressMove 225s linear';
-            progressFill.style.width = '0%';
-            setTimeout(() => {
-              progressFill.style.width = '100%';
-            }, 10);
-          } else {
-            playIcon.style.display = 'block';
-            pauseIcon.style.display = 'none';
-            progressFill.style.animation = 'none';
-          }
-        });
-      }
-
-      if (mediaPlayer) {
-        mediaPlayer.addEventListener('click', (e) => {
-          if (e.target.closest('.control-btn') || e.target.closest('.progress-bar')) {
-            return;
-          }
+      // Click terminal to cycle commands
+      const terminal = document.getElementById('terminal');
+      if (terminal) {
+        terminal.addEventListener('click', () => {
           if (!isTyping) {
-            currentMessageIndex = (currentMessageIndex + 1) % messages.length;
-            showNextMessage();
+            currentCommandIndex = (currentCommandIndex + 1) % commands.length;
+            runNextCommand();
           }
         });
+        terminal.style.cursor = 'pointer';
       }
 
       // Enhanced Parallax Gallery Effect - Horizontal Scrolling
