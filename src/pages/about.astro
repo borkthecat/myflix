@@ -56,32 +56,6 @@
 
     <!-- Main Content -->
     <main class="main-content">
-      <!-- Projects Section - Featured Projects -->
-      <section class="projects-section" id="projects">
-        <h2 class="section-title">Featured Projects</h2>
-        <div class="projects-showcase">
-          <a href="https://myvinyl.vercel.app/" target="_blank" rel="noopener noreferrer" class="project-featured">
-            <div class="project-featured-image" style="background-image: url('/images/myvinyl-cover.jpg'); background-size: cover; background-position: center;">
-              <div class="project-featured-overlay"></div>
-            </div>
-            <div class="project-featured-content">
-              <div class="project-featured-badge">Live Project</div>
-              <h3>MyVinyl</h3>
-              <p class="project-featured-tech">Astro • Music Player</p>
-              <p class="project-featured-desc">
-                A simple music playing website with 5 of my favorite songs, meant to mimic an old vinyl player. Built with Astro and published entirely by me.
-              </p>
-              <div class="project-featured-link">
-                <span>Visit Project</span>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M7 17L17 7M7 7h10v10"/>
-                </svg>
-              </div>
-            </div>
-          </a>
-        </div>
-      </section>
-
       <!-- Journey Section - Diagonal Creative Layout -->
       <section class="journey-section">
         <div class="journey-container">
@@ -293,7 +267,7 @@
         });
       }, observerOptions);
 
-      document.querySelectorAll('.journey-item, .interest-large, .interest-small, .philosophy-section, .project-featured').forEach(el => {
+      document.querySelectorAll('.journey-item, .interest-large, .interest-small, .philosophy-section').forEach(el => {
         observer.observe(el);
       });
 

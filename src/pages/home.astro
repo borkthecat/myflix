@@ -105,7 +105,7 @@
     <section class="projects" id="projects">
       <h2>Projects</h2>
       <div class="project-grid">
-        <div class="project-card" data-project="p1" style="background-image: url('/images/myvinyl-cover.jpg'); background-size: cover; background-position: center;">
+        <div class="project-card" data-project="p1" style="background-image: url('/images/myvinylcover.png'); background-size: cover; background-position: center;">
           <div class="project-hover">
             <h3>MyVinyl</h3>
             <p>Astro • Music Player</p>
@@ -522,13 +522,13 @@
         p1: {
           title: "MyVinyl",
           tech: "Astro • Music Player",
-          desc: "I used astro and its a simple music playing website with 5 of my favorite songs, meant to mimic an old vinyl player, its published and made entirely by me",
+          desc: "A nostalgic music player website built with Astro, featuring 5 of my favorite songs. Designed to mimic the warm, tactile experience of an old vinyl record player. Each track carries personal memories and moments I hold dear. Fully designed and developed by me, now live and published.",
           type: "Project",
           stack: "Astro",
           status: "Live",
           owner: "Arai Nanami Rachel",
           url: "https://myvinyl.vercel.app/",
-          image: "/images/myvinyl-cover.jpg",
+          image: "/images/myvinylcover.png",
         },
         p2: {
           title: "Project 2",
@@ -589,6 +589,11 @@
           modalType.textContent = p.type;
           modalStack.textContent = p.stack;
           modalStatus.textContent = p.status;
+          if (p.status === "Live") {
+            modalStatus.classList.add("status-live");
+          } else {
+            modalStatus.classList.remove("status-live");
+          }
           modalOwner.textContent = p.owner;
           
           // Set visit project button URL
