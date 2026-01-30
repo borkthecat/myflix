@@ -564,7 +564,7 @@ body {
 }
 
 .project-card[style*="background-image"]::before {
-  background: rgba(0, 0, 0, 0.3);
+  display: none;
 }
 
 .project-hover {
@@ -1057,14 +1057,7 @@ body {
 }
 
 .modal-hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(0, 0, 0, 0.3) 50%,
-    rgba(0, 0, 0, 0.8) 100%
-  );
+  display: none;
 }
 
 /* Modal Body */
@@ -1144,6 +1137,11 @@ body {
 .modal-actions .btn-primary {
   background: #fff;
   color: #000;
+  text-decoration: none;
+}
+
+.modal-actions .btn-primary:hover {
+  text-decoration: none;
 }
 
 .modal-actions .btn-primary:hover {
