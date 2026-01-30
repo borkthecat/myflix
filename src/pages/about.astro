@@ -472,27 +472,29 @@
       const horizontalWords = document.querySelectorAll('.horizontal-word');
       const cursorImage = document.createElement('div');
       cursorImage.className = 'cursor-hover-image';
-      cursorImage.style.display = 'none';
       document.body.appendChild(cursorImage);
       
       let currentImageUrl = '';
+      let isHovering = false;
       
       horizontalWords.forEach(word => {
         const imageUrl = word.getAttribute('data-image');
         
         word.addEventListener('mouseenter', () => {
           currentImageUrl = imageUrl;
+          isHovering = true;
           cursorImage.style.backgroundImage = `url(${imageUrl})`;
-          cursorImage.style.display = 'block';
+          cursorImage.style.opacity = '1';
         });
         
         word.addEventListener('mouseleave', () => {
-          cursorImage.style.display = 'none';
+          isHovering = false;
           currentImageUrl = '';
+          cursorImage.style.opacity = '0';
         });
         
         word.addEventListener('mousemove', (e) => {
-          if (currentImageUrl === imageUrl) {
+          if (isHovering && currentImageUrl === imageUrl) {
             cursorImage.style.left = e.clientX + 20 + 'px';
             cursorImage.style.top = e.clientY + 20 + 'px';
           }
