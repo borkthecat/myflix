@@ -509,63 +509,82 @@
         canvas.style.zIndex = '10';
         console.log('Canvas dimensions set:', canvas.width, canvas.height);
         
-        // Create a simple, visible globe without textures
-        console.log('Creating globe...');
+        // Create a detailed, visible globe
+        console.log('Creating detailed globe...');
         
-        // Create Earth geometry
-        const earthGeometry = new THREE.SphereGeometry(6, 32, 32);
+        // Create high-resolution Earth geometry (more segments = more detail)
+        const earthGeometry = new THREE.SphereGeometry(6, 128, 64);
         
-        // Create bright, visible material (blue-green like Earth)
+        // Create detailed material with multiple properties
         const earthMaterial = new THREE.MeshPhongMaterial({
           color: 0x4a90e2,
-          shininess: 50,
-          specular: 0x333333,
+          shininess: 80,
+          specular: 0x444444,
           emissive: 0x1a3a5a,
-          emissiveIntensity: 0.2
+          emissiveIntensity: 0.3,
+          flatShading: false
         });
         
         const earth = new THREE.Mesh(earthGeometry, earthMaterial);
         scene.add(earth);
-        console.log('Earth mesh created');
+        console.log('Earth mesh created with high detail');
         
-        // Add wireframe for better visibility
+        // Add detailed wireframe for better visibility
         const wireframe = new THREE.WireframeGeometry(earthGeometry);
         const line = new THREE.LineSegments(wireframe, new THREE.LineBasicMaterial({
           color: 0x6ba3d8,
-          opacity: 0.5,
-          transparent: true
+          opacity: 0.4,
+          transparent: true,
+          linewidth: 1
         }));
         earth.add(line);
-        console.log('Wireframe added');
+        console.log('Detailed wireframe added');
         
-        // Add a second layer for continents effect
-        const continentsGeometry = new THREE.SphereGeometry(6.02, 32, 32);
-        const continentsMaterial = new THREE.MeshPhongMaterial({
+        // Add multiple continent layers for depth
+        const continentsGeometry1 = new THREE.SphereGeometry(6.02, 128, 64);
+        const continentsMaterial1 = new THREE.MeshPhongMaterial({
           color: 0x5a9a5a,
           transparent: true,
-          opacity: 0.3,
+          opacity: 0.4,
           side: THREE.DoubleSide
         });
-        const continents = new THREE.Mesh(continentsGeometry, continentsMaterial);
-        scene.add(continents);
-        console.log('Continents layer added');
+        const continents1 = new THREE.Mesh(continentsGeometry1, continentsMaterial1);
+        scene.add(continents1);
         
-        // Add stars background
+        const continentsGeometry2 = new THREE.SphereGeometry(6.04, 64, 32);
+        const continentsMaterial2 = new THREE.MeshPhongMaterial({
+          color: 0x4a8a4a,
+          transparent: true,
+          opacity: 0.2,
+          side: THREE.DoubleSide
+        });
+        const continents2 = new THREE.Mesh(continentsGeometry2, continentsMaterial2);
+        scene.add(continents2);
+        console.log('Multiple continent layers added');
+        
+        // Store continents for rotation (defined before use)
+        let continents = [continents1, continents2];
+        
+        // Add extensive stars background that covers entire hero section
         const starsGeometry = new THREE.BufferGeometry();
         const starsMaterial = new THREE.PointsMaterial({
           color: 0xffffff,
-          size: 0.5
+          size: 1,
+          transparent: true,
+          opacity: 0.8
         });
         const starsVertices = [];
-        for (let i = 0; i < 10000; i++) {
-          const x = (Math.random() - 0.5) * 2000;
-          const y = (Math.random() - 0.5) * 2000;
-          const z = (Math.random() - 0.5) * 2000;
+        // Create many more stars in a larger area to cover entire hero
+        for (let i = 0; i < 20000; i++) {
+          const x = (Math.random() - 0.5) * 4000;
+          const y = (Math.random() - 0.5) * 4000;
+          const z = (Math.random() - 0.5) * 4000;
           starsVertices.push(x, y, z);
         }
         starsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starsVertices, 3));
         const stars = new THREE.Points(starsGeometry, starsMaterial);
         scene.add(stars);
+        console.log('Extended stars background added');
         
         // Add strong lighting for visibility
         const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
@@ -615,12 +634,16 @@
             
             earth.rotation.y += rotationSpeed.y;
             earth.rotation.x += rotationSpeed.x;
-            continents.rotation.y += rotationSpeed.y;
-            continents.rotation.x += rotationSpeed.x;
+            continents.forEach(cont => {
+              cont.rotation.y += rotationSpeed.y;
+              cont.rotation.x += rotationSpeed.x;
+            });
             
             // Limit vertical rotation
             earth.rotation.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, earth.rotation.x));
-            continents.rotation.x = earth.rotation.x;
+            continents.forEach(cont => {
+              cont.rotation.x = earth.rotation.x;
+            });
             
             previousMousePosition = { x: e.clientX, y: e.clientY };
           }
@@ -700,27 +723,34 @@
           // Auto-rotate when not dragging
           if (!isDragging && Math.abs(rotationSpeed.y) < 0.01 && Math.abs(rotationSpeed.x) < 0.01) {
             earth.rotation.y += 0.002;
-            continents.rotation.y += 0.002;
+            continents.forEach(cont => {
+              cont.rotation.y += 0.002;
+            });
           }
           
           // Rotate continents slightly faster for effect
-          continents.rotation.y += 0.0001;
+          continents.forEach(cont => {
+            cont.rotation.y += 0.0001;
+          });
           
-          // Parallax effect - fade out as you scroll
+          // Parallax effect - globe scrolls down with page
           const heroSection = document.querySelector('.hero');
           if (heroSection) {
             const rect = heroSection.getBoundingClientRect();
+            const scrollY = window.scrollY;
             const heroHeight = heroSection.offsetHeight;
-            const scrollProgress = Math.max(0, Math.min(1, (heroHeight - rect.top) / heroHeight));
             
-            // Move camera away
-            camera.position.z = initialZ + (scrollProgress * 20);
-            camera.position.y = initialY + (scrollProgress * 6);
-            camera.position.x = initialX + (scrollProgress * 4);
+            // Move globe down as user scrolls (parallax scroll)
+            const scrollOffset = scrollY * 0.5; // Adjust speed of parallax
+            const wrapper = canvas.parentElement;
+            if (wrapper) {
+              wrapper.style.transform = `translateY(${scrollOffset}px)`;
+            }
             
-            // Fade out
-            const opacity = 1 - scrollProgress;
-            canvas.style.opacity = opacity;
+            // Also move camera slightly for depth effect
+            const scrollProgress = Math.max(0, Math.min(1, scrollY / (heroHeight * 2)));
+            camera.position.z = initialZ + (scrollProgress * 5);
+            camera.position.y = initialY + (scrollProgress * 2);
           }
           
           renderer.render(scene, camera);
