@@ -509,74 +509,68 @@
         canvas.style.zIndex = '10';
         console.log('Canvas dimensions set:', canvas.width, canvas.height);
         
-        // Load voxel model ONLY
-        console.log('Loading voxel model...');
+        // Create solar system with planets
+        console.log('Creating solar system...');
         
-        let earth;
-        let continents = [];
+        let planets = [];
+        let sun;
         
-        // Function to try loading the model
-        function tryLoadModel() {
-          // Check if Three.js is loaded
-          if (typeof THREE === 'undefined') {
-            console.log('Waiting for Three.js...');
-            setTimeout(tryLoadModel, 100);
-            return;
-          }
+        // Create the Sun (large, bright yellow)
+        const sunGeometry = new THREE.SphereGeometry(1.5, 32, 32);
+        const sunMaterial = new THREE.MeshBasicMaterial({
+          color: 0xffd700,
+          emissive: 0xffaa00,
+          emissiveIntensity: 1
+        });
+        sun = new THREE.Mesh(sunGeometry, sunMaterial);
+        sun.position.set(0, 0, 0);
+        scene.add(sun);
+        console.log('Sun created');
+        
+        // Planet data: name, color, size, distance from center
+        const planetData = [
+          { name: 'Mercury', color: 0x8c7853, size: 0.15, distance: 3, speed: 0.008 },
+          { name: 'Venus', color: 0xffc649, size: 0.2, distance: 4, speed: 0.006 },
+          { name: 'Earth', color: 0x4a90e2, size: 0.25, distance: 5.5, speed: 0.005 },
+          { name: 'Mars', color: 0xcd5c5c, size: 0.2, distance: 7, speed: 0.004 },
+          { name: 'Jupiter', color: 0xd8ca9d, size: 0.5, distance: 9, speed: 0.002 },
+          { name: 'Saturn', color: 0xfad5a5, size: 0.45, distance: 11, speed: 0.0015 },
+          { name: 'Uranus', color: 0x4fd0e7, size: 0.3, distance: 13, speed: 0.001 },
+          { name: 'Neptune', color: 0x4166f5, size: 0.3, distance: 15, speed: 0.0008 }
+        ];
+        
+        // Create planets
+        planetData.forEach((data, index) => {
+          const planetGeometry = new THREE.SphereGeometry(data.size, 32, 32);
+          const planetMaterial = new THREE.MeshPhongMaterial({
+            color: data.color,
+            shininess: 30,
+            specular: 0x222222
+          });
+          const planet = new THREE.Mesh(planetGeometry, planetMaterial);
           
-          // Try to find GLTFLoader in different possible locations
-          let GLTFLoaderClass = null;
-          if (typeof THREE.GLTFLoader !== 'undefined') {
-            GLTFLoaderClass = THREE.GLTFLoader;
-          } else if (typeof GLTFLoader !== 'undefined') {
-            GLTFLoaderClass = GLTFLoader;
-          } else if (window.GLTFLoader) {
-            GLTFLoaderClass = window.GLTFLoader;
-          }
+          // Position planets in a circle around the sun
+          const angle = (index / planetData.length) * Math.PI * 2;
+          planet.position.x = Math.cos(angle) * data.distance;
+          planet.position.z = Math.sin(angle) * data.distance;
+          planet.position.y = (Math.random() - 0.5) * 2; // Slight vertical variation
           
-          if (GLTFLoaderClass) {
-            console.log('GLTFLoader found, loading model...');
-            const loader = new GLTFLoaderClass();
-            
-            loader.load(
-              '/voxel_arcade_packman.glb',
-              (gltf) => {
-                console.log('Voxel model loaded successfully');
-                earth = gltf.scene;
-                
-              // Scale the model to be very small
-              earth.scale.set(0.8, 0.8, 0.8);
-                
-                // Center the model
-                const box = new THREE.Box3().setFromObject(earth);
-                const center = box.getCenter(new THREE.Vector3());
-                if (earth.position) {
-                  earth.position.sub(center);
-                }
-                
-                scene.add(earth);
-                console.log('Voxel model added to scene');
-                
-                // Store for rotation
-                continents = [earth];
-              },
-              (progress) => {
-                if (progress.total > 0) {
-                  console.log('Loading progress:', (progress.loaded / progress.total * 100) + '%');
-                }
-              },
-              (error) => {
-                console.error('Error loading voxel model:', error);
-              }
-            );
-          } else {
-            console.log('GLTFLoader not available yet, retrying...');
-            setTimeout(tryLoadModel, 200);
-          }
-        }
+          // Store rotation data
+          planet.userData = {
+            angle: angle,
+            distance: data.distance,
+            speed: data.speed,
+            initialY: planet.position.y
+          };
+          
+          scene.add(planet);
+          planets.push(planet);
+          console.log(`${data.name} created`);
+        });
         
-        // Start trying to load
-        tryLoadModel();
+        // Store for compatibility
+        let earth = planets[2]; // Earth is the 3rd planet
+        let continents = planets;
         
         // Add extensive stars background that covers ENTIRE hero section (behind text too)
         const starsGeometry = new THREE.BufferGeometry();
