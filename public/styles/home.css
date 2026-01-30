@@ -1607,4 +1607,30 @@ body {
   .modal-info {
     grid-template-columns: 1fr;
   }
+
+  .footer {
+    padding: 30px 20px;
+  }
+
+  .footer .socials {
+    gap: 15px;
+    margin-bottom: 15px;
+  }
+
+  .footer .socials img,
+  .footer .socials svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .footer .links {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 6px 20px;
+    margin-bottom: 15px;
+  }
+
+  .footer .links a {
+    font-size: 0.8rem;
+    padding-bottom: 8px;
+  }
 }
