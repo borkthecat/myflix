@@ -455,39 +455,47 @@
         renderer.setPixelRatio(window.devicePixelRatio);
         
         // Create low-poly globe geometry (fewer segments for low-poly look)
-        const geometry = new THREE.SphereGeometry(3, 24, 24);
+        const geometry = new THREE.SphereGeometry(3.5, 24, 24);
         
-        // Create material with earth-like colors
+        // Create material with earth-like colors - more visible
         const material = new THREE.MeshPhongMaterial({
-          color: 0x5a7c69,
-          shininess: 30,
-          specular: 0x222222,
-          flatShading: true
+          color: 0x6b8e5a,
+          shininess: 40,
+          specular: 0x333333,
+          flatShading: true,
+          emissive: 0x1a1a1a,
+          emissiveIntensity: 0.2
         });
         
         const globe = new THREE.Mesh(geometry, material);
         scene.add(globe);
         
-        // Add wireframe for low-poly aesthetic
+        // Add wireframe for low-poly aesthetic - more visible
         const wireframe = new THREE.WireframeGeometry(geometry);
         const line = new THREE.LineSegments(wireframe, new THREE.LineBasicMaterial({ 
-          color: 0x4a5568, 
-          opacity: 0.4, 
-          transparent: true 
+          color: 0x6b8e5a, 
+          opacity: 0.5, 
+          transparent: true,
+          linewidth: 1
         }));
         globe.add(line);
         
         // Add lighting for better visibility
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+        const ambientLight = new THREE.AmbientLight(0xffffff, 1);
         scene.add(ambientLight);
         
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
         directionalLight.position.set(5, 5, 5);
         scene.add(directionalLight);
         
-        const pointLight = new THREE.PointLight(0xffffff, 0.5);
+        const pointLight = new THREE.PointLight(0xffffff, 0.8);
         pointLight.position.set(-5, 0, 5);
         scene.add(pointLight);
+        
+        // Add rim light for better edge definition
+        const rimLight = new THREE.DirectionalLight(0x88aaff, 0.6);
+        rimLight.position.set(-5, -3, -5);
+        scene.add(rimLight);
         
         // Position camera - to the right side to show globe
         camera.position.z = 7;
