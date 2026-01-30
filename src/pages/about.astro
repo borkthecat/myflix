@@ -60,7 +60,11 @@
       <section class="about-hero">
         <div class="hero-wrapper">
           <div class="hero-content">
-            <h1>Arai Nanami Rachel</h1>
+            <div class="hero-name">
+              <span class="name-part">Arai</span>
+              <span class="name-part">Nanami</span>
+              <span class="name-part">Rachel</span>
+            </div>
             <p class="hero-subtitle">Computer Science & Design Student</p>
             <p class="hero-description">
               Undergraduate at SUTD studying Computer Science and Design, with a
@@ -155,40 +159,77 @@
         </div>
       </section>
 
-      <!-- GitHub Section -->
-      <section class="github-section">
-        <div class="github-container">
-          <div class="github-header">
-            <h2>GitHub</h2>
-            <div class="github-status">
-              <span class="status-dot"></span>
-              <span class="status-text">Active</span>
-            </div>
-          </div>
-          
-          <div class="github-activity">
-            <div class="activity-graph" id="github-graph">
-              <div class="graph-loading">Loading activity...</div>
-            </div>
-            <div class="activity-stats" id="github-stats">
-              <span class="contributions-count">Loading...</span>
-              <span class="contributions-text">contributions this year</span>
+      <!-- GitHub & Experience Combined Section -->
+      <section class="github-experience-section">
+        <div class="combined-container">
+          <!-- Experience Section (Left) -->
+          <div class="experience-side">
+            <h2 class="side-title">Experience</h2>
+            <div class="experience-timeline-compact">
+              <div class="timeline-item-compact">
+                <div class="timeline-dot-compact"></div>
+                <div class="timeline-content-compact">
+                  <h3>Freelance Web Developer</h3>
+                  <p class="timeline-company-compact">Self-Employed</p>
+                  <p class="timeline-date-compact">December 2025 - Current</p>
+                  <p class="timeline-desc-compact">Developing and maintaining websites for clients</p>
+                </div>
+              </div>
+              <div class="timeline-item-compact">
+                <div class="timeline-dot-compact"></div>
+                <div class="timeline-content-compact">
+                  <h3>Data Annotator</h3>
+                  <p class="timeline-company-compact">Klass Engineering & Solutions</p>
+                  <p class="timeline-date-compact">March 2025 - August 2025</p>
+                  <p class="timeline-desc-compact">Annotated and processed data for machine learning projects</p>
+                </div>
+              </div>
+              <div class="timeline-item-compact">
+                <div class="timeline-dot-compact"></div>
+                <div class="timeline-content-compact">
+                  <h3>Web Developer Intern</h3>
+                  <p class="timeline-company-compact">iClick Media Pte Ltd</p>
+                  <p class="timeline-date-compact">September 2023 - February 2024</p>
+                  <p class="timeline-desc-compact">Developed web applications and maintained existing websites</p>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div class="github-repos">
-            <div class="repos-header">
-              <h3>Open Source</h3>
-              <p class="repos-subtitle">Templates & repos</p>
-              <a href="https://github.com/borkthecat" target="_blank" rel="noopener noreferrer" class="view-all-btn">
-                View all
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M7 17L17 7M7 7h10v10"/>
-                </svg>
-              </a>
+          <!-- GitHub Section (Right) -->
+          <div class="github-side">
+            <div class="github-header-compact">
+              <h2 class="side-title">GitHub</h2>
+              <div class="github-status">
+                <span class="status-dot"></span>
+                <span class="status-text">Active</span>
+              </div>
             </div>
-            <div class="repos-grid" id="github-repos">
-              <div class="repo-loading">Loading repositories...</div>
+            
+            <div class="github-activity-compact">
+              <div class="activity-graph-compact" id="github-graph">
+                <div class="graph-loading">Loading activity...</div>
+              </div>
+              <div class="activity-stats-compact" id="github-stats">
+                <span class="contributions-count">Loading...</span>
+                <span class="contributions-text">contributions this year</span>
+              </div>
+            </div>
+
+            <div class="github-repos-compact">
+              <div class="repos-header-compact">
+                <h3>Open Source</h3>
+                <p class="repos-subtitle-compact">Templates & repos</p>
+                <a href="https://github.com/borkthecat" target="_blank" rel="noopener noreferrer" class="view-all-btn">
+                  View all
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M7 17L17 7M7 7h10v10"/>
+                  </svg>
+                </a>
+              </div>
+              <div class="repos-grid-compact" id="github-repos">
+                <div class="repo-loading">Loading repositories...</div>
+              </div>
             </div>
           </div>
         </div>
@@ -250,42 +291,6 @@
           <div class="horizontal-word" data-image="/images/user4.jpg">
             <span>Innovate</span>
             <div class="hover-image"></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Experience Section -->
-      <section class="experience-section">
-        <div class="experience-container">
-          <h2 class="section-title">Experience</h2>
-          <div class="experience-timeline">
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-content">
-                <h3>Freelance Web Developer</h3>
-                <p class="timeline-company">Self-Employed</p>
-                <p class="timeline-date">December 2025 - Current</p>
-                <p class="timeline-desc">Developing and maintaining websites for clients</p>
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-content">
-                <h3>Data Annotator</h3>
-                <p class="timeline-company">Klass Engineering & Solutions</p>
-                <p class="timeline-date">March 2025 - August 2025</p>
-                <p class="timeline-desc">Annotated and processed data for machine learning projects</p>
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-content">
-                <h3>Web Developer Intern</h3>
-                <p class="timeline-company">iClick Media Pte Ltd</p>
-                <p class="timeline-date">September 2023 - February 2024</p>
-                <p class="timeline-desc">Developed web applications and maintained existing websites</p>
-              </div>
-            </div>
           </div>
         </div>
       </section>
@@ -405,7 +410,7 @@
         });
       }, observerOptions);
 
-      document.querySelectorAll('.story-item-creative, .interest-item, .timeline-item').forEach(el => {
+      document.querySelectorAll('.story-item-creative, .interest-item, .timeline-item-compact').forEach(el => {
         observer.observe(el);
       });
 
@@ -422,43 +427,35 @@
       // Enhanced Parallax Gallery Effect
       const parallaxTrack = document.getElementById('parallax-track');
       const parallaxImages = document.querySelectorAll('.parallax-image');
-      let lastScrollY = window.scrollY;
       
       function updateParallax() {
-        const scrollY = window.scrollY;
-        
-        if (parallaxTrack) {
+        if (parallaxTrack && parallaxImages.length > 0) {
           const gallerySection = document.querySelector('.parallax-gallery');
           if (gallerySection) {
             const rect = gallerySection.getBoundingClientRect();
-            const isVisible = rect.top < window.innerHeight && rect.bottom > -200;
+            const windowHeight = window.innerHeight;
+            const isVisible = rect.top < windowHeight && rect.bottom > -200;
             
             if (isVisible) {
               // Calculate scroll progress within the section
-              const sectionTop = scrollY + rect.top - window.innerHeight;
-              const sectionHeight = rect.height + window.innerHeight * 2;
-              const scrollProgress = Math.max(0, Math.min(1, (scrollY - sectionTop) / sectionHeight));
+              const sectionStart = rect.top;
+              const sectionEnd = rect.bottom;
+              const viewportCenter = windowHeight / 2;
+              const sectionCenter = (sectionStart + sectionEnd) / 2;
+              const distanceFromCenter = (viewportCenter - sectionCenter) / windowHeight;
               
-              // Move images with different speeds for depth effect
-              const baseOffset = (scrollProgress - 0.5) * 400;
+              // Smooth parallax movement
+              const maxOffset = 150;
+              const offset = distanceFromCenter * maxOffset;
               
               parallaxImages.forEach((img, index) => {
-                const speed = 0.5 + (index % 3) * 0.3; // Different speeds for each image
-                const offset = baseOffset * speed;
-                const rotation = (scrollProgress - 0.5) * 5 * (index % 2 === 0 ? 1 : -1);
-                
-                img.style.transform = `translateX(${offset}px) rotateY(${rotation}deg)`;
-                img.style.opacity = 0.7 + scrollProgress * 0.3;
+                const speed = 0.3 + (index % 3) * 0.2;
+                const imgOffset = offset * speed;
+                img.style.transform = `translateX(${imgOffset}px)`;
               });
-              
-              // Move track
-              parallaxTrack.style.transform = `translateX(${baseOffset * 0.3}px)`;
             }
           }
         }
-        
-        lastScrollY = scrollY;
-        requestAnimationFrame(updateParallax);
       }
       
       // Smooth parallax on scroll
