@@ -704,13 +704,22 @@
             rotationSpeed.y = -deltaX * 0.01;
             rotationSpeed.x = deltaY * 0.01;
             
-            earth.rotation.y += rotationSpeed.y;
-            earth.rotation.x += rotationSpeed.x;
-            continents.rotation.y += rotationSpeed.y;
-            continents.rotation.x += rotationSpeed.x;
-            
-            earth.rotation.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, earth.rotation.x));
-            continents.rotation.x = earth.rotation.x;
+            if (earth && earth.rotation) {
+              earth.rotation.y += rotationSpeed.y;
+              earth.rotation.x += rotationSpeed.x;
+              
+              earth.rotation.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, earth.rotation.x));
+              
+              if (continents && Array.isArray(continents)) {
+                continents.forEach(cont => {
+                  if (cont && cont.rotation && cont !== earth) {
+                    cont.rotation.y += rotationSpeed.y;
+                    cont.rotation.x += rotationSpeed.x;
+                    cont.rotation.x = earth.rotation.x;
+                  }
+                });
+              }
+            }
             
             touchStart = { x: e.touches[0].clientX, y: e.touches[0].clientY };
           }
@@ -726,13 +735,22 @@
             rotationSpeed.y *= 0.95;
             rotationSpeed.x *= 0.95;
             
-            earth.rotation.y += rotationSpeed.y;
-            earth.rotation.x += rotationSpeed.x;
-            continents.rotation.y += rotationSpeed.y;
-            continents.rotation.x += rotationSpeed.x;
-            
-            earth.rotation.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, earth.rotation.x));
-            continents.rotation.x = earth.rotation.x;
+            if (earth && earth.rotation) {
+              earth.rotation.y += rotationSpeed.y;
+              earth.rotation.x += rotationSpeed.x;
+              
+              earth.rotation.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, earth.rotation.x));
+              
+              if (continents && Array.isArray(continents)) {
+                continents.forEach(cont => {
+                  if (cont && cont.rotation && cont !== earth) {
+                    cont.rotation.y += rotationSpeed.y;
+                    cont.rotation.x += rotationSpeed.x;
+                    cont.rotation.x = earth.rotation.x;
+                  }
+                });
+              }
+            }
             
             if (Math.abs(rotationSpeed.y) < 0.001 && Math.abs(rotationSpeed.x) < 0.001) {
               rotationSpeed = { x: 0, y: 0 };
