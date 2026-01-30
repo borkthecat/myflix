@@ -985,11 +985,9 @@
             } else {
               rotationSpeed = { x: 0, y: 0 };
               
-              // Auto-orbit when not being dragged and momentum has stopped
-              if (!userHasInteracted || (Math.abs(rotationSpeed.y) < 0.001 && Math.abs(rotationSpeed.x) < 0.001)) {
-                cameraTheta += autoOrbitSpeed;
-                updateCameraPosition();
-              }
+              // Auto-orbit when momentum has stopped (always, even after user interaction)
+              cameraTheta += autoOrbitSpeed;
+              updateCameraPosition();
             }
           }
         }
