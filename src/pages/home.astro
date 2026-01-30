@@ -498,78 +498,46 @@
         canvas.style.visibility = 'visible';
         canvas.style.opacity = '1';
         
-        // Create Earth texture loader
-        const textureLoader = new THREE.TextureLoader();
+        // Create a simple, visible globe without textures
+        console.log('Creating globe...');
         
-        // Create Earth material with fallback if textures fail
-        let earthMaterial;
-        let earth;
-        let clouds;
+        // Create Earth geometry
+        const earthGeometry = new THREE.SphereGeometry(6, 32, 32);
         
-        // Try to load textures, fallback to colored material if they fail
-        try {
-          const earthTexture = textureLoader.load(
-            'https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_atmos_2048.jpg',
-            () => console.log('Earth texture loaded'),
-            undefined,
-            () => {
-              console.warn('Earth texture failed, using fallback');
-              createFallbackGlobe();
-            }
-          );
-          
-          const earthBump = textureLoader.load('https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_normal_2048.jpg');
-          const earthSpecular = textureLoader.load('https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_specular_2048.jpg');
-          
-          earthMaterial = new THREE.MeshPhongMaterial({
-            map: earthTexture,
-            bumpMap: earthBump,
-            bumpScale: 0.05,
-            specularMap: earthSpecular,
-            specular: new THREE.Color(0x333333),
-            shininess: 5
-          });
-          
-          // Create Earth geometry
-          const earthGeometry = new THREE.SphereGeometry(5, 64, 64);
-          earth = new THREE.Mesh(earthGeometry, earthMaterial);
-          scene.add(earth);
-          
-          // Add clouds
-          const cloudTexture = textureLoader.load('https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_clouds_1024.jpg');
-          const cloudMaterial = new THREE.MeshPhongMaterial({
-            map: cloudTexture,
-            transparent: true,
-            opacity: 0.4
-          });
-          const cloudGeometry = new THREE.SphereGeometry(5.05, 64, 64);
-          clouds = new THREE.Mesh(cloudGeometry, cloudMaterial);
-          scene.add(clouds);
-        } catch (e) {
-          console.error('Error loading textures:', e);
-          createFallbackGlobe();
-        }
+        // Create bright, visible material (blue-green like Earth)
+        const earthMaterial = new THREE.MeshPhongMaterial({
+          color: 0x4a90e2,
+          shininess: 50,
+          specular: 0x333333,
+          emissive: 0x1a3a5a,
+          emissiveIntensity: 0.2
+        });
         
-        function createFallbackGlobe() {
-          // Fallback: Create a visible colored globe
-          const fallbackMaterial = new THREE.MeshPhongMaterial({
-            color: 0x4a90e2,
-            shininess: 30,
-            specular: 0x222222
-          });
-          const earthGeometry = new THREE.SphereGeometry(5, 64, 64);
-          earth = new THREE.Mesh(earthGeometry, fallbackMaterial);
-          scene.add(earth);
-          
-          // Add wireframe for visibility
-          const wireframe = new THREE.WireframeGeometry(earthGeometry);
-          const line = new THREE.LineSegments(wireframe, new THREE.LineBasicMaterial({
-            color: 0x6ba3d8,
-            opacity: 0.3,
-            transparent: true
-          }));
-          earth.add(line);
-        }
+        const earth = new THREE.Mesh(earthGeometry, earthMaterial);
+        scene.add(earth);
+        console.log('Earth mesh created');
+        
+        // Add wireframe for better visibility
+        const wireframe = new THREE.WireframeGeometry(earthGeometry);
+        const line = new THREE.LineSegments(wireframe, new THREE.LineBasicMaterial({
+          color: 0x6ba3d8,
+          opacity: 0.5,
+          transparent: true
+        }));
+        earth.add(line);
+        console.log('Wireframe added');
+        
+        // Add a second layer for continents effect
+        const continentsGeometry = new THREE.SphereGeometry(6.02, 32, 32);
+        const continentsMaterial = new THREE.MeshPhongMaterial({
+          color: 0x5a9a5a,
+          transparent: true,
+          opacity: 0.3,
+          side: THREE.DoubleSide
+        });
+        const continents = new THREE.Mesh(continentsGeometry, continentsMaterial);
+        scene.add(continents);
+        console.log('Continents layer added');
         
         // Add stars background
         const starsGeometry = new THREE.BufferGeometry();
@@ -588,23 +556,27 @@
         const stars = new THREE.Points(starsGeometry, starsMaterial);
         scene.add(stars);
         
-        // Add lighting
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+        // Add strong lighting for visibility
+        const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
         scene.add(ambientLight);
+        console.log('Ambient light added');
         
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-        directionalLight.position.set(5, 3, 5);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
+        directionalLight.position.set(5, 5, 5);
         scene.add(directionalLight);
+        console.log('Directional light added');
         
-        const pointLight = new THREE.PointLight(0xffffff, 0.5);
+        const pointLight = new THREE.PointLight(0xffffff, 1);
         pointLight.position.set(-5, 0, 5);
         scene.add(pointLight);
+        console.log('Point light added');
         
-        // Position camera
-        camera.position.z = 12;
-        camera.position.y = 1;
+        // Position camera closer for better visibility
+        camera.position.z = 14;
+        camera.position.y = 1.5;
         camera.position.x = 0;
         camera.lookAt(0, 0, 0);
+        console.log('Camera positioned');
         
         // Store initial positions for parallax
         const initialZ = camera.position.z;
@@ -632,12 +604,12 @@
             
             earth.rotation.y += rotationSpeed.y;
             earth.rotation.x += rotationSpeed.x;
-            clouds.rotation.y += rotationSpeed.y;
-            clouds.rotation.x += rotationSpeed.x;
+            continents.rotation.y += rotationSpeed.y;
+            continents.rotation.x += rotationSpeed.x;
             
             // Limit vertical rotation
             earth.rotation.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, earth.rotation.x));
-            clouds.rotation.x = earth.rotation.x;
+            continents.rotation.x = earth.rotation.x;
             
             previousMousePosition = { x: e.clientX, y: e.clientY };
           }
@@ -695,11 +667,11 @@
             
             earth.rotation.y += rotationSpeed.y;
             earth.rotation.x += rotationSpeed.x;
-            clouds.rotation.y += rotationSpeed.y;
-            clouds.rotation.x += rotationSpeed.x;
+            continents.rotation.y += rotationSpeed.y;
+            continents.rotation.x += rotationSpeed.x;
             
             earth.rotation.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, earth.rotation.x));
-            clouds.rotation.x = earth.rotation.x;
+            continents.rotation.x = earth.rotation.x;
             
             if (Math.abs(rotationSpeed.y) < 0.001 && Math.abs(rotationSpeed.x) < 0.001) {
               rotationSpeed = { x: 0, y: 0 };
@@ -717,11 +689,11 @@
           // Auto-rotate when not dragging
           if (!isDragging && Math.abs(rotationSpeed.y) < 0.01 && Math.abs(rotationSpeed.x) < 0.01) {
             earth.rotation.y += 0.002;
-            clouds.rotation.y += 0.002;
+            continents.rotation.y += 0.002;
           }
           
-          // Rotate clouds slightly faster for effect
-          clouds.rotation.y += 0.0001;
+          // Rotate continents slightly faster for effect
+          continents.rotation.y += 0.0001;
           
           // Parallax effect - fade out as you scroll
           const heroSection = document.querySelector('.hero');
