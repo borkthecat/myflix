@@ -1805,9 +1805,45 @@ body {
     gap: 20px;
   }
 
-  .player-body {
-    width: 150px;
-    height: 170px;
+  .minecraft-player {
+    width: 100px;
+    height: 200px;
+  }
+
+  .mc-head {
+    width: 64px;
+    height: 64px;
+  }
+
+  .mc-face {
+    width: 48px;
+    height: 48px;
+    top: 6px;
+    left: 6px;
+  }
+
+  .mc-body {
+    width: 56px;
+    height: 80px;
+  }
+
+  .mc-chest {
+    width: 44px;
+    height: 64px;
+  }
+
+  .mc-arms {
+    width: 96px;
+  }
+
+  .mc-arm {
+    width: 16px;
+    height: 56px;
+  }
+
+  .mc-leg {
+    width: 16px;
+    height: 48px;
   }
 
   .speech-bubble-main {
