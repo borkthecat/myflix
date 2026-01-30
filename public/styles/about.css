@@ -201,7 +201,7 @@ body {
   padding-bottom: 40px;
 }
 
-/* Elegant Animated Logo */
+/* Animated Media Player */
 .talking-player {
   display: flex;
   align-items: flex-start;
@@ -214,155 +214,185 @@ body {
   margin-right: auto;
 }
 
-.animated-logo-container {
+.media-player-container {
   flex-shrink: 0;
-  position: relative;
-  width: 180px;
-  height: 180px;
+  width: 280px;
+  background: linear-gradient(135deg, rgba(26, 26, 26, 0.95), rgba(20, 20, 20, 0.9));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.3s ease;
-}
-
-.animated-logo-container:hover {
-  transform: scale(1.05);
-}
-
-.logo-svg {
-  width: 100%;
-  height: 100%;
-  filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.1));
-}
-
-/* Logo rings */
-.logo-ring {
-  stroke-dasharray: 1000;
-  stroke-dashoffset: 1000;
-  animation: ringDraw 8s ease-in-out infinite;
-}
-
-.logo-ring-1 {
-  animation-delay: 0s;
-}
-
-.logo-ring-2 {
-  animation-delay: 1s;
-}
-
-@keyframes ringDraw {
-  0% {
-    stroke-dashoffset: 1000;
-    opacity: 0;
-  }
-  20% {
-    opacity: 1;
-  }
-  80% {
-    stroke-dashoffset: 0;
-    opacity: 1;
-  }
-  100% {
-    stroke-dashoffset: 0;
-    opacity: 0.6;
-  }
-}
-
-/* Geometric shapes */
-.logo-shape {
-  transform-origin: 100px 100px;
-  opacity: 0.8;
   transition: all 0.3s ease;
 }
 
-.logo-triangle {
-  animation: shapeRotate 12s linear infinite;
+.media-player-container:hover {
+  transform: translateY(-4px);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
-.logo-square {
-  animation: shapeRotate 10s linear infinite reverse;
+/* Player Screen */
+.player-screen {
+  background: #0a0a0a;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  min-height: 140px;
 }
 
-.logo-circle {
-  animation: shapePulse 4s ease-in-out infinite;
+.screen-display {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-@keyframes shapeRotate {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Waveform */
+.waveform {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 6px;
+  height: 60px;
 }
 
-@keyframes shapePulse {
+.wave-bar {
+  width: 4px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.4));
+  border-radius: 2px;
+  height: var(--height);
+  animation: waveAnimate 1.2s ease-in-out infinite;
+  animation-delay: var(--delay);
+}
+
+@keyframes waveAnimate {
   0%, 100% {
-    transform: scale(1);
-    opacity: 0.8;
-  }
-  50% {
-    transform: scale(1.1);
-    opacity: 1;
-  }
-}
-
-.animated-logo-container:hover .logo-shape {
-  opacity: 1;
-  stroke: rgba(255, 255, 255, 0.5);
-}
-
-/* Center dot */
-.logo-center {
-  animation: centerPulse 2s ease-in-out infinite;
-  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4));
-}
-
-@keyframes centerPulse {
-  0%, 100% {
-    r: 8;
+    transform: scaleY(0.5);
     opacity: 0.6;
   }
   50% {
-    r: 10;
+    transform: scaleY(1);
     opacity: 1;
   }
 }
 
-/* Accent lines */
-.logo-line {
-  stroke-dasharray: 20;
-  stroke-dashoffset: 20;
-  animation: lineDraw 3s ease-in-out infinite;
-  opacity: 0.6;
+/* Track Info */
+.track-info {
+  text-align: center;
 }
 
-.logo-line-1 {
-  animation-delay: 0s;
+.track-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 4px;
+  letter-spacing: -0.3px;
 }
 
-.logo-line-2 {
-  animation-delay: 0.5s;
+.track-artist {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 400;
 }
 
-.logo-line-3 {
-  animation-delay: 1s;
+/* Player Controls */
+.player-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
 }
 
-.logo-line-4 {
-  animation-delay: 1.5s;
+.control-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
 }
 
-@keyframes lineDraw {
-  0%, 100% {
-    stroke-dashoffset: 20;
-    opacity: 0.3;
+.control-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.control-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.play-btn {
+  width: 56px;
+  height: 56px;
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.play-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: scale(1.15);
+}
+
+.play-btn svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Progress Bar */
+.player-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.6));
+  border-radius: 2px;
+  width: 35%;
+  animation: progressMove 3s linear infinite;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+@keyframes progressMove {
+  0% {
+    width: 0%;
   }
-  50% {
-    stroke-dashoffset: 0;
-    opacity: 0.8;
+  100% {
+    width: 100%;
   }
+}
+
+.time-display {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 400;
 }
 
 .speech-bubble-main {
