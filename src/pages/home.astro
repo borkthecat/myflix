@@ -532,27 +532,36 @@
           return new THREE.MeshPhongMaterial({ map: texture, shininess: 10 });
         }
         
-        // Create the Sun with corona effect
+        // Create the Sun with bright corona effect
         const sunGeometry = new THREE.SphereGeometry(2, 64, 64);
         const sunMaterial = new THREE.MeshBasicMaterial({
-          color: 0xffd700,
-          emissive: 0xff6600,
-          emissiveIntensity: 2
+          color: 0xffff00,
+          emissive: 0xffaa00,
+          emissiveIntensity: 5
         });
         sun = new THREE.Mesh(sunGeometry, sunMaterial);
         sun.position.set(0, 0, 0);
         scene.add(sun);
         
-        // Add sun glow
-        const sunGlowGeometry = new THREE.SphereGeometry(2.3, 32, 32);
-        const sunGlowMaterial = new THREE.MeshBasicMaterial({
-          color: 0xffaa00,
-          transparent: true,
-          opacity: 0.3
-        });
-        const sunGlow = new THREE.Mesh(sunGlowGeometry, sunGlowMaterial);
-        sun.add(sunGlow);
-        console.log('Sun with glow created');
+        // Add multiple sun glow layers for brightness
+        for (let i = 0; i < 3; i++) {
+          const glowSize = 2.3 + i * 0.3;
+          const sunGlowGeometry = new THREE.SphereGeometry(glowSize, 32, 32);
+          const sunGlowMaterial = new THREE.MeshBasicMaterial({
+            color: 0xffaa00,
+            transparent: true,
+            opacity: 0.4 - i * 0.1
+          });
+          const sunGlow = new THREE.Mesh(sunGlowGeometry, sunGlowMaterial);
+          sun.add(sunGlow);
+        }
+        
+        // Add bright point light from sun
+        const sunLight = new THREE.PointLight(0xffffff, 3, 100);
+        sunLight.position.set(0, 0, 0);
+        scene.add(sunLight);
+        
+        console.log('Bright sun with multiple glow layers created');
         
         // Enhanced planet data with more detail
         const planetData = [
@@ -833,26 +842,30 @@
         scene.add(rimLight);
         console.log('Vibrant lighting added');
         
-        // Position camera to view entire solar system
+        // Position camera to view entire solar system - free camera system
         let cameraDistance = 25;
-        camera.position.z = cameraDistance;
-        camera.position.y = 5;
-        camera.position.x = 0;
-        camera.lookAt(0, 0, 0);
+        let cameraTheta = 0; // Horizontal rotation (around Y axis)
+        let cameraPhi = Math.PI / 3; // Vertical rotation (elevation)
+        
+        function updateCameraPosition() {
+          camera.position.x = cameraDistance * Math.sin(cameraPhi) * Math.cos(cameraTheta);
+          camera.position.y = cameraDistance * Math.cos(cameraPhi);
+          camera.position.z = cameraDistance * Math.sin(cameraPhi) * Math.sin(cameraTheta);
+          camera.lookAt(0, 0, 0);
+        }
+        
+        updateCameraPosition();
+        
         camera.userData = { 
-          angle: 0,
           distance: cameraDistance,
-          minDistance: 5,
-          maxDistance: 50
+          minDistance: 3,
+          maxDistance: 60,
+          theta: cameraTheta,
+          phi: cameraPhi
         };
-        console.log('Camera positioned to view solar system');
+        console.log('Free camera positioned');
         
-        // Store initial positions for parallax
-        const initialZ = camera.position.z;
-        const initialY = camera.position.y;
-        const initialX = camera.position.x;
-        
-        // Draggable interaction
+        // Free camera controls
         let isDragging = false;
         let previousMousePosition = { x: 0, y: 0 };
         let rotationSpeed = { x: 0, y: 0 };
@@ -868,20 +881,19 @@
             const deltaX = e.clientX - previousMousePosition.x;
             const deltaY = e.clientY - previousMousePosition.y;
             
-            // Rotate camera view around the scene
-            rotationSpeed.y = -deltaX * 0.01;
-            rotationSpeed.x = deltaY * 0.01;
+            // Free rotation - horizontal and vertical
+            rotationSpeed.y = -deltaX * 0.005;
+            rotationSpeed.x = deltaY * 0.005;
             
-            // Rotate camera around the center
-            const radius = camera.userData.distance;
-            const theta = rotationSpeed.y;
-            const phi = rotationSpeed.x;
+            // Update spherical coordinates
+            cameraTheta += rotationSpeed.y;
+            cameraPhi += rotationSpeed.x;
             
-            camera.position.x = Math.sin(camera.userData.angle || 0) * radius;
-            camera.position.z = Math.cos(camera.userData.angle || 0) * radius;
-            camera.userData.angle = (camera.userData.angle || 0) + theta;
-            camera.position.y = Math.max(-10, Math.min(10, camera.position.y + phi * 2));
-            camera.lookAt(0, 0, 0);
+            // Limit vertical rotation to prevent flipping
+            cameraPhi = Math.max(0.1, Math.min(Math.PI - 0.1, cameraPhi));
+            
+            // Update camera position
+            updateCameraPosition();
             
             previousMousePosition = { x: e.clientX, y: e.clientY };
           }
@@ -897,22 +909,19 @@
           canvas.style.cursor = 'grab';
         });
         
-        // Zoom functionality
+        // Zoom functionality - move camera forward/backward
         canvas.addEventListener('wheel', (e) => {
           e.preventDefault();
-          const zoomSpeed = 0.1;
+          const zoomSpeed = 0.5;
           const delta = e.deltaY > 0 ? zoomSpeed : -zoomSpeed;
           
-          camera.userData.distance = Math.max(
+          cameraDistance = Math.max(
             camera.userData.minDistance,
-            Math.min(camera.userData.maxDistance, camera.userData.distance + delta)
+            Math.min(camera.userData.maxDistance, cameraDistance + delta)
           );
           
-          // Update camera position to maintain orbit
-          const radius = camera.userData.distance;
-          camera.position.x = Math.sin(camera.userData.angle) * radius;
-          camera.position.z = Math.cos(camera.userData.angle) * radius;
-          camera.lookAt(0, 0, 0);
+          camera.userData.distance = cameraDistance;
+          updateCameraPosition();
         });
         
         // Touch support
@@ -930,17 +939,19 @@
             const deltaX = e.touches[0].clientX - touchStart.x;
             const deltaY = e.touches[0].clientY - touchStart.y;
             
-            // Rotate camera view around the scene
-            rotationSpeed.y = -deltaX * 0.01;
-            rotationSpeed.x = deltaY * 0.01;
+            // Free rotation for touch
+            rotationSpeed.y = -deltaX * 0.005;
+            rotationSpeed.x = deltaY * 0.005;
             
-            // Rotate camera around the center
-            const radius = camera.userData.distance;
-            camera.userData.angle = (camera.userData.angle || 0) + rotationSpeed.y;
-            camera.position.x = Math.sin(camera.userData.angle) * radius;
-            camera.position.z = Math.cos(camera.userData.angle) * radius;
-            camera.position.y = Math.max(-10, Math.min(10, camera.position.y + rotationSpeed.x * 2));
-            camera.lookAt(0, 0, 0);
+            // Update spherical coordinates
+            cameraTheta += rotationSpeed.y;
+            cameraPhi += rotationSpeed.x;
+            
+            // Limit vertical rotation
+            cameraPhi = Math.max(0.1, Math.min(Math.PI - 0.1, cameraPhi));
+            
+            // Update camera position
+            updateCameraPosition();
             
             touchStart = { x: e.touches[0].clientX, y: e.touches[0].clientY };
           }
@@ -950,7 +961,7 @@
           isDragging = false;
         });
         
-        // Momentum/inertia
+        // Momentum/inertia for smooth rotation
         function applyMomentum() {
           if (!isDragging) {
             rotationSpeed.y *= 0.95;
@@ -958,12 +969,13 @@
             
             // Apply momentum to camera rotation
             if (Math.abs(rotationSpeed.y) > 0.001 || Math.abs(rotationSpeed.x) > 0.001) {
-              const radius = camera.userData.distance;
-              camera.userData.angle = (camera.userData.angle || 0) + rotationSpeed.y;
-              camera.position.x = Math.sin(camera.userData.angle) * radius;
-              camera.position.z = Math.cos(camera.userData.angle) * radius;
-              camera.position.y = Math.max(-10, Math.min(10, camera.position.y + rotationSpeed.x * 2));
-              camera.lookAt(0, 0, 0);
+              cameraTheta += rotationSpeed.y;
+              cameraPhi += rotationSpeed.x;
+              
+              // Limit vertical rotation
+              cameraPhi = Math.max(0.1, Math.min(Math.PI - 0.1, cameraPhi));
+              
+              updateCameraPosition();
             } else {
               rotationSpeed = { x: 0, y: 0 };
             }
