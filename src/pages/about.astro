@@ -58,13 +58,6 @@
     <main class="main-content">
       <!-- Hero Section -->
       <section class="about-hero">
-        <div class="hero-bubbles">
-          <div class="bubble bubble-1"></div>
-          <div class="bubble bubble-2"></div>
-          <div class="bubble bubble-3"></div>
-          <div class="bubble bubble-4"></div>
-          <div class="bubble bubble-5"></div>
-        </div>
         <div class="hero-wrapper">
           <div class="hero-content">
             <!-- Enhanced Animated Media Player -->
@@ -148,28 +141,42 @@
                   </div>
                 </div>
               </div>
-              <div class="speech-bubble-main" id="speech-bubble">
-                <div class="speech-content-main">
-                  <p class="speech-text-main" id="speech-text">Hello! Welcome to my portfolio...</p>
+              <div class="player-message" id="player-message">
+                <div class="message-content">
+                  <p class="message-text" id="message-text">Hello! Welcome to my portfolio...</p>
                   <div class="typing-indicator">
                     <span></span>
                     <span></span>
                     <span></span>
                   </div>
                 </div>
-                <div class="speech-tail-main"></div>
               </div>
             </div>
             
-            <div class="hero-subtitle-wrapper">
-              <p class="hero-subtitle">Computer Science & Design Student</p>
-              <div class="hero-line"></div>
+            <!-- Hero Stats/Info Cards -->
+            <div class="hero-info-grid">
+              <div class="info-card">
+                <div class="info-icon">🎨</div>
+                <div class="info-content">
+                  <div class="info-label">Design</div>
+                  <div class="info-value">Creative</div>
+                </div>
+              </div>
+              <div class="info-card">
+                <div class="info-icon">💻</div>
+                <div class="info-content">
+                  <div class="info-label">Code</div>
+                  <div class="info-value">Innovative</div>
+                </div>
+              </div>
+              <div class="info-card">
+                <div class="info-icon">🚀</div>
+                <div class="info-content">
+                  <div class="info-label">Build</div>
+                  <div class="info-value">Impactful</div>
+                </div>
+              </div>
             </div>
-            <p class="hero-description">
-              Undergraduate at SUTD studying Computer Science and Design, with a
-              curiosity for technology and how it shapes the world. I'm passionate about
-              creating innovative solutions that bridge the gap between design and engineering.
-            </p>
           </div>
         </div>
       </section>
@@ -571,11 +578,11 @@
         }
         
         let charIndex = 0;
-        speechText.textContent = '';
+        messageText.textContent = '';
         
         const typeInterval = setInterval(() => {
           if (charIndex < message.length) {
-            speechText.textContent += message[charIndex];
+            messageText.textContent += message[charIndex];
             charIndex++;
           } else {
             clearInterval(typeInterval);

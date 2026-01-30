@@ -636,41 +636,43 @@ body {
   box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
 }
 
-.speech-bubble-main {
+.player-message {
   flex: 1;
   position: relative;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: linear-gradient(135deg, rgba(26, 26, 26, 0.95), rgba(20, 20, 20, 0.9));
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 16px;
-  padding: 18px 24px;
-  backdrop-filter: blur(10px);
-  min-height: 60px;
+  padding: 24px 28px;
+  backdrop-filter: blur(20px);
+  min-height: 80px;
   display: flex;
   align-items: center;
-  animation: bubbleFloatMain 3s ease-in-out infinite;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
 }
 
-@keyframes bubbleFloatMain {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-3px);
-  }
+.player-message:hover {
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
-.speech-content-main {
+.message-content {
   position: relative;
   width: 100%;
 }
 
-.speech-text-main {
-  font-size: 1rem;
+.message-text {
+  font-size: 1.15rem;
   color: #fff;
   margin: 0;
   font-weight: 400;
-  line-height: 1.5;
-  min-height: 24px;
+  line-height: 1.6;
+  min-height: 28px;
+  letter-spacing: -0.2px;
 }
 
 .typing-indicator {
