@@ -448,246 +448,178 @@
       // Auto year update
       document.getElementById("year").textContent = new Date().getFullYear();
 
-      // Interactive 3D Globe with Parallax - Wait for DOM and Three.js
+      // Interactive 3D Globe using globe.gl library
       function initGlobe() {
-        const canvas = document.getElementById('globe-canvas');
-        if (!canvas) {
-          console.error('Canvas not found');
+        const container = document.getElementById('globe-canvas');
+        if (!container) {
+          console.error('Globe container not found');
           return;
         }
         
-        if (typeof THREE === 'undefined') {
-          console.error('Three.js not loaded');
+        if (typeof Globe === 'undefined') {
+          console.error('Globe.gl library not loaded');
           return;
         }
         
-        const scene = new THREE.Scene();
+        // Create globe instance
+        const globe = Globe()
+          (container)
+          .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
+          .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
+          .backgroundColor('rgba(0,0,0,0)')
+          .showAtmosphere(true)
+          .atmosphereColor('#6b8e5a')
+          .atmosphereAltitude(0.15)
+          .enablePointerInteraction(false)
+          .pointOfView({ lat: 0, lng: 0, altitude: 2.5 });
         
-        // Get canvas dimensions properly
-        const getSize = () => {
-          const rect = canvas.getBoundingClientRect();
-          return {
-            width: rect.width || 800,
-            height: rect.height || 600
-          };
+        // Auto-rotate
+        let autoRotateSpeed = 0.5;
+        let rotation = { lat: 0, lng: 0 };
+        
+        const animate = () => {
+          rotation.lng += autoRotateSpeed;
+          globe.pointOfView({ lat: rotation.lat, lng: rotation.lng, altitude: 2.5 });
+          requestAnimationFrame(animate);
         };
+        animate();
         
-        const { width, height } = getSize();
-        const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ 
-          canvas: canvas, 
-          alpha: true, 
-          antialias: true
-        });
-        
-        renderer.setSize(width, height);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        renderer.setClearColor(0x000000, 0);
-        
-        // Create very large, highly visible globe
-        const geometry = new THREE.SphereGeometry(8, 32, 32);
-        
-        // Extremely bright material
-        const material = new THREE.MeshPhongMaterial({
-          color: 0xbaddcc,
-          shininess: 100,
-          specular: 0x888888,
-          flatShading: true,
-          emissive: 0x6a7a6a,
-          emissiveIntensity: 0.7
-        });
-        
-        const globe = new THREE.Mesh(geometry, material);
-        scene.add(globe);
-        
-        // Very prominent wireframe
-        const wireframe = new THREE.WireframeGeometry(geometry);
-        const line = new THREE.LineSegments(wireframe, new THREE.LineBasicMaterial({ 
-          color: 0xddffdd, 
-          opacity: 1, 
-          transparent: true
-        }));
-        globe.add(line);
-        
-        // Maximum lighting
-        const ambientLight = new THREE.AmbientLight(0xffffff, 3);
-        scene.add(ambientLight);
-        
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 3.5);
-        directionalLight.position.set(5, 5, 5);
-        scene.add(directionalLight);
-        
-        const pointLight = new THREE.PointLight(0xffffff, 3);
-        pointLight.position.set(-5, 0, 5);
-        scene.add(pointLight);
-        
-        const rimLight = new THREE.DirectionalLight(0xddddff, 2.5);
-        rimLight.position.set(-5, -3, -5);
-        scene.add(rimLight);
-        
-        // Position camera to show globe clearly
-        camera.position.z = 18;
-        camera.position.y = 1;
-        camera.position.x = 0;
-        camera.lookAt(0, 0, 0);
-        
-        // Store initial positions for parallax
-        const initialZ = camera.position.z;
-        const initialY = camera.position.y;
-        const initialX = camera.position.x;
-        
-        // Draggable globe interaction
+        // Draggable interaction
         let isDragging = false;
         let previousMousePosition = { x: 0, y: 0 };
-        let rotationSpeed = { x: 0, y: 0 };
+        let rotationSpeed = { lat: 0, lng: 0 };
         
-        canvas.addEventListener('mousedown', (e) => {
+        container.addEventListener('mousedown', (e) => {
           isDragging = true;
           previousMousePosition = { x: e.clientX, y: e.clientY };
-          canvas.style.cursor = 'grabbing';
+          container.style.cursor = 'grabbing';
+          autoRotateSpeed = 0;
         });
         
-        canvas.addEventListener('mousemove', (e) => {
+        container.addEventListener('mousemove', (e) => {
           if (isDragging) {
             const deltaX = e.clientX - previousMousePosition.x;
             const deltaY = e.clientY - previousMousePosition.y;
             
-            rotationSpeed.y = deltaX * 0.01;
-            rotationSpeed.x = -deltaY * 0.01;
+            rotationSpeed.lng = deltaX * 0.5;
+            rotationSpeed.lat = -deltaY * 0.5;
             
-            globe.rotation.y += rotationSpeed.y;
-            globe.rotation.x += rotationSpeed.x;
+            rotation.lng += rotationSpeed.lng;
+            rotation.lat += rotationSpeed.lat;
+            
+            // Limit vertical rotation
+            rotation.lat = Math.max(-85, Math.min(85, rotation.lat));
+            
+            globe.pointOfView({ lat: rotation.lat, lng: rotation.lng, altitude: 2.5 });
             
             previousMousePosition = { x: e.clientX, y: e.clientY };
           }
         });
         
-        canvas.addEventListener('mouseup', () => {
+        container.addEventListener('mouseup', () => {
           isDragging = false;
-          canvas.style.cursor = 'grab';
+          container.style.cursor = 'grab';
+          // Resume slow auto-rotate after a delay
+          setTimeout(() => {
+            if (!isDragging) {
+              autoRotateSpeed = 0.3;
+            }
+          }, 2000);
         });
         
-        canvas.addEventListener('mouseleave', () => {
+        container.addEventListener('mouseleave', () => {
           isDragging = false;
-          canvas.style.cursor = 'grab';
+          container.style.cursor = 'grab';
+          setTimeout(() => {
+            if (!isDragging) {
+              autoRotateSpeed = 0.3;
+            }
+          }, 2000);
         });
         
-        // Touch support for mobile
+        // Touch support
         let touchStart = { x: 0, y: 0 };
         
-        canvas.addEventListener('touchstart', (e) => {
+        container.addEventListener('touchstart', (e) => {
           e.preventDefault();
           isDragging = true;
           touchStart = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+          autoRotateSpeed = 0;
         });
         
-        canvas.addEventListener('touchmove', (e) => {
+        container.addEventListener('touchmove', (e) => {
           e.preventDefault();
           if (isDragging) {
             const deltaX = e.touches[0].clientX - touchStart.x;
             const deltaY = e.touches[0].clientY - touchStart.y;
             
-            rotationSpeed.y = deltaX * 0.01;
-            rotationSpeed.x = -deltaY * 0.01;
+            rotationSpeed.lng = deltaX * 0.5;
+            rotationSpeed.lat = -deltaY * 0.5;
             
-            globe.rotation.y += rotationSpeed.y;
-            globe.rotation.x += rotationSpeed.x;
+            rotation.lng += rotationSpeed.lng;
+            rotation.lat += rotationSpeed.lat;
+            rotation.lat = Math.max(-85, Math.min(85, rotation.lat));
+            
+            globe.pointOfView({ lat: rotation.lat, lng: rotation.lng, altitude: 2.5 });
             
             touchStart = { x: e.touches[0].clientX, y: e.touches[0].clientY };
           }
         });
         
-        canvas.addEventListener('touchend', () => {
+        container.addEventListener('touchend', () => {
           isDragging = false;
+          setTimeout(() => {
+            if (!isDragging) {
+              autoRotateSpeed = 0.3;
+            }
+          }, 2000);
         });
         
-        // Momentum/inertia for smooth spinning
-        function applyMomentum() {
-          if (!isDragging) {
-            rotationSpeed.y *= 0.95;
-            rotationSpeed.x *= 0.95;
-            
-            globe.rotation.y += rotationSpeed.y;
-            globe.rotation.x += rotationSpeed.x;
-            
-            if (Math.abs(rotationSpeed.y) < 0.001 && Math.abs(rotationSpeed.x) < 0.001) {
-              rotationSpeed = { x: 0, y: 0 };
-            }
-          }
-        }
-        
-        // Animation loop
-        function animate() {
-          requestAnimationFrame(animate);
-          
-          // Apply momentum/inertia
-          applyMomentum();
-          
-          // Slow auto rotation when not dragging
-          if (!isDragging && Math.abs(rotationSpeed.y) < 0.01 && Math.abs(rotationSpeed.x) < 0.01) {
-            globe.rotation.y += 0.001;
-          }
-          
-          // Parallax effect - globe disappears as you scroll
-          if (heroSection) {
+        // Parallax effect - fade out as you scroll
+        const heroSection = document.querySelector('.hero');
+        if (heroSection) {
+          const handleScroll = () => {
             const rect = heroSection.getBoundingClientRect();
             const heroHeight = heroSection.offsetHeight;
             const scrollProgress = Math.max(0, Math.min(1, (heroHeight - rect.top) / heroHeight));
-            
-            // Move globe away and fade out as you scroll
-            camera.position.z = initialZ + (scrollProgress * 20);
-            camera.position.y = initialY + (scrollProgress * 6);
-            camera.position.x = initialX + (scrollProgress * 4);
-            
-            // Fade out the globe
             const opacity = 1 - scrollProgress;
-            material.opacity = opacity;
-            material.transparent = opacity < 1;
-            line.material.opacity = 0.6 * opacity;
-            
-            // Rotate globe as you scroll
-            globe.rotation.x = scrollProgress * 0.5;
-          }
-          
-          renderer.render(scene, camera);
-        }
-        
-          // Handle window resize
-          window.addEventListener('resize', () => {
-            const { width, height } = getSize();
-            renderer.setSize(width, height);
-            camera.aspect = width / height;
-            camera.updateProjectionMatrix();
-          });
-          
-          // Initial render immediately
-          renderer.render(scene, camera);
-          
-          // Start animation
-          animate();
-          
-          // Hide hint after interaction
-          const hint = document.querySelector('.globe-hint');
-          let hasInteracted = false;
-          const hideHint = () => {
-            if (!hasInteracted && hint) {
-              hasInteracted = true;
-              hint.style.transition = 'opacity 0.3s ease';
-              hint.style.opacity = '0';
-              setTimeout(() => hint.style.display = 'none', 300);
-            }
+            container.style.opacity = opacity;
           };
           
-          canvas.addEventListener('mousedown', hideHint);
-          canvas.addEventListener('touchstart', hideHint);
+          window.addEventListener('scroll', handleScroll);
+          handleScroll(); // Initial check
         }
         
-        // Initialize when DOM is ready
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', initGlobe);
+        // Hide hint after interaction
+        const hint = document.querySelector('.globe-hint');
+        let hasInteracted = false;
+        const hideHint = () => {
+          if (!hasInteracted && hint) {
+            hasInteracted = true;
+            hint.style.transition = 'opacity 0.3s ease';
+            hint.style.opacity = '0';
+            setTimeout(() => hint.style.display = 'none', 300);
+          }
+        };
+        
+        container.addEventListener('mousedown', hideHint);
+        container.addEventListener('touchstart', hideHint);
+      }
+      
+      // Initialize when libraries are loaded
+      function waitForGlobe() {
+        if (typeof Globe !== 'undefined') {
+          setTimeout(initGlobe, 100);
         } else {
-          setTimeout(initGlobe, 200); // Small delay to ensure canvas is rendered
+          setTimeout(waitForGlobe, 100);
         }
+      }
+      
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', waitForGlobe);
+      } else {
+        waitForGlobe();
+      }
     </script>
 
     <script>
