@@ -734,8 +734,23 @@
           camera.updateProjectionMatrix();
         });
         
+        // Test: Render a simple colored rectangle first to verify canvas works
+        const testGeometry = new THREE.BoxGeometry(2, 2, 2);
+        const testMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+        const testCube = new THREE.Mesh(testGeometry, testMaterial);
+        scene.add(testCube);
+        renderer.render(scene, camera);
+        console.log('Test cube rendered - you should see a red cube if canvas works');
+        
+        // Remove test cube and render globe
+        scene.remove(testCube);
+        
         // Force initial render multiple times to ensure visibility
         console.log('Starting render loop...');
+        console.log('Canvas element:', canvas);
+        console.log('Canvas computed style:', window.getComputedStyle(canvas));
+        console.log('Canvas bounding rect:', canvas.getBoundingClientRect());
+        
         renderer.render(scene, camera);
         renderer.render(scene, camera);
         renderer.render(scene, camera);
@@ -744,6 +759,15 @@
         console.log('Scene children count:', scene.children.length);
         console.log('Camera position:', camera.position);
         console.log('Renderer size:', renderer.getSize());
+        console.log('Earth position:', earth.position);
+        console.log('Earth visible:', earth.visible);
+        
+        // Check if canvas is actually visible
+        const rect = canvas.getBoundingClientRect();
+        console.log('Canvas bounding rect:', rect);
+        if (rect.width === 0 || rect.height === 0) {
+          console.error('Canvas has zero dimensions!');
+        }
         
         // Start animation
         animate();
