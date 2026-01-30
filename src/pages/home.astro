@@ -532,7 +532,9 @@
               // Center the model
               const box = new THREE.Box3().setFromObject(earth);
               const center = box.getCenter(new THREE.Vector3());
-              earth.position.sub(center);
+              if (earth.position) {
+                earth.position.sub(center);
+              }
               
               scene.add(earth);
               console.log('Voxel model added to scene');
