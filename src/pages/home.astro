@@ -443,6 +443,7 @@
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
     <script>
       // Auto year update
       document.getElementById("year").textContent = new Date().getFullYear();
@@ -716,25 +717,27 @@
             rotationSpeed.y = -deltaX * 0.01;
             rotationSpeed.x = deltaY * 0.01;
             
-            earth.rotation.y += rotationSpeed.y;
-            earth.rotation.x += rotationSpeed.x;
-            if (continents) {
-              continents.forEach(cont => {
-                if (cont) {
-                  cont.rotation.y += rotationSpeed.y;
-                  cont.rotation.x += rotationSpeed.x;
-                }
-              });
-            }
-            
-            // Limit vertical rotation
-            earth.rotation.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, earth.rotation.x));
-            if (continents) {
-              continents.forEach(cont => {
-                if (cont) {
-                  cont.rotation.x = earth.rotation.x;
-                }
-              });
+            if (earth) {
+              earth.rotation.y += rotationSpeed.y;
+              earth.rotation.x += rotationSpeed.x;
+              if (continents) {
+                continents.forEach(cont => {
+                  if (cont && cont !== earth) {
+                    cont.rotation.y += rotationSpeed.y;
+                    cont.rotation.x += rotationSpeed.x;
+                  }
+                });
+              }
+              
+              // Limit vertical rotation
+              earth.rotation.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, earth.rotation.x));
+              if (continents) {
+                continents.forEach(cont => {
+                  if (cont && cont !== earth) {
+                    cont.rotation.x = earth.rotation.x;
+                  }
+                });
+              }
             }
             
             previousMousePosition = { x: e.clientX, y: e.clientY };
@@ -814,21 +817,21 @@
           applyMomentum();
           
           // Auto-rotate when not dragging (natural direction)
-          if (!isDragging && Math.abs(rotationSpeed.y) < 0.01 && Math.abs(rotationSpeed.x) < 0.01) {
+          if (earth && !isDragging && Math.abs(rotationSpeed.y) < 0.01 && Math.abs(rotationSpeed.x) < 0.01) {
             earth.rotation.y -= 0.002; // Negative for natural rotation
             if (continents) {
               continents.forEach(cont => {
-                if (cont) {
+                if (cont && cont !== earth) {
                   cont.rotation.y -= 0.002;
                 }
               });
             }
           }
           
-          // Rotate vegetation slightly faster for effect
+          // Rotate other elements slightly faster for effect
           if (continents) {
             continents.forEach(cont => {
-              if (cont) {
+              if (cont && cont !== earth) {
                 cont.rotation.y -= 0.0001; // Negative for natural rotation
               }
             });
