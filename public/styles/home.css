@@ -90,23 +90,25 @@ body {
   overflow: hidden;
 }
 
-/* Make sure stars canvas covers entire hero */
-.hero .globe-wrapper {
+/* Make sure stars canvas covers entire hero behind text */
+.hero .globe-canvas {
   width: 100% !important;
   height: 100% !important;
+  position: absolute;
+  top: 0;
   left: 0;
   right: 0;
-  top: 0;
   bottom: 0;
 }
 
 .globe-wrapper {
   position: absolute;
   top: 0;
+  left: 0;
   right: 0;
-  width: 55%;
-  height: 100%;
-  z-index: 1;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 0;
   display: flex;
   align-items: center;
   justify-content: center;
