@@ -712,8 +712,9 @@
             const deltaX = e.clientX - previousMousePosition.x;
             const deltaY = e.clientY - previousMousePosition.y;
             
-            rotationSpeed.y = deltaX * 0.01;
-            rotationSpeed.x = -deltaY * 0.01;
+            // Fix rotation direction for touch too
+            rotationSpeed.y = -deltaX * 0.01;
+            rotationSpeed.x = deltaY * 0.01;
             
             earth.rotation.y += rotationSpeed.y;
             earth.rotation.x += rotationSpeed.x;
