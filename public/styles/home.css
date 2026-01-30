@@ -122,6 +122,7 @@ body {
   display: block;
   cursor: grab;
   background: transparent;
+  position: relative;
 }
 
 .globe-canvas:active {

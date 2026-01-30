@@ -80,7 +80,7 @@
     <!-- Hero / About Section -->
     <section class="hero">
       <div class="globe-wrapper">
-        <canvas id="globe-canvas" class="globe-canvas"></canvas>
+        <div id="globe-canvas" class="globe-canvas"></div>
         <div class="globe-hint">Drag to rotate</div>
       </div>
       <div class="overlay"></div>
@@ -443,6 +443,7 @@
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://unpkg.com/globe.gl@2.31.0/dist/globe.gl.js"></script>
     <script>
       // Auto year update
       document.getElementById("year").textContent = new Date().getFullYear();
