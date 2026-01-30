@@ -516,42 +516,68 @@
         let earth;
         let continents = [];
         
-        // Check if GLTFLoader is available
-        if (typeof THREE !== 'undefined' && typeof THREE.GLTFLoader !== 'undefined') {
-          const loader = new THREE.GLTFLoader();
+        // Function to try loading the model
+        function tryLoadModel() {
+          // Check if Three.js is loaded
+          if (typeof THREE === 'undefined') {
+            console.log('Waiting for Three.js...');
+            setTimeout(tryLoadModel, 100);
+            return;
+          }
           
-          loader.load(
-            '/voxel_arcade_packman.glb',
-            (gltf) => {
-              console.log('Voxel model loaded successfully');
-              earth = gltf.scene;
-              
-              // Scale the model appropriately
-              earth.scale.set(6, 6, 6);
-              
-              // Center the model
-              const box = new THREE.Box3().setFromObject(earth);
-              const center = box.getCenter(new THREE.Vector3());
-              if (earth.position) {
-                earth.position.sub(center);
+          // Try to find GLTFLoader in different possible locations
+          let GLTFLoaderClass = null;
+          if (typeof THREE.GLTFLoader !== 'undefined') {
+            GLTFLoaderClass = THREE.GLTFLoader;
+          } else if (typeof GLTFLoader !== 'undefined') {
+            GLTFLoaderClass = GLTFLoader;
+          } else if (window.GLTFLoader) {
+            GLTFLoaderClass = window.GLTFLoader;
+          }
+          
+          if (GLTFLoaderClass) {
+            console.log('GLTFLoader found, loading model...');
+            const loader = new GLTFLoaderClass();
+            
+            loader.load(
+              '/voxel_arcade_packman.glb',
+              (gltf) => {
+                console.log('Voxel model loaded successfully');
+                earth = gltf.scene;
+                
+                // Scale the model appropriately
+                earth.scale.set(6, 6, 6);
+                
+                // Center the model
+                const box = new THREE.Box3().setFromObject(earth);
+                const center = box.getCenter(new THREE.Vector3());
+                if (earth.position) {
+                  earth.position.sub(center);
+                }
+                
+                scene.add(earth);
+                console.log('Voxel model added to scene');
+                
+                // Store for rotation
+                continents = [earth];
+              },
+              (progress) => {
+                if (progress.total > 0) {
+                  console.log('Loading progress:', (progress.loaded / progress.total * 100) + '%');
+                }
+              },
+              (error) => {
+                console.error('Error loading voxel model:', error);
               }
-              
-              scene.add(earth);
-              console.log('Voxel model added to scene');
-              
-              // Store for rotation
-              continents = [earth];
-            },
-            (progress) => {
-              console.log('Loading progress:', (progress.loaded / progress.total * 100) + '%');
-            },
-            (error) => {
-              console.error('Error loading voxel model:', error);
-            }
-          );
-        } else {
-          console.error('GLTFLoader not available');
+            );
+          } else {
+            console.log('GLTFLoader not available yet, retrying...');
+            setTimeout(tryLoadModel, 200);
+          }
         }
+        
+        // Start trying to load
+        tryLoadModel();
         
         // Add extensive stars background that covers ENTIRE hero section (behind text too)
         const starsGeometry = new THREE.BufferGeometry();
