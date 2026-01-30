@@ -201,7 +201,7 @@ body {
   padding-bottom: 40px;
 }
 
-/* Abstract Animated Art Piece */
+/* Animated Face with Effects */
 .talking-player {
   display: flex;
   align-items: flex-start;
@@ -214,298 +214,390 @@ body {
   margin-right: auto;
 }
 
-.abstract-art-container {
+.animated-face-container {
   flex-shrink: 0;
   position: relative;
   width: 200px;
   height: 200px;
   cursor: pointer;
-  filter: drop-shadow(0 0 30px rgba(168, 85, 247, 0.4));
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Main morphing shape */
-.morphing-shape {
+/* Background glow */
+.face-glow {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 120px;
-  height: 120px;
-  animation: morphRotate 8s ease-in-out infinite;
-}
-
-.shape-core {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80px;
-  height: 80px;
-  background: linear-gradient(135deg, #a855f7 0%, #ec4899 50%, #ef4444 100%);
-  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-  animation: morphCore 6s ease-in-out infinite;
-  box-shadow: 
-    0 0 40px rgba(168, 85, 247, 0.6),
-    inset 0 0 20px rgba(255, 255, 255, 0.2);
-}
-
-.shape-layer {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border: 2px solid;
-  border-radius: 50%;
-  opacity: 0.6;
-  animation: layerPulse 4s ease-in-out infinite;
-}
-
-.shape-layer-1 {
-  width: 100px;
-  height: 100px;
-  border-color: rgba(168, 85, 247, 0.5);
-  animation-delay: 0s;
-}
-
-.shape-layer-2 {
-  width: 120px;
-  height: 120px;
-  border-color: rgba(236, 72, 153, 0.4);
-  animation-delay: 1s;
-}
-
-.shape-layer-3 {
-  width: 140px;
-  height: 140px;
-  border-color: rgba(239, 68, 68, 0.3);
-  animation-delay: 2s;
-}
-
-@keyframes morphCore {
-  0%, 100% {
-    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
-  25% {
-    border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%;
-    transform: translate(-50%, -50%) rotate(90deg);
-  }
-  50% {
-    border-radius: 50% 50% 50% 50% / 50% 50% 50% 50%;
-    transform: translate(-50%, -50%) rotate(180deg);
-  }
-  75% {
-    border-radius: 30% 70% 30% 70% / 70% 30% 70% 30%;
-    transform: translate(-50%, -50%) rotate(270deg);
-  }
-}
-
-@keyframes morphRotate {
-  0%, 100% {
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
-  100% {
-    transform: translate(-50%, -50%) rotate(360deg);
-  }
-}
-
-@keyframes layerPulse {
-  0%, 100% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 0.6;
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.2);
-    opacity: 0.3;
-  }
-}
-
-/* Orbiting particles */
-.particle-orbit {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 160px;
-  height: 160px;
-  border-radius: 50%;
-  animation: orbitRotate 10s linear infinite;
-}
-
-.orbit-1 {
-  animation-duration: 12s;
-  animation-direction: normal;
-}
-
-.orbit-2 {
-  animation-duration: 15s;
-  animation-direction: reverse;
   width: 180px;
   height: 180px;
-}
-
-.orbit-3 {
-  animation-duration: 18s;
-  animation-direction: normal;
-  width: 200px;
-  height: 200px;
-}
-
-.orbit-4 {
-  animation-duration: 20s;
-  animation-direction: reverse;
-  width: 140px;
-  height: 140px;
-}
-
-@keyframes orbitRotate {
-  from {
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
-  to {
-    transform: translate(-50%, -50%) rotate(360deg);
-  }
-}
-
-.particle {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 12px;
-  height: 12px;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.4), rgba(236, 72, 153, 0.3), transparent 70%);
   border-radius: 50%;
-  background: linear-gradient(135deg, #a855f7, #ec4899);
-  box-shadow: 0 0 15px rgba(168, 85, 247, 0.8);
-  animation: particlePulse 2s ease-in-out infinite;
-}
-
-.particle-1 {
-  background: linear-gradient(135deg, #a855f7, #ec4899);
-  animation-delay: 0s;
-}
-
-.particle-2 {
-  background: linear-gradient(135deg, #ec4899, #ef4444);
-  animation-delay: 0.5s;
-  width: 10px;
-  height: 10px;
-}
-
-.particle-3 {
-  background: linear-gradient(135deg, #ef4444, #f59e0b);
-  animation-delay: 1s;
-  width: 14px;
-  height: 14px;
-}
-
-.particle-4 {
-  background: linear-gradient(135deg, #f59e0b, #a855f7);
-  animation-delay: 1.5s;
-  width: 8px;
-  height: 8px;
-}
-
-@keyframes particlePulse {
-  0%, 100% {
-    transform: translateX(-50%) scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: translateX(-50%) scale(1.5);
-    opacity: 0.7;
-  }
-}
-
-/* Floating geometric elements */
-.geo-element {
-  position: absolute;
-  border: 2px solid;
-  opacity: 0.4;
-  animation: geoFloat 5s ease-in-out infinite;
-}
-
-.geo-1 {
-  top: 10%;
-  left: 10%;
-  width: 20px;
-  height: 20px;
-  border-color: rgba(168, 85, 247, 0.6);
-  border-radius: 50%;
-  animation-delay: 0s;
-}
-
-.geo-2 {
-  top: 20%;
-  right: 15%;
-  width: 0;
-  height: 0;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 15px solid rgba(236, 72, 153, 0.6);
-  border-top: none;
-  animation-delay: 1.5s;
-}
-
-.geo-3 {
-  bottom: 15%;
-  left: 20%;
-  width: 15px;
-  height: 15px;
-  border-color: rgba(239, 68, 68, 0.6);
-  transform: rotate(45deg);
-  animation-delay: 3s;
-}
-
-@keyframes geoFloat {
-  0%, 100% {
-    transform: translateY(0) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-20px) rotate(180deg);
-  }
-}
-
-/* Glow effects */
-.glow-effect {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(168, 85, 247, 0.3), transparent 70%);
   animation: glowPulse 3s ease-in-out infinite;
-  pointer-events: none;
-}
-
-.glow-1 {
-  width: 150px;
-  height: 150px;
-  animation-delay: 0s;
-}
-
-.glow-2 {
-  width: 200px;
-  height: 200px;
-  background: radial-gradient(circle, rgba(236, 72, 153, 0.2), transparent 70%);
-  animation-delay: 1s;
-}
-
-.glow-3 {
-  width: 250px;
-  height: 250px;
-  background: radial-gradient(circle, rgba(239, 68, 68, 0.15), transparent 70%);
-  animation-delay: 2s;
+  filter: blur(20px);
 }
 
 @keyframes glowPulse {
   0%, 100% {
-    opacity: 0.5;
+    opacity: 0.6;
     transform: translate(-50%, -50%) scale(1);
   }
   50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+}
+
+/* Face outline */
+.face-outline {
+  position: relative;
+  width: 160px;
+  height: 180px;
+  z-index: 2;
+}
+
+.face-head {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  box-shadow: 
+    0 0 30px rgba(168, 85, 247, 0.5),
+    inset 0 0 20px rgba(255, 255, 255, 0.1);
+  animation: faceFloat 4s ease-in-out infinite;
+}
+
+@keyframes faceFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* Eyes */
+.face-eyes {
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 30px;
+  z-index: 3;
+}
+
+.eye-container {
+  position: relative;
+  width: 32px;
+  height: 24px;
+}
+
+.eye-eye {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 24px;
+  background: #fff;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  animation: eyeBlink 4s ease-in-out infinite;
+}
+
+@keyframes eyeBlink {
+  0%, 90%, 100% {
+    height: 24px;
+  }
+  92%, 98% {
+    height: 2px;
+  }
+}
+
+.eye-pupil {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 16px;
+  height: 16px;
+  background: #000;
+  border-radius: 50%;
+  animation: pupilMove 6s ease-in-out infinite;
+}
+
+@keyframes pupilMove {
+  0%, 100% {
+    transform: translate(-50%, -50%);
+  }
+  25% {
+    transform: translate(-30%, -50%);
+  }
+  50% {
+    transform: translate(-50%, -30%);
+  }
+  75% {
+    transform: translate(-70%, -50%);
+  }
+}
+
+.eye-sparkle {
+  position: absolute;
+  top: 20%;
+  left: 30%;
+  width: 6px;
+  height: 6px;
+  background: #fff;
+  border-radius: 50%;
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.5);
+  }
+}
+
+.eye-lid {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  border-radius: 50%;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.eye-lid-top {
+  top: 0;
+  height: 50%;
+  animation: lidBlinkTop 4s ease-in-out infinite;
+}
+
+.eye-lid-bottom {
+  bottom: 0;
+  height: 50%;
+  animation: lidBlinkBottom 4s ease-in-out infinite;
+}
+
+@keyframes lidBlinkTop {
+  0%, 90%, 100% {
+    transform: translateY(0);
+  }
+  92%, 98% {
+    transform: translateY(50%);
+  }
+}
+
+@keyframes lidBlinkBottom {
+  0%, 90%, 100% {
+    transform: translateY(0);
+  }
+  92%, 98% {
+    transform: translateY(-50%);
+  }
+}
+
+/* Nose */
+.face-nose {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 30px;
+  border-left: 2px solid rgba(255, 255, 255, 0.3);
+  border-right: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+}
+
+/* Mouth */
+.face-mouth {
+  position: absolute;
+  top: 65%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 25px;
+  z-index: 3;
+}
+
+.mouth-shape {
+  width: 100%;
+  height: 100%;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top: none;
+  border-radius: 0 0 50px 50px;
+  background: rgba(0, 0, 0, 0.2);
+  animation: mouthTalk 2s ease-in-out infinite;
+}
+
+@keyframes mouthTalk {
+  0%, 100% {
+    height: 25px;
+    border-radius: 0 0 50px 50px;
+  }
+  50% {
+    height: 35px;
+    border-radius: 0 0 60px 60px;
+  }
+}
+
+.mouth-teeth {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 8px;
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+}
+
+.mouth-teeth::before,
+.mouth-teeth::after {
+  content: '';
+  width: 6px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 2px;
+}
+
+/* Cheeks */
+.face-cheek {
+  position: absolute;
+  top: 55%;
+  width: 30px;
+  height: 20px;
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.3), transparent);
+  border-radius: 50%;
+  animation: cheekBlush 3s ease-in-out infinite;
+}
+
+.cheek-left {
+  left: 10%;
+}
+
+.cheek-right {
+  right: 10%;
+}
+
+@keyframes cheekBlush {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
     opacity: 0.8;
-    transform: translate(-50%, -50%) scale(1.2);
+    transform: scale(1.2);
+  }
+}
+
+/* Floating particles */
+.face-particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: linear-gradient(135deg, #a855f7, #ec4899);
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.8);
+  animation: particleFloat 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.particle-1 {
+  top: 10%;
+  left: 20%;
+  animation-delay: 0s;
+}
+
+.particle-2 {
+  top: 20%;
+  right: 15%;
+  animation-delay: 1s;
+}
+
+.particle-3 {
+  bottom: 15%;
+  left: 25%;
+  animation-delay: 2s;
+}
+
+.particle-4 {
+  bottom: 25%;
+  right: 20%;
+  animation-delay: 3s;
+}
+
+.particle-5 {
+  top: 50%;
+  left: 5%;
+  animation-delay: 4s;
+}
+
+.particle-6 {
+  top: 50%;
+  right: 5%;
+  animation-delay: 5s;
+}
+
+@keyframes particleFloat {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(20px, -30px) scale(1.5);
+    opacity: 1;
+  }
+}
+
+/* Energy waves */
+.energy-wave {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 200px;
+  border: 2px solid rgba(168, 85, 247, 0.3);
+  border-radius: 50%;
+  animation: waveExpand 3s ease-out infinite;
+  pointer-events: none;
+}
+
+.wave-1 {
+  animation-delay: 0s;
+}
+
+.wave-2 {
+  animation-delay: 1s;
+}
+
+.wave-3 {
+  animation-delay: 2s;
+}
+
+@keyframes waveExpand {
+  0% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0;
   }
 }
 
@@ -1859,39 +1951,44 @@ body {
     gap: 20px;
   }
 
-  .abstract-art-container {
+  .animated-face-container {
     width: 150px;
     height: 150px;
   }
 
-  .morphing-shape {
-    width: 90px;
-    height: 90px;
-  }
-
-  .shape-core {
-    width: 60px;
-    height: 60px;
-  }
-
-  .particle-orbit {
+  .face-outline {
     width: 120px;
-    height: 120px;
-  }
-
-  .orbit-2 {
-    width: 135px;
     height: 135px;
   }
 
-  .orbit-3 {
-    width: 150px;
-    height: 150px;
+  .face-eyes {
+    gap: 20px;
+    top: 30%;
   }
 
-  .orbit-4 {
-    width: 105px;
-    height: 105px;
+  .eye-container {
+    width: 24px;
+    height: 18px;
+  }
+
+  .eye-eye {
+    width: 24px;
+    height: 18px;
+  }
+
+  .eye-pupil {
+    width: 12px;
+    height: 12px;
+  }
+
+  .face-mouth {
+    width: 40px;
+    top: 60%;
+  }
+
+  .face-cheek {
+    width: 20px;
+    height: 15px;
   }
 
   .speech-bubble-main {
