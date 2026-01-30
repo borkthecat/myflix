@@ -79,8 +79,9 @@
 
     <!-- Hero / About Section -->
     <section class="hero">
-      <div class="globe-container">
+      <div class="globe-wrapper">
         <canvas id="globe-canvas" class="globe-canvas"></canvas>
+        <div class="globe-hint">Drag to rotate</div>
       </div>
       <div class="overlay"></div>
       <div class="hero-content">
@@ -635,29 +636,34 @@
         
         // Handle window resize
         window.addEventListener('resize', () => {
-          const rect = canvas.getBoundingClientRect();
-          renderer.setSize(rect.width, rect.height);
-          camera.aspect = rect.width / rect.height;
+          const { width, height } = getCanvasSize();
+          renderer.setSize(width, height);
+          camera.aspect = width / height;
           camera.updateProjectionMatrix();
         });
         
-        // Initial render
+        // Initial render to ensure visibility
         renderer.render(scene, camera);
         
+        // Start animation
         animate();
         
         // Hide hint after interaction
         const hint = document.querySelector('.globe-hint');
         let hasInteracted = false;
-        canvas.addEventListener('mousedown', () => {
+        const hideHint = () => {
           if (!hasInteracted && hint) {
             hasInteracted = true;
+            hint.style.transition = 'opacity 0.3s ease';
             hint.style.opacity = '0';
             setTimeout(() => hint.style.display = 'none', 300);
           }
-        });
+        };
+        
+        canvas.addEventListener('mousedown', hideHint);
+        canvas.addEventListener('touchstart', hideHint);
       } else {
-        console.warn('Three.js not loaded or canvas not found');
+        console.error('Globe canvas or Three.js not available');
       }
     </script>
 
