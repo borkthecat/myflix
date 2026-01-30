@@ -71,12 +71,15 @@
         </div>
       </section>
 
-      <!-- Story Section -->
+      <!-- Story Section - Creative Layout -->
       <section class="story-section">
         <div class="story-container">
-          <div class="story-item">
-            <span class="story-number">01</span>
+          <div class="story-item story-item-creative">
+            <div class="story-visual">
+              <div class="story-icon">🎓</div>
+            </div>
             <div class="story-content">
+              <span class="story-label">01</span>
               <h2>Education</h2>
               <p>
                 Currently pursuing my undergraduate degree at SUTD, where I'm
@@ -87,9 +90,12 @@
             </div>
           </div>
 
-          <div class="story-item">
-            <span class="story-number">02</span>
+          <div class="story-item story-item-creative story-item-reverse">
+            <div class="story-visual">
+              <div class="story-icon">🔥</div>
+            </div>
             <div class="story-content">
+              <span class="story-label">02</span>
               <h2>Passion</h2>
               <p>
                 I'm deeply curious about how technology shapes our world and
@@ -99,9 +105,12 @@
             </div>
           </div>
 
-          <div class="story-item">
-            <span class="story-number">03</span>
+          <div class="story-item story-item-creative">
+            <div class="story-visual">
+              <div class="story-icon">🚀</div>
+            </div>
             <div class="story-content">
+              <span class="story-label">03</span>
               <h2>Goals</h2>
               <p>
                 My goal is to work on projects that make a real difference,
@@ -189,13 +198,58 @@
       <section class="parallax-gallery">
         <div class="parallax-container">
           <div class="parallax-track" id="parallax-track">
-            <div class="parallax-image" style="background-image: url('/images/user1.jpg');"></div>
-            <div class="parallax-image" style="background-image: url('/images/user2.jpg');"></div>
-            <div class="parallax-image" style="background-image: url('/images/user3.jpg');"></div>
-            <div class="parallax-image" style="background-image: url('/images/user4.jpg');"></div>
-            <div class="parallax-image" style="background-image: url('/images/jellyfishfield.gif');"></div>
-            <div class="parallax-image" style="background-image: url('/images/jellyfishfield1.gif');"></div>
-            <!-- Add more images as needed -->
+            <div class="parallax-image" style="background-image: url('/images/user1.jpg');" data-text="Moments of focus and creativity">
+              <div class="parallax-overlay">
+                <p class="parallax-text">Moments of focus and creativity</p>
+              </div>
+            </div>
+            <div class="parallax-image" style="background-image: url('/images/user2.jpg');" data-text="Exploring new perspectives">
+              <div class="parallax-overlay">
+                <p class="parallax-text">Exploring new perspectives</p>
+              </div>
+            </div>
+            <div class="parallax-image" style="background-image: url('/images/user3.jpg');" data-text="Building something meaningful">
+              <div class="parallax-overlay">
+                <p class="parallax-text">Building something meaningful</p>
+              </div>
+            </div>
+            <div class="parallax-image" style="background-image: url('/images/user4.jpg');" data-text="Learning and growing">
+              <div class="parallax-overlay">
+                <p class="parallax-text">Learning and growing</p>
+              </div>
+            </div>
+            <div class="parallax-image" style="background-image: url('/images/jellyfishfield.gif');" data-text="Finding inspiration in motion">
+              <div class="parallax-overlay">
+                <p class="parallax-text">Finding inspiration in motion</p>
+              </div>
+            </div>
+            <div class="parallax-image" style="background-image: url('/images/jellyfishfield1.gif');" data-text="Embracing the journey">
+              <div class="parallax-overlay">
+                <p class="parallax-text">Embracing the journey</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Horizontal Text Section with Hover Images -->
+      <section class="horizontal-text-section">
+        <div class="horizontal-container">
+          <div class="horizontal-word" data-image="/images/user1.jpg">
+            <span>Design</span>
+            <div class="hover-image"></div>
+          </div>
+          <div class="horizontal-word" data-image="/images/user2.jpg">
+            <span>Code</span>
+            <div class="hover-image"></div>
+          </div>
+          <div class="horizontal-word" data-image="/images/user3.jpg">
+            <span>Create</span>
+            <div class="hover-image"></div>
+          </div>
+          <div class="horizontal-word" data-image="/images/user4.jpg">
+            <span>Innovate</span>
+            <div class="hover-image"></div>
           </div>
         </div>
       </section>
@@ -351,37 +405,54 @@
         });
       }, observerOptions);
 
-      document.querySelectorAll('.story-item, .interest-item, .timeline-item').forEach(el => {
+      document.querySelectorAll('.story-item-creative, .interest-item, .timeline-item').forEach(el => {
         observer.observe(el);
       });
 
-      // Parallax Gallery Effect
+      // Horizontal text hover images
+      const horizontalWords = document.querySelectorAll('.horizontal-word');
+      horizontalWords.forEach(word => {
+        const imageUrl = word.getAttribute('data-image');
+        const hoverImage = word.querySelector('.hover-image');
+        if (hoverImage && imageUrl) {
+          hoverImage.style.backgroundImage = `url(${imageUrl})`;
+        }
+      });
+
+      // Enhanced Parallax Gallery Effect
       const parallaxTrack = document.getElementById('parallax-track');
+      const parallaxImages = document.querySelectorAll('.parallax-image');
       let lastScrollY = window.scrollY;
-      let scrollDirection = 0;
       
       function updateParallax() {
         const scrollY = window.scrollY;
-        const scrollDelta = scrollY - lastScrollY;
-        scrollDirection = scrollDelta > 0 ? 1 : scrollDelta < 0 ? -1 : scrollDirection;
         
         if (parallaxTrack) {
           const gallerySection = document.querySelector('.parallax-gallery');
           if (gallerySection) {
             const rect = gallerySection.getBoundingClientRect();
-            const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+            const isVisible = rect.top < window.innerHeight && rect.bottom > -200;
             
             if (isVisible) {
               // Calculate scroll progress within the section
               const sectionTop = scrollY + rect.top - window.innerHeight;
-              const sectionHeight = rect.height + window.innerHeight;
+              const sectionHeight = rect.height + window.innerHeight * 2;
               const scrollProgress = Math.max(0, Math.min(1, (scrollY - sectionTop) / sectionHeight));
               
-              // Move images left and right based on scroll
-              const maxOffset = 200;
-              const offset = (scrollProgress - 0.5) * 2 * maxOffset * scrollDirection;
+              // Move images with different speeds for depth effect
+              const baseOffset = (scrollProgress - 0.5) * 400;
               
-              parallaxTrack.style.transform = `translateX(${offset}px)`;
+              parallaxImages.forEach((img, index) => {
+                const speed = 0.5 + (index % 3) * 0.3; // Different speeds for each image
+                const offset = baseOffset * speed;
+                const rotation = (scrollProgress - 0.5) * 5 * (index % 2 === 0 ? 1 : -1);
+                
+                img.style.transform = `translateX(${offset}px) rotateY(${rotation}deg)`;
+                img.style.opacity = 0.7 + scrollProgress * 0.3;
+              });
+              
+              // Move track
+              parallaxTrack.style.transform = `translateX(${baseOffset * 0.3}px)`;
             }
           }
         }
