@@ -634,16 +634,20 @@
             
             earth.rotation.y += rotationSpeed.y;
             earth.rotation.x += rotationSpeed.x;
-            continents.forEach(cont => {
-              cont.rotation.y += rotationSpeed.y;
-              cont.rotation.x += rotationSpeed.x;
-            });
+            if (continents) {
+              continents.forEach(cont => {
+                cont.rotation.y += rotationSpeed.y;
+                cont.rotation.x += rotationSpeed.x;
+              });
+            }
             
             // Limit vertical rotation
             earth.rotation.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, earth.rotation.x));
-            continents.forEach(cont => {
-              cont.rotation.x = earth.rotation.x;
-            });
+            if (continents) {
+              continents.forEach(cont => {
+                cont.rotation.x = earth.rotation.x;
+              });
+            }
             
             previousMousePosition = { x: e.clientX, y: e.clientY };
           }
@@ -723,15 +727,19 @@
           // Auto-rotate when not dragging
           if (!isDragging && Math.abs(rotationSpeed.y) < 0.01 && Math.abs(rotationSpeed.x) < 0.01) {
             earth.rotation.y += 0.002;
-            continents.forEach(cont => {
-              cont.rotation.y += 0.002;
-            });
+            if (continents) {
+              continents.forEach(cont => {
+                cont.rotation.y += 0.002;
+              });
+            }
           }
           
           // Rotate continents slightly faster for effect
-          continents.forEach(cont => {
-            cont.rotation.y += 0.0001;
-          });
+          if (continents) {
+            continents.forEach(cont => {
+              cont.rotation.y += 0.0001;
+            });
+          }
           
           // Parallax effect - globe scrolls down with page
           const heroSection = document.querySelector('.hero');
