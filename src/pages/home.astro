@@ -457,12 +457,16 @@
         // Set renderer size to match canvas container
         function updateRendererSize() {
           const rect = canvas.getBoundingClientRect();
-          renderer.setSize(rect.width, rect.height);
-          renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-          camera.aspect = rect.width / rect.height;
-          camera.updateProjectionMatrix();
-        }
-        updateRendererSize();
+        renderer.setSize(rect.width, rect.height);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        camera.aspect = rect.width / rect.height;
+        camera.updateProjectionMatrix();
+      }
+      updateRendererSize();
+      
+      // Make canvas draggable
+      canvas.style.cursor = 'grab';
+      canvas.style.pointerEvents = 'auto';
         
         // Create larger, more visible globe
         const geometry = new THREE.SphereGeometry(4, 20, 20);
@@ -516,29 +520,97 @@
         const initialY = camera.position.y;
         const initialX = camera.position.x;
         
-        // Mouse interaction
-        let mouseX = 0;
-        let mouseY = 0;
-        let targetRotationX = 0;
-        let targetRotationY = 0;
+        // Draggable globe interaction
+        let isDragging = false;
+        let previousMousePosition = { x: 0, y: 0 };
+        let rotationSpeed = { x: 0, y: 0 };
         
-        document.addEventListener('mousemove', (e) => {
-          mouseX = (e.clientX / window.innerWidth) * 2 - 1;
-          mouseY = (e.clientY / window.innerHeight) * 2 - 1;
-          targetRotationY = mouseX * 0.5;
-          targetRotationX = -mouseY * 0.3;
+        canvas.addEventListener('mousedown', (e) => {
+          isDragging = true;
+          previousMousePosition = { x: e.clientX, y: e.clientY };
+          canvas.style.cursor = 'grabbing';
         });
+        
+        canvas.addEventListener('mousemove', (e) => {
+          if (isDragging) {
+            const deltaX = e.clientX - previousMousePosition.x;
+            const deltaY = e.clientY - previousMousePosition.y;
+            
+            rotationSpeed.y = deltaX * 0.01;
+            rotationSpeed.x = -deltaY * 0.01;
+            
+            globe.rotation.y += rotationSpeed.y;
+            globe.rotation.x += rotationSpeed.x;
+            
+            previousMousePosition = { x: e.clientX, y: e.clientY };
+          }
+        });
+        
+        canvas.addEventListener('mouseup', () => {
+          isDragging = false;
+          canvas.style.cursor = 'grab';
+        });
+        
+        canvas.addEventListener('mouseleave', () => {
+          isDragging = false;
+          canvas.style.cursor = 'grab';
+        });
+        
+        // Touch support for mobile
+        let touchStart = { x: 0, y: 0 };
+        
+        canvas.addEventListener('touchstart', (e) => {
+          e.preventDefault();
+          isDragging = true;
+          touchStart = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        });
+        
+        canvas.addEventListener('touchmove', (e) => {
+          e.preventDefault();
+          if (isDragging) {
+            const deltaX = e.touches[0].clientX - touchStart.x;
+            const deltaY = e.touches[0].clientY - touchStart.y;
+            
+            rotationSpeed.y = deltaX * 0.01;
+            rotationSpeed.x = -deltaY * 0.01;
+            
+            globe.rotation.y += rotationSpeed.y;
+            globe.rotation.x += rotationSpeed.x;
+            
+            touchStart = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+          }
+        });
+        
+        canvas.addEventListener('touchend', () => {
+          isDragging = false;
+        });
+        
+        // Momentum/inertia for smooth spinning
+        function applyMomentum() {
+          if (!isDragging) {
+            rotationSpeed.y *= 0.95;
+            rotationSpeed.x *= 0.95;
+            
+            globe.rotation.y += rotationSpeed.y;
+            globe.rotation.x += rotationSpeed.x;
+            
+            if (Math.abs(rotationSpeed.y) < 0.001 && Math.abs(rotationSpeed.x) < 0.001) {
+              rotationSpeed = { x: 0, y: 0 };
+            }
+          }
+        }
         
         // Animation loop
         function animate() {
           requestAnimationFrame(animate);
           
-          // Smooth rotation based on mouse
-          globe.rotation.y += (targetRotationY - globe.rotation.y) * 0.05;
-          globe.rotation.x += (targetRotationX - globe.rotation.x) * 0.05;
+          // Apply momentum/inertia
+          applyMomentum();
           
-          // Auto rotation
-          globe.rotation.y += 0.002;
+          // Slow auto rotation when not dragging
+          if (!isDragging && Math.abs(rotationSpeed.y) < 0.01 && Math.abs(rotationSpeed.x) < 0.01) {
+            globe.rotation.y += 0.001;
+          }
           
           // Parallax effect - globe disappears as you scroll
           if (heroSection) {
