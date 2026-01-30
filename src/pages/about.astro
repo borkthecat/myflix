@@ -558,16 +558,15 @@
         showNextMessage();
       }, 1000);
       
-      // Make player talk on click
-      const playerBody = document.querySelector('.player-body');
-      if (playerBody) {
-        playerBody.addEventListener('click', () => {
+      // Make abstract art talk on click
+      const abstractArt = document.querySelector('.abstract-art-container');
+      if (abstractArt) {
+        abstractArt.addEventListener('click', () => {
           if (!isTyping) {
             currentMessageIndex = (currentMessageIndex + 1) % messages.length;
             showNextMessage();
           }
         });
-        playerBody.style.cursor = 'pointer';
       }
 
       // Enhanced Parallax Gallery Effect - Horizontal Scrolling
