@@ -510,8 +510,8 @@
         canvas.style.zIndex = '10';
         console.log('Canvas dimensions set:', canvas.width, canvas.height);
         
-        // Load voxel planet model
-        console.log('Loading voxel planet model...');
+        // Load voxel model ONLY
+        console.log('Loading voxel model...');
         
         let earth;
         let continents = [];
@@ -535,7 +535,7 @@
               earth.position.sub(center);
               
               scene.add(earth);
-              console.log('Voxel planet added to scene');
+              console.log('Voxel model added to scene');
               
               // Store for rotation
               continents = [earth];
@@ -545,26 +545,10 @@
             },
             (error) => {
               console.error('Error loading voxel model:', error);
-              // Fallback to simple sphere if model fails to load
-              createFallbackPlanet();
             }
           );
         } else {
           console.error('GLTFLoader not available');
-          // Fallback to simple sphere
-          createFallbackPlanet();
-        }
-        
-        function createFallbackPlanet() {
-          console.log('Creating fallback planet...');
-          const earthGeometry = new THREE.SphereGeometry(6, 64, 64);
-          const earthMaterial = new THREE.MeshPhongMaterial({
-            color: 0x4a90e2,
-            shininess: 80
-          });
-          earth = new THREE.Mesh(earthGeometry, earthMaterial);
-          scene.add(earth);
-          continents = [earth];
         }
         
         // Add extensive stars background that covers ENTIRE hero section (behind text too)
