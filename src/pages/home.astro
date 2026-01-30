@@ -627,12 +627,13 @@
         scene.add(rimLight);
         console.log('Vibrant lighting added');
         
-        // Position camera closer for better visibility
-        camera.position.z = 14;
-        camera.position.y = 1.5;
+        // Position camera to view entire solar system
+        camera.position.z = 20;
+        camera.position.y = 5;
         camera.position.x = 0;
         camera.lookAt(0, 0, 0);
-        console.log('Camera positioned');
+        camera.userData = { angle: 0 };
+        console.log('Camera positioned to view solar system');
         
         // Store initial positions for parallax
         const initialZ = camera.position.z;
