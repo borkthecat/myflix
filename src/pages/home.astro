@@ -448,73 +448,68 @@
 
       // Interactive 3D Globe with Parallax
       const canvas = document.getElementById('globe-canvas');
-      if (canvas) {
-        const heroSection = document.querySelector('.hero');
-        const heroRect = heroSection.getBoundingClientRect();
-        
+      if (canvas && typeof THREE !== 'undefined') {
         const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(50, canvas.offsetWidth / canvas.offsetHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+        const width = canvas.offsetWidth || 600;
+        const height = canvas.offsetHeight || 400;
+        const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ 
+          canvas: canvas, 
+          alpha: true, 
+          antialias: true,
+          powerPreference: "high-performance"
+        });
         
-        // Set renderer size to match canvas container
-        function updateRendererSize() {
-          const rect = canvas.getBoundingClientRect();
-        renderer.setSize(rect.width, rect.height);
+        renderer.setSize(width, height);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        camera.aspect = rect.width / rect.height;
-        camera.updateProjectionMatrix();
-      }
-      updateRendererSize();
-      
-      // Make canvas draggable
-      canvas.style.cursor = 'grab';
-      canvas.style.pointerEvents = 'auto';
+        renderer.setClearColor(0x000000, 0);
         
-        // Create larger, more visible globe
-        const geometry = new THREE.SphereGeometry(4, 20, 20);
+        // Create much larger, more visible globe
+        const geometry = new THREE.SphereGeometry(5, 32, 32);
         
-        // Create material with brighter, more visible colors
+        // Create material with very bright, visible colors
         const material = new THREE.MeshPhongMaterial({
-          color: 0x7a9c8a,
-          shininess: 50,
-          specular: 0x444444,
-          flatShading: true,
-          emissive: 0x2a3a2a,
-          emissiveIntensity: 0.3
+          color: 0x8aac9a,
+          shininess: 60,
+          specular: 0x555555,
+          flatShading: false,
+          emissive: 0x3a4a3a,
+          emissiveIntensity: 0.4
         });
         
         const globe = new THREE.Mesh(geometry, material);
         scene.add(globe);
         
-        // Add wireframe for low-poly aesthetic
+        // Add prominent wireframe
         const wireframe = new THREE.WireframeGeometry(geometry);
         const line = new THREE.LineSegments(wireframe, new THREE.LineBasicMaterial({ 
-          color: 0x8aac9a, 
-          opacity: 0.6, 
-          transparent: true
+          color: 0xaaccaa, 
+          opacity: 0.7, 
+          transparent: true,
+          linewidth: 2
         }));
         globe.add(line);
         
-        // Add strong lighting for visibility
-        const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
+        // Very strong lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
         scene.add(ambientLight);
         
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
         directionalLight.position.set(5, 5, 5);
         scene.add(directionalLight);
         
-        const pointLight = new THREE.PointLight(0xffffff, 1);
+        const pointLight = new THREE.PointLight(0xffffff, 1.5);
         pointLight.position.set(-5, 0, 5);
         scene.add(pointLight);
         
-        const rimLight = new THREE.DirectionalLight(0xaaccff, 0.8);
+        const rimLight = new THREE.DirectionalLight(0xaaccff, 1);
         rimLight.position.set(-5, -3, -5);
         scene.add(rimLight);
         
-        // Position camera to show globe clearly on the right
-        camera.position.z = 8;
-        camera.position.y = 1.5;
-        camera.position.x = 3;
+        // Position camera closer and centered to show globe clearly
+        camera.position.z = 10;
+        camera.position.y = 0;
+        camera.position.x = 0;
         camera.lookAt(0, 0, 0);
         
         // Store initial positions for parallax
@@ -640,10 +635,29 @@
         
         // Handle window resize
         window.addEventListener('resize', () => {
-          updateRendererSize();
+          const rect = canvas.getBoundingClientRect();
+          renderer.setSize(rect.width, rect.height);
+          camera.aspect = rect.width / rect.height;
+          camera.updateProjectionMatrix();
         });
         
+        // Initial render
+        renderer.render(scene, camera);
+        
         animate();
+        
+        // Hide hint after interaction
+        const hint = document.querySelector('.globe-hint');
+        let hasInteracted = false;
+        canvas.addEventListener('mousedown', () => {
+          if (!hasInteracted && hint) {
+            hasInteracted = true;
+            hint.style.opacity = '0';
+            setTimeout(() => hint.style.display = 'none', 300);
+          }
+        });
+      } else {
+        console.warn('Three.js not loaded or canvas not found');
       }
     </script>
 
