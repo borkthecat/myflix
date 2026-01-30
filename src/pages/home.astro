@@ -1066,10 +1066,10 @@
               wrapper.style.transform = `translateY(${scrollOffset}px)`;
             }
             
-            // Also move camera slightly for depth effect
+            // Parallax effect - fade out globe as user scrolls
             const scrollProgress = Math.max(0, Math.min(1, scrollY / (heroHeight * 2)));
-            camera.position.z = initialZ + (scrollProgress * 5);
-            camera.position.y = initialY + (scrollProgress * 2);
+            const opacity = 1 - scrollProgress;
+            renderer.domElement.style.opacity = opacity;
           }
           
           renderer.render(scene, camera);
