@@ -940,6 +940,7 @@
         canvas.addEventListener('touchmove', (e) => {
           e.preventDefault();
           if (isDragging) {
+            userHasInteracted = true;
             const deltaX = e.touches[0].clientX - touchStart.x;
             const deltaY = e.touches[0].clientY - touchStart.y;
             
