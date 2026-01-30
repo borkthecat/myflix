@@ -748,11 +748,11 @@
           applyMomentum();
           
           // Auto-rotate when not dragging (natural direction)
-          if (earth && !isDragging && Math.abs(rotationSpeed.y) < 0.01 && Math.abs(rotationSpeed.x) < 0.01) {
+          if (earth && earth.rotation && !isDragging && Math.abs(rotationSpeed.y) < 0.01 && Math.abs(rotationSpeed.x) < 0.01) {
             earth.rotation.y -= 0.002; // Negative for natural rotation
-            if (continents) {
+            if (continents && continents.length > 0) {
               continents.forEach(cont => {
-                if (cont && cont !== earth) {
+                if (cont && cont !== earth && cont.rotation) {
                   cont.rotation.y -= 0.002;
                 }
               });
@@ -760,9 +760,9 @@
           }
           
           // Rotate other elements slightly faster for effect
-          if (continents) {
+          if (continents && continents.length > 0) {
             continents.forEach(cont => {
-              if (cont && cont !== earth) {
+              if (cont && cont !== earth && cont.rotation) {
                 cont.rotation.y -= 0.0001; // Negative for natural rotation
               }
             });
