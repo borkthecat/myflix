@@ -473,14 +473,22 @@
         };
         
         let { width, height } = getSize();
+        console.log('Initial canvas size:', width, height);
         
-        // Ensure minimum dimensions
+        // Ensure minimum dimensions - use parent container size
+        const wrapper = canvas.parentElement;
         if (width === 0 || height === 0) {
-          width = 800;
-          height = 600;
-          canvas.style.width = '100%';
-          canvas.style.height = '100%';
+          const rect = wrapper ? wrapper.getBoundingClientRect() : { width: 800, height: 600 };
+          width = rect.width || 800;
+          height = rect.height || 600;
+          console.log('Using wrapper size:', width, height);
         }
+        
+        // Set canvas dimensions explicitly
+        canvas.width = width;
+        canvas.height = height;
+        canvas.style.width = width + 'px';
+        canvas.style.height = height + 'px';
         
         const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer({ 
@@ -489,14 +497,17 @@
           antialias: true
         });
         
-        renderer.setSize(width, height);
+        renderer.setSize(width, height, false);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         renderer.setClearColor(0x000000, 0);
         
-        // Make canvas visible
+        // Make canvas visible and ensure it's on top
         canvas.style.display = 'block';
         canvas.style.visibility = 'visible';
         canvas.style.opacity = '1';
+        canvas.style.position = 'relative';
+        canvas.style.zIndex = '10';
+        console.log('Canvas dimensions set:', canvas.width, canvas.height);
         
         // Create a simple, visible globe without textures
         console.log('Creating globe...');
@@ -723,11 +734,20 @@
           camera.updateProjectionMatrix();
         });
         
-        // Initial render
+        // Force initial render multiple times to ensure visibility
+        console.log('Starting render loop...');
         renderer.render(scene, camera);
+        renderer.render(scene, camera);
+        renderer.render(scene, camera);
+        
+        // Verify scene has objects
+        console.log('Scene children count:', scene.children.length);
+        console.log('Camera position:', camera.position);
+        console.log('Renderer size:', renderer.getSize());
         
         // Start animation
         animate();
+        console.log('Animation started');
         
         // Hide hint after interaction
         const hint = document.querySelector('.globe-hint');
