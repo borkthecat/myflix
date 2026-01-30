@@ -58,12 +58,25 @@
     <main class="main-content">
       <!-- Hero Section -->
       <section class="about-hero">
+        <div class="hero-bubbles">
+          <div class="bubble bubble-1"></div>
+          <div class="bubble bubble-2"></div>
+          <div class="bubble bubble-3"></div>
+          <div class="bubble bubble-4"></div>
+          <div class="bubble bubble-5"></div>
+        </div>
         <div class="hero-wrapper">
           <div class="hero-content">
-            <div class="hero-name">
-              <span class="name-part">Arai</span>
-              <span class="name-part">Nanami</span>
-              <span class="name-part">Rachel</span>
+            <div class="hero-name-creative">
+              <div class="name-bubble name-bubble-1">
+                <span class="name-part">Arai</span>
+              </div>
+              <div class="name-bubble name-bubble-2">
+                <span class="name-part">Nanami</span>
+              </div>
+              <div class="name-bubble name-bubble-3">
+                <span class="name-part">Rachel</span>
+              </div>
             </div>
             <div class="hero-subtitle-wrapper">
               <p class="hero-subtitle">Computer Science & Design Student</p>
@@ -427,12 +440,20 @@
         }
       });
 
-      // Enhanced Parallax Gallery Effect
+      // Enhanced Parallax Gallery Effect - Horizontal Scrolling
       const parallaxTrack = document.getElementById('parallax-track');
       const parallaxImages = document.querySelectorAll('.parallax-image');
       
+      // Duplicate images for seamless loop
+      if (parallaxTrack && parallaxImages.length > 0) {
+        parallaxImages.forEach(img => {
+          const clone = img.cloneNode(true);
+          parallaxTrack.appendChild(clone);
+        });
+      }
+      
       function updateParallax() {
-        if (parallaxTrack && parallaxImages.length > 0) {
+        if (parallaxTrack) {
           const gallerySection = document.querySelector('.parallax-gallery');
           if (gallerySection) {
             const rect = gallerySection.getBoundingClientRect();
@@ -440,22 +461,24 @@
             const isVisible = rect.top < windowHeight && rect.bottom > -200;
             
             if (isVisible) {
-              // Calculate scroll progress within the section
-              const sectionStart = rect.top;
-              const sectionEnd = rect.bottom;
-              const viewportCenter = windowHeight / 2;
-              const sectionCenter = (sectionStart + sectionEnd) / 2;
-              const distanceFromCenter = (viewportCenter - sectionCenter) / windowHeight;
+              // Calculate scroll progress
+              const scrollY = window.scrollY;
+              const sectionTop = scrollY + rect.top - windowHeight;
+              const sectionHeight = rect.height + windowHeight;
+              const scrollProgress = Math.max(0, Math.min(1, (scrollY - sectionTop) / sectionHeight));
               
-              // Smooth parallax movement
-              const maxOffset = 150;
-              const offset = distanceFromCenter * maxOffset;
+              // Continuous horizontal scrolling
+              const imageWidth = 260 + 18; // width + gap
+              const totalWidth = imageWidth * parallaxImages.length;
+              const maxScroll = totalWidth;
+              const currentScroll = scrollProgress * maxScroll;
               
-              parallaxImages.forEach((img, index) => {
-                const speed = 0.3 + (index % 3) * 0.2;
-                const imgOffset = offset * speed;
-                img.style.transform = `translateX(${imgOffset}px)`;
-              });
+              parallaxTrack.style.transform = `translateX(-${currentScroll}px)`;
+              
+              // Reset position for seamless loop
+              if (currentScroll >= totalWidth) {
+                parallaxTrack.style.transform = `translateX(0px)`;
+              }
             }
           }
         }
