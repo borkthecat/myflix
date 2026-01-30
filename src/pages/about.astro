@@ -574,10 +574,40 @@
         showNextMessage();
       }, 1000);
       
-      // Make animated face talk on click
-      const animatedFace = document.querySelector('.animated-face-container');
-      if (animatedFace) {
-        animatedFace.addEventListener('click', () => {
+      // Media Player Interactions
+      const mediaPlayer = document.querySelector('.media-player-container');
+      const playBtn = document.getElementById('play-btn');
+      const progressFill = document.getElementById('progress-fill');
+      let isPlaying = false;
+
+      if (playBtn) {
+        playBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          isPlaying = !isPlaying;
+          const playIcon = playBtn.querySelector('.play-icon');
+          const pauseIcon = playBtn.querySelector('.pause-icon');
+          
+          if (isPlaying) {
+            playIcon.style.display = 'none';
+            pauseIcon.style.display = 'block';
+            progressFill.style.animation = 'progressMove 225s linear';
+            progressFill.style.width = '0%';
+            setTimeout(() => {
+              progressFill.style.width = '100%';
+            }, 10);
+          } else {
+            playIcon.style.display = 'block';
+            pauseIcon.style.display = 'none';
+            progressFill.style.animation = 'none';
+          }
+        });
+      }
+
+      if (mediaPlayer) {
+        mediaPlayer.addEventListener('click', (e) => {
+          if (e.target.closest('.control-btn') || e.target.closest('.progress-bar')) {
+            return;
+          }
           if (!isTyping) {
             currentMessageIndex = (currentMessageIndex + 1) % messages.length;
             showNextMessage();
