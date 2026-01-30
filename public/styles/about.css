@@ -184,10 +184,11 @@ body {
 
 /* Hero Section */
 .about-hero {
-  padding: 100px 60px;
-  max-width: 1000px;
+  padding: 80px 60px 60px;
+  max-width: 900px;
   margin: 0 auto;
   text-align: center;
+  position: relative;
 }
 
 .hero-wrapper {
@@ -197,20 +198,24 @@ body {
 .hero-name {
   display: flex;
   flex-direction: column;
-  gap: 5px;
-  margin-bottom: 25px;
+  gap: 2px;
+  margin-bottom: 20px;
   align-items: center;
 }
 
 .name-part {
-  font-size: 5rem;
-  font-weight: 300;
-  line-height: 1.1;
-  letter-spacing: -3px;
+  font-size: 5.5rem;
+  font-weight: 200;
+  line-height: 1;
+  letter-spacing: -4px;
   display: block;
   opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 0.8s ease forwards;
+  transform: translateY(15px);
+  animation: fadeInUp 0.6s ease forwards;
+  background: linear-gradient(135deg, #fff 0%, #e5e5e5 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .name-part:nth-child(1) {
@@ -232,49 +237,66 @@ body {
   }
 }
 
+.hero-subtitle-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
 .hero-subtitle {
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   color: #b3b3b3;
-  margin: 0 0 30px 0;
-  font-weight: 300;
-  letter-spacing: 1px;
+  margin: 0;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+}
+
+.hero-line {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
 }
 
 .hero-description {
-  font-size: 1.2rem;
-  line-height: 1.8;
-  color: #e5e5e5;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #d3d3d3;
   margin: 0;
-  max-width: 700px;
+  max-width: 650px;
   margin-left: auto;
   margin-right: auto;
+  font-weight: 300;
 }
 
 /* Story Section - Creative Layout */
 .story-section {
-  padding: 120px 60px;
+  padding: 60px 60px;
   background: #0a0a0a;
 }
 
 .story-container {
-  max-width: 1200px;
+  max-width: 1100px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 80px;
+  gap: 35px;
 }
 
 .story-item-creative {
   display: grid;
-  grid-template-columns: 200px 1fr;
-  gap: 60px;
+  grid-template-columns: 120px 1fr;
+  gap: 35px;
   align-items: center;
   opacity: 0;
-  transform: translateX(-50px);
-  transition: all 0.8s ease;
-  padding: 40px;
-  background: rgba(26, 26, 26, 0.5);
-  border-radius: 20px;
+  transform: translateX(-30px);
+  transition: all 0.6s ease;
+  padding: 25px 30px;
+  background: rgba(26, 26, 26, 0.4);
+  border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
@@ -284,8 +306,8 @@ body {
 }
 
 .story-item-reverse {
-  grid-template-columns: 1fr 200px;
-  transform: translateX(50px);
+  grid-template-columns: 1fr 120px;
+  transform: translateX(30px);
 }
 
 .story-item-reverse.animate-in {
@@ -307,9 +329,9 @@ body {
 }
 
 .story-icon {
-  font-size: 6rem;
+  font-size: 4rem;
   filter: grayscale(100%);
-  opacity: 0.6;
+  opacity: 0.5;
   transition: all 0.4s ease;
   transform: scale(1);
 }
@@ -317,7 +339,7 @@ body {
 .story-item-creative:hover .story-icon {
   filter: grayscale(0%);
   opacity: 1;
-  transform: scale(1.2) rotate(5deg);
+  transform: scale(1.15) rotate(5deg);
 }
 
 .story-content {
@@ -326,52 +348,45 @@ body {
 
 .story-label {
   display: inline-block;
-  font-size: 0.9rem;
+  font-size: 0.75rem;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.4);
-  letter-spacing: 3px;
+  color: rgba(255, 255, 255, 0.3);
+  letter-spacing: 2px;
   text-transform: uppercase;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .story-content h2 {
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin: 0 0 25px 0;
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 0 0 15px 0;
   color: #fff;
-  letter-spacing: -1px;
-  background: linear-gradient(135deg, #fff 0%, #b3b3b3 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  letter-spacing: -0.5px;
   transition: all 0.3s ease;
 }
 
 .story-item-creative:hover .story-content h2 {
-  background: linear-gradient(135deg, #fff 0%, #fff 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #fff;
 }
 
 .story-content p {
-  font-size: 1.15rem;
-  line-height: 1.9;
+  font-size: 1rem;
+  line-height: 1.7;
   color: #b3b3b3;
   margin: 0;
 }
 
 /* Interests Section */
 .interests-section {
-  padding: 100px 60px;
+  padding: 60px 60px;
   max-width: 1000px;
   margin: 0 auto;
 }
 
 .section-title {
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-weight: 300;
-  margin: 0 0 60px 0;
+  margin: 0 0 40px 0;
   text-align: center;
   color: #fff;
   letter-spacing: -1px;
@@ -380,7 +395,7 @@ body {
 .interests-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
+  gap: 25px;
 }
 
 .interest-item {
@@ -681,8 +696,8 @@ body {
 
 /* GitHub & Experience Combined Section */
 .github-experience-section {
-  padding: 80px 60px;
-  background: #0a0a0a;
+  padding: 60px 60px;
+  background: #141414;
 }
 
 .combined-container {
@@ -988,22 +1003,23 @@ body {
 
 /* Parallax Image Gallery */
 .parallax-gallery {
-  padding: 80px 0;
+  padding: 60px 0;
   background: #141414;
   overflow: hidden;
   position: relative;
+  margin-bottom: 80px;
 }
 
 .parallax-container {
   width: 100%;
-  height: 400px;
+  height: 380px;
   position: relative;
   overflow: visible;
 }
 
 .parallax-track {
   display: flex;
-  gap: 20px;
+  gap: 18px;
   height: 100%;
   will-change: transform;
   padding: 0 40px;
@@ -1012,21 +1028,21 @@ body {
 
 .parallax-image {
   flex-shrink: 0;
-  width: 280px;
-  height: 360px;
+  width: 260px;
+  height: 340px;
   background-size: cover;
   background-position: center;
-  border-radius: 12px;
+  border-radius: 10px;
   position: relative;
   overflow: hidden;
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
 }
 
 .parallax-image:hover {
-  transform: scale(1.08) translateY(-8px);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+  transform: scale(1.06) translateY(-6px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7);
   z-index: 10;
 }
 
@@ -1065,17 +1081,18 @@ body {
 
 /* Horizontal Text Section */
 .horizontal-text-section {
-  padding: 120px 60px;
-  background: #141414;
+  padding: 100px 60px;
+  background: #0a0a0a;
   overflow: visible;
   position: relative;
+  margin-top: 40px;
 }
 
 .horizontal-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 80px;
+  gap: 70px;
   flex-wrap: wrap;
   max-width: 1400px;
   margin: 0 auto;
@@ -1084,12 +1101,12 @@ body {
 
 .horizontal-word {
   position: relative;
-  font-size: 7rem;
+  font-size: 6.5rem;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.1);
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  letter-spacing: -4px;
+  letter-spacing: -3px;
   line-height: 1;
   user-select: none;
   z-index: 1;
@@ -1097,8 +1114,8 @@ body {
 
 .horizontal-word:hover {
   color: rgba(255, 255, 255, 0.95);
-  transform: scale(1.15);
-  letter-spacing: -2px;
+  transform: scale(1.12);
+  letter-spacing: -1px;
   z-index: 10;
 }
 
@@ -1106,23 +1123,23 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -150%) scale(0);
-  width: 350px;
-  height: 350px;
+  transform: translate(-50%, -180%) scale(0);
+  width: 320px;
+  height: 320px;
   background-size: cover;
   background-position: center;
-  border-radius: 16px;
+  border-radius: 14px;
   opacity: 0;
   pointer-events: none;
   z-index: 100;
-  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.9);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9);
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 .horizontal-word:hover .hover-image {
   opacity: 1;
-  transform: translate(-50%, -150%) scale(1);
+  transform: translate(-50%, -180%) scale(1);
 }
 
 /* Experience Section */
@@ -1233,22 +1250,22 @@ body {
 
 /* Philosophy Section */
 .philosophy-section {
-  padding: 100px 60px;
-  background: #0a0a0a;
+  padding: 70px 60px;
+  background: #141414;
 }
 
 .philosophy-wrapper {
-  max-width: 900px;
+  max-width: 850px;
   margin: 0 auto;
   text-align: center;
 }
 
 .philosophy-quote {
-  font-size: 2rem;
+  font-size: 1.7rem;
   line-height: 1.6;
   color: #e5e5e5;
   font-style: italic;
-  margin: 0 0 80px 0;
+  margin: 0 0 50px 0;
   font-weight: 300;
   border: none;
   padding: 0;
@@ -1263,7 +1280,7 @@ body {
 .philosophy-stats {
   display: flex;
   justify-content: center;
-  gap: 100px;
+  gap: 80px;
   flex-wrap: wrap;
 }
 
@@ -1371,12 +1388,16 @@ body {
     padding: 60px 30px;
   }
 
-  .hero-content h1 {
-    font-size: 2.5rem;
+  .about-hero {
+    padding: 60px 30px 40px;
+  }
+
+  .name-part {
+    font-size: 3.5rem;
   }
 
   .hero-subtitle {
-    font-size: 1.1rem;
+    font-size: 0.8rem;
   }
 
   .hero-description {
@@ -1441,43 +1462,51 @@ body {
   }
 
   .parallax-gallery {
-    padding: 60px 0;
+    padding: 50px 0;
+    margin-bottom: 60px;
   }
 
   .parallax-container {
-    height: 320px;
+    height: 280px;
   }
 
   .parallax-track {
     padding: 0 20px;
+    gap: 15px;
   }
 
   .parallax-image {
-    width: 240px;
-    height: 300px;
+    width: 200px;
+    height: 260px;
   }
 
   .parallax-text {
-    font-size: 1rem;
-    padding: 20px;
+    font-size: 0.9rem;
+    padding: 15px;
   }
 
   .horizontal-text-section {
-    padding: 80px 30px;
+    padding: 70px 30px;
     overflow: visible;
+    margin-top: 30px;
   }
 
   .horizontal-container {
-    gap: 40px;
+    gap: 35px;
   }
 
   .horizontal-word {
-    font-size: 4.5rem;
+    font-size: 4rem;
   }
 
   .hover-image {
-    width: 280px;
-    height: 280px;
+    width: 250px;
+    height: 250px;
+    transform: translate(-50%, -200%) scale(0);
+  }
+
+  .horizontal-word:hover .hover-image {
+    transform: translate(-50%, -200%) scale(1);
   }
 
   .story-item-creative {
