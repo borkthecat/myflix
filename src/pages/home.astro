@@ -566,8 +566,8 @@
                 console.log('Voxel model loaded successfully');
                 earth = gltf.scene;
                 
-                // Scale the model appropriately
-                earth.scale.set(6, 6, 6);
+              // Scale the model appropriately (smaller size)
+              earth.scale.set(2.5, 2.5, 2.5);
                 
                 // Center the model
                 const box = new THREE.Box3().setFromObject(earth);
