@@ -827,9 +827,15 @@
         // Verify scene has objects
         console.log('Scene children count:', scene.children.length);
         console.log('Camera position:', camera.position);
-        console.log('Renderer size:', renderer.getSize());
-        console.log('Earth position:', earth.position);
-        console.log('Earth visible:', earth.visible);
+        const size = new THREE.Vector2();
+        renderer.getSize(size);
+        console.log('Renderer size:', size.width, size.height);
+        if (earth && earth.position) {
+          console.log('Earth position:', earth.position);
+          console.log('Earth visible:', earth.visible);
+        } else {
+          console.log('Earth not loaded yet');
+        }
         
         // Check if canvas is actually visible
         const rect = canvas.getBoundingClientRect();
