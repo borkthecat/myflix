@@ -439,9 +439,112 @@
       </div>
     </footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
       // Auto year update
       document.getElementById("year").textContent = new Date().getFullYear();
+
+      // Interactive 3D Globe with Parallax
+      const canvas = document.getElementById('globe-canvas');
+      if (canvas) {
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+        
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        
+        // Create globe geometry
+        const geometry = new THREE.SphereGeometry(2, 64, 64);
+        
+        // Create material with earth-like colors
+        const material = new THREE.MeshPhongMaterial({
+          color: 0x4a5568,
+          shininess: 30,
+          specular: 0x222222
+        });
+        
+        const globe = new THREE.Mesh(geometry, material);
+        scene.add(globe);
+        
+        // Add low-poly style with custom shader or texture
+        const wireframe = new THREE.WireframeGeometry(geometry);
+        const line = new THREE.LineSegments(wireframe, new THREE.LineBasicMaterial({ 
+          color: 0x2d3748, 
+          opacity: 0.3, 
+          transparent: true 
+        }));
+        globe.add(line);
+        
+        // Add lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+        scene.add(ambientLight);
+        
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        directionalLight.position.set(5, 5, 5);
+        scene.add(directionalLight);
+        
+        // Position camera
+        camera.position.z = 5;
+        camera.position.y = 0.5;
+        
+        // Mouse interaction
+        let mouseX = 0;
+        let mouseY = 0;
+        let targetRotationX = 0;
+        let targetRotationY = 0;
+        
+        document.addEventListener('mousemove', (e) => {
+          mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+          mouseY = (e.clientY / window.innerHeight) * 2 - 1;
+          targetRotationY = mouseX * 0.5;
+          targetRotationX = -mouseY * 0.3;
+        });
+        
+        // Parallax scroll effect
+        let scrollY = 0;
+        let targetScrollY = 0;
+        
+        window.addEventListener('scroll', () => {
+          targetScrollY = window.scrollY;
+        });
+        
+        // Animation loop
+        function animate() {
+          requestAnimationFrame(animate);
+          
+          // Smooth rotation based on mouse
+          globe.rotation.y += (targetRotationY - globe.rotation.y) * 0.05;
+          globe.rotation.x += (targetRotationX - globe.rotation.x) * 0.05;
+          
+          // Auto rotation
+          globe.rotation.y += 0.002;
+          
+          // Parallax effect based on scroll
+          scrollY += (targetScrollY - scrollY) * 0.1;
+          camera.position.y = 0.5 + (scrollY * 0.001);
+          camera.position.z = 5 + (scrollY * 0.002);
+          
+          // Update camera based on scroll for parallax
+          const heroSection = document.querySelector('.hero');
+          if (heroSection) {
+            const rect = heroSection.getBoundingClientRect();
+            const parallaxOffset = (rect.top / window.innerHeight) * 2;
+            camera.position.y = 0.5 + parallaxOffset;
+          }
+          
+          renderer.render(scene, camera);
+        }
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {
+          camera.aspect = window.innerWidth / window.innerHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+        
+        animate();
+      }
     </script>
 
     <script>
