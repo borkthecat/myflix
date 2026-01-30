@@ -700,26 +700,17 @@
             const deltaX = e.touches[0].clientX - touchStart.x;
             const deltaY = e.touches[0].clientY - touchStart.y;
             
-            // Fix rotation direction for touch too
+            // Rotate camera view around the scene
             rotationSpeed.y = -deltaX * 0.01;
             rotationSpeed.x = deltaY * 0.01;
             
-            if (earth && earth.rotation) {
-              earth.rotation.y += rotationSpeed.y;
-              earth.rotation.x += rotationSpeed.x;
-              
-              earth.rotation.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, earth.rotation.x));
-              
-              if (continents && Array.isArray(continents)) {
-                continents.forEach(cont => {
-                  if (cont && cont.rotation && cont !== earth) {
-                    cont.rotation.y += rotationSpeed.y;
-                    cont.rotation.x += rotationSpeed.x;
-                    cont.rotation.x = earth.rotation.x;
-                  }
-                });
-              }
-            }
+            // Rotate camera around the center
+            const radius = 20;
+            camera.userData.angle = (camera.userData.angle || 0) + rotationSpeed.y;
+            camera.position.x = Math.sin(camera.userData.angle) * radius;
+            camera.position.z = Math.cos(camera.userData.angle) * radius;
+            camera.position.y += rotationSpeed.x * 2;
+            camera.lookAt(0, 0, 0);
             
             touchStart = { x: e.touches[0].clientX, y: e.touches[0].clientY };
           }
