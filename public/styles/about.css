@@ -203,101 +203,35 @@ body {
 
 /* Terminal Interface */
 .terminal-container {
-  max-width: 800px;
+  max-width: 700px;
   margin: 0 auto 50px;
   position: relative;
   z-index: 1;
 }
 
 .terminal-window {
-  background: #141414;
-  border-radius: 16px;
+  background: rgba(20, 20, 20, 0.4);
+  border-radius: 8px;
   overflow: hidden;
-  box-shadow: 
-    0 20px 60px rgba(0, 0, 0, 0.8),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Courier New', monospace;
   transition: all 0.3s ease;
   cursor: pointer;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .terminal-window:hover {
-  box-shadow: 
-    0 25px 70px rgba(0, 0, 0, 0.9),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  transform: translateY(-3px);
-  border-color: rgba(255, 255, 255, 0.12);
-}
-
-.terminal-header {
-  background: linear-gradient(180deg, rgba(20, 20, 20, 0.95), rgba(15, 15, 15, 0.9));
-  padding: 14px 20px;
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  position: relative;
-}
-
-.terminal-header::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-}
-
-.terminal-title-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.terminal-status-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #22c55e;
-  box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
-  animation: statusPulse 2s ease-in-out infinite;
-}
-
-@keyframes statusPulse {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.7;
-    transform: scale(1.2);
-  }
-}
-
-.terminal-title {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 0.8rem;
-  font-weight: 500;
-  letter-spacing: 0.5px;
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+  transform: translateY(-2px);
 }
 
 .terminal-body {
-  padding: 24px;
-  min-height: 220px;
-  background: #141414;
+  padding: 28px 32px;
+  min-height: 180px;
+  background: transparent;
   position: relative;
-}
-
-.terminal-body::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
 }
 
 .terminal-line {
@@ -309,19 +243,22 @@ body {
 }
 
 .terminal-prompt {
-  color: #58a6ff;
-  margin-right: 8px;
-  font-weight: 500;
+  color: #7dd3fc;
+  margin-right: 10px;
+  font-weight: 600;
+  font-size: 1rem;
 }
 
 .terminal-command {
-  color: #c9d1d9;
+  color: #e5e7eb;
+  font-size: 1rem;
 }
 
 .terminal-cursor {
-  color: #58a6ff;
+  color: #7dd3fc;
   animation: terminalBlink 1s infinite;
-  margin-left: 2px;
+  margin-left: 4px;
+  font-weight: 600;
 }
 
 @keyframes terminalBlink {
@@ -334,64 +271,15 @@ body {
 }
 
 .terminal-output {
-  margin-top: 12px;
-  color: #8b949e;
-  font-size: 0.9rem;
-  line-height: 1.6;
+  margin-top: 16px;
+  color: #a1a1aa;
+  font-size: 0.95rem;
+  line-height: 1.7;
   white-space: pre-wrap;
-  min-height: 40px;
+  min-height: 50px;
   opacity: 0;
   transform: translateY(10px);
   transition: all 0.3s ease;
-}
-
-.terminal-footer {
-  margin-top: 20px;
-  padding-top: 16px;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.terminal-stats {
-  display: flex;
-  gap: 24px;
-  flex-wrap: wrap;
-}
-
-.stat-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.85rem;
-}
-
-.stat-label {
-  color: rgba(255, 255, 255, 0.5);
-  font-weight: 400;
-}
-
-.stat-value {
-  color: rgba(255, 255, 255, 0.8);
-  font-weight: 600;
-}
-
-.stat-value.online {
-  color: #22c55e;
-  position: relative;
-  padding-left: 12px;
-}
-
-.stat-value.online::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #22c55e;
-  box-shadow: 0 0 6px rgba(34, 197, 94, 0.6);
-  animation: statusPulse 2s ease-in-out infinite;
 }
 
 /* Old media player styles - to be removed */

@@ -447,60 +447,68 @@
       // Interactive 3D Globe with Parallax
       const canvas = document.getElementById('globe-canvas');
       if (canvas) {
+        const heroSection = document.querySelector('.hero');
+        const heroRect = heroSection.getBoundingClientRect();
+        
         const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const camera = new THREE.PerspectiveCamera(50, canvas.offsetWidth / canvas.offsetHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
         
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(window.devicePixelRatio);
+        // Set renderer size to match canvas container
+        function updateRendererSize() {
+          const rect = canvas.getBoundingClientRect();
+          renderer.setSize(rect.width, rect.height);
+          renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+          camera.aspect = rect.width / rect.height;
+          camera.updateProjectionMatrix();
+        }
+        updateRendererSize();
         
-        // Create low-poly globe geometry (fewer segments for low-poly look)
-        const geometry = new THREE.SphereGeometry(3.5, 24, 24);
+        // Create larger, more visible globe
+        const geometry = new THREE.SphereGeometry(4, 20, 20);
         
-        // Create material with earth-like colors - more visible
+        // Create material with brighter, more visible colors
         const material = new THREE.MeshPhongMaterial({
-          color: 0x6b8e5a,
-          shininess: 40,
-          specular: 0x333333,
+          color: 0x7a9c8a,
+          shininess: 50,
+          specular: 0x444444,
           flatShading: true,
-          emissive: 0x1a1a1a,
-          emissiveIntensity: 0.2
+          emissive: 0x2a3a2a,
+          emissiveIntensity: 0.3
         });
         
         const globe = new THREE.Mesh(geometry, material);
         scene.add(globe);
         
-        // Add wireframe for low-poly aesthetic - more visible
+        // Add wireframe for low-poly aesthetic
         const wireframe = new THREE.WireframeGeometry(geometry);
         const line = new THREE.LineSegments(wireframe, new THREE.LineBasicMaterial({ 
-          color: 0x6b8e5a, 
-          opacity: 0.5, 
-          transparent: true,
-          linewidth: 1
+          color: 0x8aac9a, 
+          opacity: 0.6, 
+          transparent: true
         }));
         globe.add(line);
         
-        // Add lighting for better visibility
-        const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+        // Add strong lighting for visibility
+        const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
         scene.add(ambientLight);
         
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
         directionalLight.position.set(5, 5, 5);
         scene.add(directionalLight);
         
-        const pointLight = new THREE.PointLight(0xffffff, 0.8);
+        const pointLight = new THREE.PointLight(0xffffff, 1);
         pointLight.position.set(-5, 0, 5);
         scene.add(pointLight);
         
-        // Add rim light for better edge definition
-        const rimLight = new THREE.DirectionalLight(0x88aaff, 0.6);
+        const rimLight = new THREE.DirectionalLight(0xaaccff, 0.8);
         rimLight.position.set(-5, -3, -5);
         scene.add(rimLight);
         
-        // Position camera - to the right side to show globe
-        camera.position.z = 7;
-        camera.position.y = 1;
-        camera.position.x = 2.5;
+        // Position camera to show globe clearly on the right
+        camera.position.z = 8;
+        camera.position.y = 1.5;
+        camera.position.x = 3;
         camera.lookAt(0, 0, 0);
         
         // Store initial positions for parallax
@@ -521,14 +529,6 @@
           targetRotationX = -mouseY * 0.3;
         });
         
-        // Parallax scroll effect
-        let scrollY = 0;
-        let targetScrollY = 0;
-        
-        window.addEventListener('scroll', () => {
-          targetScrollY = window.scrollY;
-        });
-        
         // Animation loop
         function animate() {
           requestAnimationFrame(animate);
@@ -541,22 +541,21 @@
           globe.rotation.y += 0.002;
           
           // Parallax effect - globe disappears as you scroll
-          const heroSection = document.querySelector('.hero');
           if (heroSection) {
             const rect = heroSection.getBoundingClientRect();
             const heroHeight = heroSection.offsetHeight;
             const scrollProgress = Math.max(0, Math.min(1, (heroHeight - rect.top) / heroHeight));
             
             // Move globe away and fade out as you scroll
-            camera.position.z = initialZ + (scrollProgress * 15); // Move away
-            camera.position.y = initialY + (scrollProgress * 5);
-            camera.position.x = initialX + (scrollProgress * 3);
+            camera.position.z = initialZ + (scrollProgress * 20);
+            camera.position.y = initialY + (scrollProgress * 6);
+            camera.position.x = initialX + (scrollProgress * 4);
             
             // Fade out the globe
             const opacity = 1 - scrollProgress;
             material.opacity = opacity;
             material.transparent = opacity < 1;
-            line.material.opacity = 0.4 * opacity;
+            line.material.opacity = 0.6 * opacity;
             
             // Rotate globe as you scroll
             globe.rotation.x = scrollProgress * 0.5;
@@ -567,9 +566,7 @@
         
         // Handle window resize
         window.addEventListener('resize', () => {
-          camera.aspect = window.innerWidth / window.innerHeight;
-          camera.updateProjectionMatrix();
-          renderer.setSize(window.innerWidth, window.innerHeight);
+          updateRendererSize();
         });
         
         animate();
