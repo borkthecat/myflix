@@ -1292,12 +1292,19 @@ body {
   margin-bottom: 20px;
 }
 
-.footer .socials img {
+.footer .socials img,
+.footer .socials svg {
   width: 24px;
   height: 24px;
   filter: brightness(0) invert(1); /* white icons */
   cursor: pointer;
   transition: opacity 0.3s ease;
+  display: block;
+}
+
+.footer .socials a:hover img,
+.footer .socials a:hover svg {
+  opacity: 0.7;
 }
 
 .footer .links {
