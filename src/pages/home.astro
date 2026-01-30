@@ -865,10 +865,12 @@
         };
         console.log('Free camera positioned');
         
-        // Free camera controls
+        // Free camera controls with auto-orbit
         let isDragging = false;
         let previousMousePosition = { x: 0, y: 0 };
         let rotationSpeed = { x: 0, y: 0 };
+        let autoOrbitSpeed = 0.002; // Auto-orbit speed when not dragging
+        let userHasInteracted = false; // Track if user has manually moved camera
         
         canvas.addEventListener('mousedown', (e) => {
           isDragging = true;
@@ -878,6 +880,7 @@
         
         canvas.addEventListener('mousemove', (e) => {
           if (isDragging) {
+            userHasInteracted = true;
             const deltaX = e.clientX - previousMousePosition.x;
             const deltaY = e.clientY - previousMousePosition.y;
             
@@ -912,6 +915,7 @@
         // Zoom functionality - move camera forward/backward
         canvas.addEventListener('wheel', (e) => {
           e.preventDefault();
+          userHasInteracted = true;
           const zoomSpeed = 0.5;
           const delta = e.deltaY > 0 ? zoomSpeed : -zoomSpeed;
           
@@ -961,9 +965,10 @@
           isDragging = false;
         });
         
-        // Momentum/inertia for smooth rotation
+        // Momentum/inertia for smooth rotation and auto-orbit
         function applyMomentum() {
           if (!isDragging) {
+            // Apply momentum from user interaction
             rotationSpeed.y *= 0.95;
             rotationSpeed.x *= 0.95;
             
@@ -978,6 +983,12 @@
               updateCameraPosition();
             } else {
               rotationSpeed = { x: 0, y: 0 };
+              
+              // Auto-orbit when not being dragged and momentum has stopped
+              if (!userHasInteracted || (Math.abs(rotationSpeed.y) < 0.001 && Math.abs(rotationSpeed.x) < 0.001)) {
+                cameraTheta += autoOrbitSpeed;
+                updateCameraPosition();
+              }
             }
           }
         }
