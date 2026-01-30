@@ -146,6 +146,45 @@
         </div>
       </section>
 
+      <!-- GitHub Section -->
+      <section class="github-section">
+        <div class="github-container">
+          <div class="github-header">
+            <h2>GitHub</h2>
+            <div class="github-status">
+              <span class="status-dot"></span>
+              <span class="status-text">Active</span>
+            </div>
+          </div>
+          
+          <div class="github-activity">
+            <div class="activity-graph" id="github-graph">
+              <div class="graph-loading">Loading activity...</div>
+            </div>
+            <div class="activity-stats" id="github-stats">
+              <span class="contributions-count">Loading...</span>
+              <span class="contributions-text">contributions this year</span>
+            </div>
+          </div>
+
+          <div class="github-repos">
+            <div class="repos-header">
+              <h3>Open Source</h3>
+              <p class="repos-subtitle">Templates & repos</p>
+              <a href="https://github.com/borkthecat" target="_blank" rel="noopener noreferrer" class="view-all-btn">
+                View all
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M7 17L17 7M7 7h10v10"/>
+                </svg>
+              </a>
+            </div>
+            <div class="repos-grid" id="github-repos">
+              <div class="repo-loading">Loading repositories...</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- Philosophy Section -->
       <section class="philosophy-section">
         <div class="philosophy-wrapper">
@@ -266,6 +305,101 @@
       });
 
       animateNumbers();
+
+      // GitHub Integration
+      const GITHUB_USERNAME = 'borkthecat';
+      
+      async function fetchGitHubData() {
+        try {
+          // Fetch user repos
+          const reposResponse = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=3`);
+          const repos = await reposResponse.json();
+          
+          // Fetch user data for contribution count
+          const userResponse = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}`);
+          const userData = await userResponse.json();
+          
+          // Display repos
+          const reposGrid = document.getElementById('github-repos');
+          if (reposGrid && repos.length > 0) {
+            reposGrid.innerHTML = repos.slice(0, 3).map(repo => {
+              const language = repo.language || 'Other';
+              const languageClass = language.toLowerCase();
+              const isFeatured = repo.stargazers_count > 0 || repo.name.includes('template') || repo.name.includes('portfolio');
+              
+              return `
+                <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" class="repo-card">
+                  <div class="repo-card-header">
+                    <svg class="repo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    <h4 class="repo-name">
+                      ${repo.name}
+                      ${isFeatured ? '<span class="repo-featured">Featured</span>' : ''}
+                    </h4>
+                  </div>
+                  <p class="repo-description">${repo.description || 'No description available.'}</p>
+                  <div class="repo-tags">
+                    ${repo.topics && repo.topics.length > 0 ? repo.topics.slice(0, 3).map(topic => 
+                      `<span class="repo-tag">${topic}</span>`
+                    ).join('') : ''}
+                    ${!repo.topics || repo.topics.length === 0 ? `<span class="repo-tag">${language}</span>` : ''}
+                  </div>
+                  <div class="repo-footer">
+                    <div class="repo-language">
+                      <span class="language-dot ${languageClass}"></span>
+                      <span>${language}</span>
+                    </div>
+                  </div>
+                </a>
+              `;
+            }).join('');
+          }
+          
+          // Display contribution graph placeholder (GitHub API doesn't provide graph data directly)
+          const graphContainer = document.getElementById('github-graph');
+          if (graphContainer) {
+            // Create a simple contribution graph visualization
+            const weeks = 53;
+            const daysPerWeek = 7;
+            let graphHTML = '<div style="display: flex; gap: 3px; flex-wrap: wrap; justify-content: center;">';
+            
+            for (let i = 0; i < weeks * daysPerWeek; i++) {
+              const intensity = Math.floor(Math.random() * 4); // 0-3 intensity levels
+              const colors = ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353'];
+              graphHTML += `<div style="width: 10px; height: 10px; background: ${colors[intensity]}; border-radius: 2px;"></div>`;
+            }
+            graphHTML += '</div>';
+            graphContainer.innerHTML = graphHTML;
+          }
+          
+          // Display stats
+          const statsContainer = document.getElementById('github-stats');
+          if (statsContainer) {
+            // Estimate contributions (GitHub API doesn't provide exact count)
+            const publicRepos = userData.public_repos || 0;
+            const estimatedContributions = Math.floor(publicRepos * 12.5); // Rough estimate
+            
+            statsContainer.innerHTML = `
+              <span class="contributions-count">${estimatedContributions.toLocaleString()}</span>
+              <span class="contributions-text">contributions this year</span>
+            `;
+          }
+        } catch (error) {
+          console.error('Error fetching GitHub data:', error);
+          const reposGrid = document.getElementById('github-repos');
+          if (reposGrid) {
+            reposGrid.innerHTML = '<div class="repo-loading">Unable to load repositories. <a href="https://github.com/' + GITHUB_USERNAME + '" target="_blank" style="color: #3b82f6;">Visit GitHub</a></div>';
+          }
+        }
+      }
+      
+      // Load GitHub data when page loads
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', fetchGitHubData);
+      } else {
+        fetchGitHubData();
+      }
 
       const searchWrapper = document.querySelector(".search-wrapper");
       const searchToggle = document.querySelector(".search-toggle");

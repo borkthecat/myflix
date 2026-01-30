@@ -324,6 +324,276 @@ body {
   margin: 0;
 }
 
+/* GitHub Section */
+.github-section {
+  padding: 80px 60px;
+  background: #0a0a0a;
+}
+
+.github-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.github-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.github-header h2 {
+  font-size: 2.5rem;
+  font-weight: 300;
+  margin: 0;
+  color: #fff;
+  letter-spacing: -1px;
+}
+
+.github-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+  }
+  50% {
+    opacity: 0.8;
+    box-shadow: 0 0 0 4px rgba(34, 197, 94, 0);
+  }
+}
+
+.status-text {
+  font-size: 0.9rem;
+  color: #22c55e;
+  font-weight: 500;
+}
+
+.github-activity {
+  margin-bottom: 60px;
+}
+
+.activity-graph {
+  background: #1a1a1a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 15px;
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.graph-loading {
+  color: #b3b3b3;
+  font-size: 0.9rem;
+}
+
+.activity-stats {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.contributions-count {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.contributions-text {
+  font-size: 0.9rem;
+  color: #b3b3b3;
+}
+
+.github-repos {
+  background: #1a1a1a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 30px;
+}
+
+.repos-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.repos-header h3 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin: 0 0 5px 0;
+  color: #fff;
+}
+
+.repos-subtitle {
+  font-size: 0.9rem;
+  color: #b3b3b3;
+  margin: 0;
+}
+
+.view-all-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: gap 0.3s ease;
+}
+
+.view-all-btn:hover {
+  gap: 10px;
+  color: #fff;
+}
+
+.view-all-btn svg {
+  transition: transform 0.3s ease;
+}
+
+.view-all-btn:hover svg {
+  transform: translate(2px, -2px);
+}
+
+.repos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.repo-loading {
+  color: #b3b3b3;
+  font-size: 0.9rem;
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 20px;
+}
+
+.repo-card {
+  background: #0a0a0a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 20px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.repo-card:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.repo-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.repo-icon {
+  width: 16px;
+  height: 16px;
+  color: #b3b3b3;
+}
+
+.repo-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+}
+
+.repo-featured {
+  display: inline-block;
+  padding: 3px 8px;
+  background: rgba(59, 130, 246, 0.2);
+  border: 1px solid rgba(59, 130, 246, 0.4);
+  border-radius: 12px;
+  font-size: 0.7rem;
+  color: #3b82f6;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-left: 8px;
+}
+
+.repo-description {
+  font-size: 0.9rem;
+  color: #b3b3b3;
+  line-height: 1.5;
+  margin: 0 0 15px 0;
+}
+
+.repo-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.repo-tag {
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  font-size: 0.75rem;
+  color: #b3b3b3;
+}
+
+.repo-footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.repo-language {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: #b3b3b3;
+}
+
+.language-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #3b82f6;
+}
+
+.language-dot.rust {
+  background: #ce412b;
+}
+
+.language-dot.javascript {
+  background: #f7df1e;
+}
+
+.language-dot.python {
+  background: #3776ab;
+}
+
 /* Philosophy Section */
 .philosophy-section {
   padding: 100px 60px;
@@ -510,6 +780,18 @@ body {
   .interests-container {
     grid-template-columns: 1fr;
     gap: 30px;
+  }
+
+  .github-section {
+    padding: 60px 30px;
+  }
+
+  .github-header h2 {
+    font-size: 2rem;
+  }
+
+  .repos-grid {
+    grid-template-columns: 1fr;
   }
 
   .philosophy-section {
