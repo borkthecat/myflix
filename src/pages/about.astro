@@ -67,34 +67,43 @@
         </div>
         <div class="hero-wrapper">
           <div class="hero-content">
-            <!-- Animated Player with Speech Bubble -->
-            <div class="animated-player">
-              <div class="player-container">
-                <div class="player-disc">
-                  <div class="disc-center"></div>
-                  <div class="disc-groove"></div>
+            <!-- Animated Talking Player -->
+            <div class="talking-player">
+              <div class="player-body">
+                <div class="player-face">
+                  <div class="player-eyes">
+                    <div class="eye eye-left">
+                      <div class="pupil"></div>
+                    </div>
+                    <div class="eye eye-right">
+                      <div class="pupil"></div>
+                    </div>
+                  </div>
+                  <div class="player-mouth">
+                    <div class="mouth-shape"></div>
+                  </div>
                 </div>
-                <div class="player-arm"></div>
+                <div class="player-screen">
+                  <div class="screen-content">
+                    <div class="screen-line"></div>
+                    <div class="screen-line"></div>
+                    <div class="screen-line"></div>
+                  </div>
+                </div>
               </div>
-              <div class="speech-bubble">
-                <div class="speech-content">
-                  <p class="speech-text">Hi, I'm</p>
+              <div class="speech-bubble-main" id="speech-bubble">
+                <div class="speech-content-main">
+                  <p class="speech-text-main" id="speech-text">Hello! Welcome to my portfolio...</p>
+                  <div class="typing-indicator">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
                 </div>
-                <div class="speech-tail"></div>
+                <div class="speech-tail-main"></div>
               </div>
             </div>
             
-            <div class="hero-name-creative">
-              <div class="name-bubble name-bubble-1">
-                <span class="name-part">Arai</span>
-              </div>
-              <div class="name-bubble name-bubble-2">
-                <span class="name-part">Nanami</span>
-              </div>
-              <div class="name-bubble name-bubble-3">
-                <span class="name-part">Rachel</span>
-              </div>
-            </div>
             <div class="hero-subtitle-wrapper">
               <p class="hero-subtitle">Computer Science & Design Student</p>
               <div class="hero-line"></div>
@@ -456,6 +465,76 @@
           hoverImage.style.backgroundImage = `url(${imageUrl})`;
         }
       });
+
+      // Talking Player Animation
+      const speechText = document.getElementById('speech-text');
+      const speechBubble = document.getElementById('speech-bubble');
+      const typingIndicator = speechBubble?.querySelector('.typing-indicator');
+      
+      const messages = [
+        "Hello! Welcome to my portfolio...",
+        "I'm passionate about design and code.",
+        "Let's build something amazing together!",
+        "Scroll down to see my work...",
+        "Thanks for visiting!"
+      ];
+      
+      let currentMessageIndex = 0;
+      let isTyping = false;
+      
+      function typeMessage(message, callback) {
+        if (isTyping) return;
+        isTyping = true;
+        
+        if (typingIndicator) {
+          typingIndicator.classList.add('active');
+        }
+        
+        let charIndex = 0;
+        speechText.textContent = '';
+        
+        const typeInterval = setInterval(() => {
+          if (charIndex < message.length) {
+            speechText.textContent += message[charIndex];
+            charIndex++;
+          } else {
+            clearInterval(typeInterval);
+            if (typingIndicator) {
+              typingIndicator.classList.remove('active');
+            }
+            isTyping = false;
+            if (callback) callback();
+          }
+        }, 50);
+      }
+      
+      function showNextMessage() {
+        if (currentMessageIndex < messages.length) {
+          typeMessage(messages[currentMessageIndex], () => {
+            setTimeout(() => {
+              currentMessageIndex = (currentMessageIndex + 1) % messages.length;
+              showNextMessage();
+            }, 3000);
+          });
+        }
+      }
+      
+      // Start talking when page loads
+      setTimeout(() => {
+        showNextMessage();
+      }, 1000);
+      
+      // Make player talk on click
+      const playerBody = document.querySelector('.player-body');
+      if (playerBody) {
+        playerBody.addEventListener('click', () => {
+          if (!isTyping) {
+            currentMessageIndex = (currentMessageIndex + 1) % messages.length;
+            showNextMessage();
+          }
+        });
+        playerBody.style.cursor = 'pointer';
+      }
 
       // Enhanced Parallax Gallery Effect - Horizontal Scrolling
       const parallaxTrack = document.getElementById('parallax-track');
