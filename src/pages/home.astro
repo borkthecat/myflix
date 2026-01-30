@@ -454,27 +454,44 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(window.devicePixelRatio);
         
-        // Create globe geometry
-        const geometry = new THREE.SphereGeometry(2, 64, 64);
+        // Create low-poly globe geometry (fewer segments for low-poly look)
+        const geometry = new THREE.SphereGeometry(2.5, 32, 32);
         
-        // Create material with earth-like colors
+        // Create material with earth-like colors (brown/orange land, blue ocean)
         const material = new THREE.MeshPhongMaterial({
-          color: 0x4a5568,
-          shininess: 30,
-          specular: 0x222222
+          color: 0x4a7c59, // Green/brown land color
+          shininess: 20,
+          specular: 0x111111,
+          flatShading: true // Low-poly flat shading
         });
         
         const globe = new THREE.Mesh(geometry, material);
         scene.add(globe);
         
-        // Add low-poly style with custom shader or texture
+        // Add subtle wireframe for low-poly aesthetic
         const wireframe = new THREE.WireframeGeometry(geometry);
         const line = new THREE.LineSegments(wireframe, new THREE.LineBasicMaterial({ 
           color: 0x2d3748, 
-          opacity: 0.3, 
+          opacity: 0.2, 
           transparent: true 
         }));
         globe.add(line);
+        
+        // Add ocean color variation using vertex colors
+        const colors = [];
+        const positions = geometry.attributes.position;
+        for (let i = 0; i < positions.count; i++) {
+          const vertex = new THREE.Vector3().fromBufferAttribute(positions, i);
+          const distance = vertex.length();
+          // Mix colors based on position for land/ocean effect
+          if (vertex.y > 0.3 || vertex.y < -0.3) {
+            colors.push(0.3, 0.5, 0.7); // Blue ocean
+          } else {
+            colors.push(0.6, 0.4, 0.2); // Brown/orange land
+          }
+        }
+        geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+        material.vertexColors = true;
         
         // Add lighting
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
@@ -484,9 +501,11 @@
         directionalLight.position.set(5, 5, 5);
         scene.add(directionalLight);
         
-        // Position camera
-        camera.position.z = 5;
-        camera.position.y = 0.5;
+        // Position camera - slightly to the right to show globe better
+        camera.position.z = 6;
+        camera.position.y = 0.8;
+        camera.position.x = 1;
+        camera.lookAt(0, 0, 0);
         
         // Mouse interaction
         let mouseX = 0;
@@ -522,15 +541,16 @@
           
           // Parallax effect based on scroll
           scrollY += (targetScrollY - scrollY) * 0.1;
-          camera.position.y = 0.5 + (scrollY * 0.001);
-          camera.position.z = 5 + (scrollY * 0.002);
           
           // Update camera based on scroll for parallax
           const heroSection = document.querySelector('.hero');
           if (heroSection) {
             const rect = heroSection.getBoundingClientRect();
-            const parallaxOffset = (rect.top / window.innerHeight) * 2;
-            camera.position.y = 0.5 + parallaxOffset;
+            const parallaxOffset = (rect.top / window.innerHeight) * 3;
+            camera.position.y = 0.8 + parallaxOffset;
+            camera.position.z = 6 + (parallaxOffset * 0.5);
+            // Rotate globe slightly as you scroll
+            globe.rotation.x = parallaxOffset * 0.1;
           }
           
           renderer.render(scene, camera);
