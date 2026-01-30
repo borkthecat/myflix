@@ -447,69 +447,86 @@
       // Auto year update
       document.getElementById("year").textContent = new Date().getFullYear();
 
-      // Interactive 3D Globe with Parallax
-      const canvas = document.getElementById('globe-canvas');
-      if (canvas && typeof THREE !== 'undefined') {
+      // Interactive 3D Globe with Parallax - Wait for DOM and Three.js
+      function initGlobe() {
+        const canvas = document.getElementById('globe-canvas');
+        if (!canvas) {
+          console.error('Canvas not found');
+          return;
+        }
+        
+        if (typeof THREE === 'undefined') {
+          console.error('Three.js not loaded');
+          return;
+        }
+        
         const scene = new THREE.Scene();
-        const width = canvas.offsetWidth || 600;
-        const height = canvas.offsetHeight || 400;
-        const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 1000);
+        
+        // Get canvas dimensions properly
+        const getSize = () => {
+          const rect = canvas.getBoundingClientRect();
+          return {
+            width: rect.width || 800,
+            height: rect.height || 600
+          };
+        };
+        
+        const { width, height } = getSize();
+        const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer({ 
           canvas: canvas, 
           alpha: true, 
-          antialias: true,
-          powerPreference: "high-performance"
+          antialias: true
         });
         
         renderer.setSize(width, height);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         renderer.setClearColor(0x000000, 0);
         
-        // Create much larger, more visible globe
-        const geometry = new THREE.SphereGeometry(5, 32, 32);
+        // Create very large, highly visible globe
+        const geometry = new THREE.SphereGeometry(8, 32, 32);
         
-        // Create material with very bright, visible colors
+        // Extremely bright material
         const material = new THREE.MeshPhongMaterial({
-          color: 0x8aac9a,
-          shininess: 60,
-          specular: 0x555555,
-          flatShading: false,
-          emissive: 0x3a4a3a,
-          emissiveIntensity: 0.4
+          color: 0xbaddcc,
+          shininess: 100,
+          specular: 0x888888,
+          flatShading: true,
+          emissive: 0x6a7a6a,
+          emissiveIntensity: 0.7
         });
         
         const globe = new THREE.Mesh(geometry, material);
         scene.add(globe);
         
-        // Add prominent wireframe
+        // Very prominent wireframe
         const wireframe = new THREE.WireframeGeometry(geometry);
         const line = new THREE.LineSegments(wireframe, new THREE.LineBasicMaterial({ 
-          color: 0xaaccaa, 
-          opacity: 0.7, 
-          transparent: true,
-          linewidth: 2
+          color: 0xddffdd, 
+          opacity: 1, 
+          transparent: true
         }));
         globe.add(line);
         
-        // Very strong lighting
-        const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
+        // Maximum lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 3);
         scene.add(ambientLight);
         
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 3.5);
         directionalLight.position.set(5, 5, 5);
         scene.add(directionalLight);
         
-        const pointLight = new THREE.PointLight(0xffffff, 1.5);
+        const pointLight = new THREE.PointLight(0xffffff, 3);
         pointLight.position.set(-5, 0, 5);
         scene.add(pointLight);
         
-        const rimLight = new THREE.DirectionalLight(0xaaccff, 1);
+        const rimLight = new THREE.DirectionalLight(0xddddff, 2.5);
         rimLight.position.set(-5, -3, -5);
         scene.add(rimLight);
         
-        // Position camera closer and centered to show globe clearly
-        camera.position.z = 10;
-        camera.position.y = 0;
+        // Position camera to show globe clearly
+        camera.position.z = 18;
+        camera.position.y = 1;
         camera.position.x = 0;
         camera.lookAt(0, 0, 0);
         
@@ -634,37 +651,42 @@
           renderer.render(scene, camera);
         }
         
-        // Handle window resize
-        window.addEventListener('resize', () => {
-          const { width, height } = getCanvasSize();
-          renderer.setSize(width, height);
-          camera.aspect = width / height;
-          camera.updateProjectionMatrix();
-        });
+          // Handle window resize
+          window.addEventListener('resize', () => {
+            const { width, height } = getSize();
+            renderer.setSize(width, height);
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+          });
+          
+          // Initial render immediately
+          renderer.render(scene, camera);
+          
+          // Start animation
+          animate();
+          
+          // Hide hint after interaction
+          const hint = document.querySelector('.globe-hint');
+          let hasInteracted = false;
+          const hideHint = () => {
+            if (!hasInteracted && hint) {
+              hasInteracted = true;
+              hint.style.transition = 'opacity 0.3s ease';
+              hint.style.opacity = '0';
+              setTimeout(() => hint.style.display = 'none', 300);
+            }
+          };
+          
+          canvas.addEventListener('mousedown', hideHint);
+          canvas.addEventListener('touchstart', hideHint);
+        }
         
-        // Initial render to ensure visibility
-        renderer.render(scene, camera);
-        
-        // Start animation
-        animate();
-        
-        // Hide hint after interaction
-        const hint = document.querySelector('.globe-hint');
-        let hasInteracted = false;
-        const hideHint = () => {
-          if (!hasInteracted && hint) {
-            hasInteracted = true;
-            hint.style.transition = 'opacity 0.3s ease';
-            hint.style.opacity = '0';
-            setTimeout(() => hint.style.display = 'none', 300);
-          }
-        };
-        
-        canvas.addEventListener('mousedown', hideHint);
-        canvas.addEventListener('touchstart', hideHint);
-      } else {
-        console.error('Globe canvas or Three.js not available');
-      }
+        // Initialize when DOM is ready
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initGlobe);
+        } else {
+          setTimeout(initGlobe, 200); // Small delay to ensure canvas is rendered
+        }
     </script>
 
     <script>
