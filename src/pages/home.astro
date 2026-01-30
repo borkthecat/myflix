@@ -798,26 +798,33 @@
           // Apply momentum
           applyMomentum();
           
-          // Auto-rotate when not dragging (natural direction)
-          if (earth && earth.rotation && !isDragging && Math.abs(rotationSpeed.y) < 0.01 && Math.abs(rotationSpeed.x) < 0.01) {
-            earth.rotation.y -= 0.002; // Negative for natural rotation
-            if (continents && continents.length > 0) {
-              continents.forEach(cont => {
-                if (cont && cont !== earth && cont.rotation) {
-                  cont.rotation.y -= 0.002;
+          // Auto-rotate planets when not dragging
+          if (!isDragging && Math.abs(rotationSpeed.y) < 0.01 && Math.abs(rotationSpeed.x) < 0.01) {
+            // Rotate each planet around the sun
+            planets.forEach(planet => {
+              if (planet && planet.userData) {
+                planet.userData.angle += planet.userData.speed;
+                planet.position.x = Math.cos(planet.userData.angle) * planet.userData.distance;
+                planet.position.z = Math.sin(planet.userData.angle) * planet.userData.distance;
+                // Rotate planet on its own axis
+                if (planet.rotation) {
+                  planet.rotation.y += 0.01;
                 }
-              });
+              }
+            });
+            
+            // Rotate sun
+            if (sun && sun.rotation) {
+              sun.rotation.y += 0.005;
             }
           }
           
-          // Rotate other elements slightly faster for effect
-          if (continents && continents.length > 0) {
-            continents.forEach(cont => {
-              if (cont && cont !== earth && cont.rotation) {
-                cont.rotation.y -= 0.0001; // Negative for natural rotation
-              }
-            });
-          }
+          // Rotate planets on their axes
+          planets.forEach(planet => {
+            if (planet && planet.rotation) {
+              planet.rotation.y += 0.01;
+            }
+          });
           
           // Parallax effect - globe scrolls down with page
           const heroSection = document.querySelector('.hero');
