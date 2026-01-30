@@ -645,11 +645,11 @@
             
             earth.rotation.y += rotationSpeed.y;
             earth.rotation.x += rotationSpeed.x;
-            clouds.rotation.y += rotationSpeed.y;
-            clouds.rotation.x += rotationSpeed.x;
+            continents.rotation.y += rotationSpeed.y;
+            continents.rotation.x += rotationSpeed.x;
             
             earth.rotation.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, earth.rotation.x));
-            clouds.rotation.x = earth.rotation.x;
+            continents.rotation.x = earth.rotation.x;
             
             touchStart = { x: e.touches[0].clientX, y: e.touches[0].clientY };
           }
