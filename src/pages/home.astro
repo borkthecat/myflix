@@ -677,8 +677,6 @@
         let planets = [];
         let moons = [];
         let asteroids = [];
-        let comets = [];
-        let shootingStars = [];
         let sun;
         
         // Helper function to create gradient material
@@ -953,88 +951,6 @@
         }
         console.log('Asteroid belt created with 200 asteroids');
         
-        // Create comets with long tails
-        for (let i = 0; i < 5; i++) {
-          const cometSize = 0.08;
-          const cometGeometry = new THREE.SphereGeometry(cometSize, 16, 16);
-          const cometMaterial = new THREE.MeshBasicMaterial({
-            color: 0x88ccff,
-            emissive: 0x4488ff,
-            emissiveIntensity: 2
-          });
-          const comet = new THREE.Mesh(cometGeometry, cometMaterial);
-          
-          const distance = 20 + Math.random() * 10;
-          const angle = Math.random() * Math.PI * 2;
-          comet.position.x = Math.cos(angle) * distance;
-          comet.position.z = Math.sin(angle) * distance;
-          comet.position.y = (Math.random() - 0.5) * 5;
-          
-          // Create comet tail
-          const tailLength = 0.5;
-          const tailGeometry = new THREE.ConeGeometry(0.05, tailLength, 8);
-          const tailMaterial = new THREE.MeshBasicMaterial({
-            color: 0x4488ff,
-            transparent: true,
-            opacity: 0.6,
-            side: THREE.DoubleSide
-          });
-          const tail = new THREE.Mesh(tailGeometry, tailMaterial);
-          tail.rotation.x = Math.PI;
-          tail.position.y = -tailLength / 2;
-          comet.add(tail);
-          
-          comet.userData = {
-            angle: angle,
-            distance: distance,
-            speed: 0.001 + Math.random() * 0.001,
-            rotationSpeed: 0.05
-          };
-          
-          scene.add(comet);
-          comets.push(comet);
-        }
-        console.log('Comets created with tails');
-        
-        // Create shooting stars
-        for (let i = 0; i < 3; i++) {
-          const starGeometry = new THREE.BufferGeometry();
-          const starMaterial = new THREE.PointsMaterial({
-            color: 0xffffff,
-            size: 3,
-            transparent: true,
-            opacity: 0.8
-          });
-          const starVertices = [];
-          for (let j = 0; j < 5; j++) {
-            starVertices.push(0, 0, j * 0.1);
-          }
-          starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
-          const shootingStar = new THREE.Points(starGeometry, starMaterial);
-          
-          const startX = (Math.random() - 0.5) * 50;
-          const startY = (Math.random() - 0.5) * 50;
-          const startZ = (Math.random() - 0.5) * 50;
-          shootingStar.position.set(startX, startY, startZ);
-          
-          const direction = new THREE.Vector3(
-            (Math.random() - 0.5) * 2,
-            (Math.random() - 0.5) * 2,
-            (Math.random() - 0.5) * 2
-          ).normalize();
-          
-          shootingStar.userData = {
-            direction: direction,
-            speed: 0.3 + Math.random() * 0.2,
-            life: 0,
-            maxLife: 200 + Math.random() * 100
-          };
-          
-          scene.add(shootingStar);
-          shootingStars.push(shootingStar);
-        }
-        console.log('Shooting stars created');
-        
         // Store for compatibility
         let earth = planets[2];
         let continents = planets;
@@ -1158,9 +1074,10 @@
           canvas.style.cursor = 'grab';
         });
         
-        // Make planets clickable (only if not dragging)
+        // Make planets clickable with unique particle explosion effect
         let clickStartTime = 0;
         let clickStartPos = { x: 0, y: 0 };
+        let clickedPlanetParticles = [];
         
         canvas.addEventListener('mousedown', (e) => {
           clickStartTime = Date.now();
@@ -1185,11 +1102,53 @@
             
             if (intersects.length > 0) {
               const clickedPlanet = intersects[0].object;
-              const planetIndex = planets.indexOf(clickedPlanet);
-              if (planetIndex !== -1) {
-                const planetNames = ['Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune'];
-                alert(`You clicked on ${planetNames[planetIndex]}! 🪐`);
+              
+              // Create particle explosion effect
+              const particleCount = 30;
+              let planetColor = 0xffffff;
+              if (clickedPlanet.material && clickedPlanet.material.color) {
+                if (typeof clickedPlanet.material.color.getHex === 'function') {
+                  planetColor = clickedPlanet.material.color.getHex();
+                } else if (typeof clickedPlanet.material.color === 'number') {
+                  planetColor = clickedPlanet.material.color;
+                }
               }
+              
+              // Clear previous particles
+              clickedPlanetParticles.forEach(particle => scene.remove(particle));
+              clickedPlanetParticles = [];
+              
+              // Create particles
+              for (let i = 0; i < particleCount; i++) {
+                const particleGeometry = new THREE.SphereGeometry(0.05, 8, 8);
+                const particleMaterial = new THREE.MeshBasicMaterial({
+                  color: planetColor,
+                  emissive: planetColor,
+                  emissiveIntensity: 2
+                });
+                const particle = new THREE.Mesh(particleGeometry, particleMaterial);
+                
+                particle.position.copy(clickedPlanet.position);
+                
+                const angle = (i / particleCount) * Math.PI * 2;
+                const speed = 0.1 + Math.random() * 0.1;
+                particle.userData = {
+                  velocity: new THREE.Vector3(
+                    Math.cos(angle) * speed,
+                    (Math.random() - 0.5) * speed * 0.5,
+                    Math.sin(angle) * speed
+                  ),
+                  life: 0,
+                  maxLife: 60
+                };
+                
+                scene.add(particle);
+                clickedPlanetParticles.push(particle);
+              }
+              
+              // Temporarily scale up the planet
+              clickedPlanet.userData.originalScale = clickedPlanet.scale.x;
+              clickedPlanet.userData.pulseScale = 1.3;
             }
           }
         });
@@ -1334,43 +1293,41 @@
             sun.children[0].rotation.y -= 0.003;
           }
           
-          // Update comets
-          comets.forEach(comet => {
-            if (comet && comet.userData) {
-              comet.userData.angle += comet.userData.speed;
-              comet.position.x = Math.cos(comet.userData.angle) * comet.userData.distance;
-              comet.position.z = Math.sin(comet.userData.angle) * comet.userData.distance;
-              // Rotate comet
-              if (comet.rotation) {
-                comet.rotation.y += comet.userData.rotationSpeed;
+          // Update particle explosion effect
+          clickedPlanetParticles.forEach((particle, index) => {
+            if (particle && particle.userData) {
+              particle.userData.life++;
+              
+              if (particle.userData.life < particle.userData.maxLife) {
+                // Move particle
+                particle.position.add(particle.userData.velocity);
+                particle.userData.velocity.multiplyScalar(0.98); // Friction
+                
+                // Fade out
+                const opacity = 1 - (particle.userData.life / particle.userData.maxLife);
+                particle.material.opacity = opacity;
+                particle.scale.setScalar(opacity);
+              } else {
+                // Remove particle
+                scene.remove(particle);
+                clickedPlanetParticles.splice(index, 1);
               }
             }
           });
           
-          // Update shooting stars
-          shootingStars.forEach((star, index) => {
-            if (star && star.userData) {
-              star.userData.life++;
-              if (star.userData.life > star.userData.maxLife) {
-                // Reset shooting star
-                star.userData.life = 0;
-                const startX = (Math.random() - 0.5) * 50;
-                const startY = (Math.random() - 0.5) * 50;
-                const startZ = (Math.random() - 0.5) * 50;
-                star.position.set(startX, startY, startZ);
-                star.userData.direction = new THREE.Vector3(
-                  (Math.random() - 0.5) * 2,
-                  (Math.random() - 0.5) * 2,
-                  (Math.random() - 0.5) * 2
-                ).normalize();
+          // Pulse effect for clicked planet
+          planets.forEach(planet => {
+            if (planet.userData && planet.userData.pulseScale) {
+              const originalScale = planet.userData.originalScale || 1;
+              const pulseSpeed = 0.1;
+              const scaleDiff = planet.userData.pulseScale - originalScale;
+              
+              if (Math.abs(scaleDiff) > 0.01) {
+                planet.userData.pulseScale -= scaleDiff * pulseSpeed;
+                planet.scale.setScalar(planet.userData.pulseScale);
               } else {
-                // Move shooting star
-                star.position.add(
-                  star.userData.direction.clone().multiplyScalar(star.userData.speed)
-                );
-                // Fade out as it travels
-                const opacity = 1 - (star.userData.life / star.userData.maxLife);
-                star.material.opacity = opacity * 0.8;
+                planet.scale.setScalar(originalScale);
+                delete planet.userData.pulseScale;
               }
             }
           });
