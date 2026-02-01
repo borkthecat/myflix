@@ -806,12 +806,14 @@ body {
 /* Skills, Languages, and Projects Sections */
 .skills-section,
 .languages-section,
+.education-section,
 .projects {
   padding: 40px;
 }
 
 .skills-section h2,
 .languages-section h2,
+.education-section h2,
 .projects h2 {
   font-size: 2rem;
   margin-bottom: 20px;
@@ -979,7 +981,7 @@ body {
   transform: translate(-50%, -50%) scale(0.8);
   width: 550px;
   max-width: 90vw;
-  background: linear-gradient(135deg, rgba(20, 20, 20, 0.98) 0%, rgba(30, 30, 30, 0.98) 100%);
+  background: rgba(20, 20, 20, 0.98);
   border-radius: 16px;
   padding: 0;
   opacity: 0;
@@ -996,19 +998,6 @@ body {
   cursor: default;
 }
 
-.top10-popup::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, 
-    rgba(59, 130, 246, 0.8) 0%,
-    rgba(147, 51, 234, 0.8) 50%,
-    rgba(236, 72, 153, 0.8) 100%);
-  z-index: 1;
-}
 
 .top10-popup.active {
   opacity: 1;
@@ -1020,7 +1009,7 @@ body {
 .popup-header {
   padding: 30px 30px 20px;
   border-bottom: 1px solid rgba(128, 128, 128, 0.2);
-  background: linear-gradient(135deg, rgba(30, 30, 30, 0.5) 0%, rgba(20, 20, 20, 0.5) 100%);
+  background: rgba(20, 20, 20, 0.5);
 }
 
 .popup-header h3 {
@@ -1028,10 +1017,7 @@ body {
   font-size: 1.5rem;
   font-weight: 700;
   color: #fff;
-  background: linear-gradient(135deg, #fff 0%, #b3b3b3 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #fff;
 }
 
 .popup-subtitle {
@@ -2213,7 +2199,6 @@ body {
 /* Most icons already have their brand colors, so we only filter black/white icons */
 
 /* Make black icons white for better visibility */
-.tech-icon-badge img[alt="Next.js"],
 .tech-icon-badge img[alt="Express"],
 .tech-icon-badge img[alt="RESTful APIs"],
 .tech-icon-badge img[alt="Presentation"],
