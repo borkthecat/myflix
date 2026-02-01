@@ -1727,8 +1727,8 @@
                   let infoHTML = `<div class="planet-info-details">`;
                   infoHTML += `<div class="planet-info-image-container">`;
                   const imageName = planetInfo.name.toLowerCase();
-                  // Try .webp first, then .jpg as fallback
-                  infoHTML += `<img src="/images/${imageName}.webp" alt="${planetInfo.name}" class="planet-info-image" onerror="this.onerror=null; this.src='/images/${imageName}.jpg'; this.onerror=function(){this.style.display='none'};">`;
+                  // Try lowercase .webp, then capitalized .webp, then .jpg as fallback
+                  infoHTML += `<img src="/images/${imageName}.webp" alt="${planetInfo.name}" class="planet-info-image" onerror="this.onerror=null; this.src='/images/${planetInfo.name}.webp'; this.onerror=function(){this.onerror=null; this.src='/images/${imageName}.jpg'; this.onerror=function(){this.style.display='none'}};">`;
                   infoHTML += `</div>`;
                   infoHTML += `<p class="planet-info-description">${planetFacts.description}</p>`;
                   infoHTML += `<div class="planet-info-stats">`;
