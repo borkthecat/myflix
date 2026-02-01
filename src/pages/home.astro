@@ -829,13 +829,72 @@
           // Higher detail geometry
           const planetGeometry = new THREE.SphereGeometry(data.size, 64, 64);
           
-          // Create planet material with vibrant colors and gradient
-          const planetMaterial = createGradientMaterial(data.color, data.darkColor);
-          planetMaterial.shininess = 30;
-          planetMaterial.specular = new THREE.Color(0x333333);
-          // Add emissive for more vibrant colors
-          planetMaterial.emissive = new THREE.Color(data.color).multiplyScalar(0.2);
-          planetMaterial.emissiveIntensity = 0.3;
+          // Special handling for Earth with green and blue
+          let planetMaterial;
+          if (data.name === 'Earth' && data.earthColors) {
+            // Create Earth with green continents and blue oceans
+            const earthCanvas = document.createElement('canvas');
+            earthCanvas.width = 512;
+            earthCanvas.height = 512;
+            const ctx = earthCanvas.getContext('2d');
+            
+            // Base blue ocean
+            const oceanBlue = data.color; // 0x4a90e2
+            ctx.fillStyle = `#${oceanBlue.toString(16).padStart(6, '0')}`;
+            ctx.fillRect(0, 0, 512, 512);
+            
+            // Green colors for continents
+            const forestGreen = 0x228b22;
+            const limeGreen = 0x32cd32;
+            const darkGreen = 0x006400;
+            
+            // Draw continent-like shapes (more realistic blob shapes)
+            const continents = [
+              { x: 100, y: 150, size: 80, color: forestGreen },
+              { x: 350, y: 120, size: 70, color: limeGreen },
+              { x: 200, y: 300, size: 90, color: darkGreen },
+              { x: 400, y: 350, size: 60, color: forestGreen },
+              { x: 150, y: 400, size: 75, color: limeGreen },
+              { x: 300, y: 200, size: 55, color: darkGreen }
+            ];
+            
+            continents.forEach(continent => {
+              ctx.fillStyle = `#${continent.color.toString(16).padStart(6, '0')}`;
+              ctx.beginPath();
+              // Create irregular blob shape
+              const points = 8;
+              for (let i = 0; i < points; i++) {
+                const angle = (i / points) * Math.PI * 2;
+                const radius = continent.size * (0.7 + Math.random() * 0.3);
+                const x = continent.x + Math.cos(angle) * radius;
+                const y = continent.y + Math.sin(angle) * radius;
+                if (i === 0) {
+                  ctx.moveTo(x, y);
+                } else {
+                  ctx.lineTo(x, y);
+                }
+              }
+              ctx.closePath();
+              ctx.fill();
+            });
+            
+            const earthTexture = new THREE.CanvasTexture(earthCanvas);
+            planetMaterial = new THREE.MeshPhongMaterial({
+              map: earthTexture,
+              shininess: 30,
+              specular: new THREE.Color(0x333333),
+              emissive: new THREE.Color(0x4a90e2).multiplyScalar(0.15),
+              emissiveIntensity: 0.3
+            });
+          } else {
+            // Other planets with gradient
+            planetMaterial = createGradientMaterial(data.color, data.darkColor);
+            planetMaterial.shininess = 30;
+            planetMaterial.specular = new THREE.Color(0x333333);
+            // Add emissive for more vibrant colors
+            planetMaterial.emissive = new THREE.Color(data.color).multiplyScalar(0.25);
+            planetMaterial.emissiveIntensity = 0.3;
+          }
           
           const planet = new THREE.Mesh(planetGeometry, planetMaterial);
           
