@@ -1053,6 +1053,39 @@ body {
   margin: 0;
 }
 
+.education-details {
+  margin-top: 15px;
+}
+
+.education-entry {
+  margin-bottom: 25px;
+}
+
+.education-entry:last-child {
+  margin-bottom: 0;
+}
+
+.education-entry h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 8px 0;
+}
+
+.education-entry .education-degree {
+  font-size: 0.95rem;
+  color: #b3b3b3;
+  margin: 0 0 8px 0;
+  font-weight: 500;
+}
+
+.education-entry .education-coursework {
+  font-size: 0.9rem;
+  color: #808080;
+  margin: 0;
+  line-height: 1.6;
+}
+
 /* Interests Section */
 .interests-section {
   padding: 80px 60px;
