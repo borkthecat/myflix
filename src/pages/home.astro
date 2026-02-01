@@ -758,7 +758,8 @@
             rotationSpeed: 0.025,
             hasAtmosphere: true,
             atmosphereColor: 0x87ceeb,
-            hasMoon: true
+            hasMoon: true,
+            earthColors: [0x4a90e2, 0x2d5aa0, 0x228b22, 0x32cd32, 0x4169e1] // Blue and green for Earth
           },
           { 
             name: 'Mars', 
@@ -769,7 +770,8 @@
             speed: 0.004,
             rotationSpeed: 0.02,
             hasAtmosphere: false,
-            hasMoon: true
+            hasMoon: true,
+            moonCount: 2 // Phobos and Deimos
           },
           { 
             name: 'Jupiter', 
@@ -882,8 +884,9 @@
           scene.add(planet);
           planets.push(planet);
           
-          // Add satellites with proper satellite design (not just orbs)
-          if (data.hasMoon) {
+          // Add satellites/moons - Earth has 1 moon, Mars has 2, Jupiter/Saturn have multiple
+          if (data.hasMoon && !data.moonCount) {
+            // Earth - single moon (satellite design)
             const satellite = new THREE.Group();
             
             // Main body (box shape)
@@ -936,58 +939,26 @@
             };
             scene.add(satellite);
             moons.push(satellite);
-          } else if (data.hasMoons) {
-            for (let i = 0; i < data.moonCount; i++) {
-              const satellite = new THREE.Group();
-              
-              // Main body
-              const bodySize = data.size * 0.1;
-              const bodyGeometry = new THREE.BoxGeometry(bodySize, bodySize, bodySize * 1.5);
-              const bodyMaterial = new THREE.MeshPhongMaterial({
-                color: 0x888888,
-                emissive: 0x444444,
-                emissiveIntensity: 0.3,
-                shininess: 30
-              });
-              const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
-              satellite.add(body);
-              
-              // Solar panels
-              const panelSize = bodySize * 1.5;
-              const panelGeometry = new THREE.BoxGeometry(panelSize, bodySize * 0.3, bodySize * 0.1);
-              const panelMaterial = new THREE.MeshPhongMaterial({
-                color: 0x1a1a2e,
-                emissive: 0x0a0a1a,
-                emissiveIntensity: 0.2,
-                shininess: 50
-              });
-              
-              const leftPanel = new THREE.Mesh(panelGeometry, panelMaterial);
-              leftPanel.position.x = -panelSize / 2 - bodySize / 2;
-              satellite.add(leftPanel);
-              
-              const rightPanel = new THREE.Mesh(panelGeometry, panelMaterial);
-              rightPanel.position.x = panelSize / 2 + bodySize / 2;
-              satellite.add(rightPanel);
-              
-              // Antenna
-              const antennaGeometry = new THREE.CylinderGeometry(bodySize * 0.05, bodySize * 0.05, bodySize * 0.8, 8);
-              const antennaMaterial = new THREE.MeshPhongMaterial({
+          } else if (data.hasMoons || data.moonCount) {
+            // Multiple moons - use simple sphere design for natural moons
+            const count = data.moonCount || 2;
+            for (let i = 0; i < count; i++) {
+              const moonGeometry = new THREE.SphereGeometry(data.size * 0.1, 16, 16);
+              const moonMaterial = new THREE.MeshPhongMaterial({
                 color: 0xaaaaaa,
-                shininess: 40
+                emissive: 0x666666,
+                emissiveIntensity: 0.3,
+                shininess: 10
               });
-              const antenna = new THREE.Mesh(antennaGeometry, antennaMaterial);
-              antenna.position.y = bodySize * 0.75;
-              satellite.add(antenna);
-              
-              satellite.userData = {
+              const moon = new THREE.Mesh(moonGeometry, moonMaterial);
+              moon.userData = {
                 parentPlanet: planet,
                 distance: data.size * (1.8 + i * 0.4),
-                angle: (i / data.moonCount) * Math.PI * 2,
+                angle: (i / count) * Math.PI * 2,
                 speed: data.speed * (2 + i * 0.5)
               };
-              scene.add(satellite);
-              moons.push(satellite);
+              scene.add(moon);
+              moons.push(moon);
             }
           }
           
