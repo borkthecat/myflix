@@ -1819,6 +1819,10 @@ body {
   box-sizing: border-box;
   word-wrap: break-word;
   overflow-wrap: break-word;
+  hyphens: auto;
+  max-width: 100%;
+  overflow: hidden;
+  display: block;
 }
 
 /* Horizontal Text Section */
