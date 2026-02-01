@@ -1242,105 +1242,120 @@
         for (let i = 0; i < 3; i++) {
           const ship = new THREE.Group();
           
-          // Main body - organic, bulbous shape (more alien-like)
+          // Main body - metallic saucer shape
           const bodyGeometry = new THREE.SphereGeometry(0.2, 16, 16);
           const bodyMaterial = new THREE.MeshPhongMaterial({
-            color: 0x8b00ff, // Purple alien color
-            emissive: 0x4a0080,
-            emissiveIntensity: 0.6,
-            shininess: 30
+            color: 0x888888, // Metallic gray
+            emissive: 0x333333,
+            emissiveIntensity: 0.2,
+            shininess: 100,
+            metalness: 0.8
           });
           const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
           body.scale.set(1.2, 0.8, 1.2); // Flatten and widen
           ship.add(body);
           
-          // Top antenna/head
+          // Top antenna/communication array - metallic
           const antennaGeometry = new THREE.ConeGeometry(0.05, 0.3, 8);
           const antennaMaterial = new THREE.MeshPhongMaterial({
-            color: 0xff00ff, // Bright magenta
-            emissive: 0xff00ff,
-            emissiveIntensity: 1.5,
-            shininess: 50
+            color: 0xaaaaaa, // Lighter metallic
+            emissive: 0x444444,
+            emissiveIntensity: 0.3,
+            shininess: 80
           });
           const antenna = new THREE.Mesh(antennaGeometry, antennaMaterial);
           antenna.position.y = 0.25;
           antenna.rotation.z = Math.random() * 0.2 - 0.1; // Slight tilt
           ship.add(antenna);
           
-          // Antenna tip glow
+          // Antenna tip - energy indicator
           const tipGeometry = new THREE.SphereGeometry(0.06, 8, 8);
           const tipMaterial = new THREE.MeshBasicMaterial({
-            color: 0xff00ff,
-            emissive: 0xff00ff,
-            emissiveIntensity: 3
+            color: 0x00ff88, // Green energy
+            emissive: 0x00ff88,
+            emissiveIntensity: 2
           });
           const tip = new THREE.Mesh(tipGeometry, tipMaterial);
           tip.position.y = 0.45;
           ship.add(tip);
           
-          // Side tentacles/appendages (4 around the body)
+          // Side thrusters/engines (4 around the body) - metallic
           for (let j = 0; j < 4; j++) {
-            const tentacleGeometry = new THREE.CylinderGeometry(0.03, 0.05, 0.25, 8);
-            const tentacleMaterial = new THREE.MeshPhongMaterial({
-              color: 0x9b00ff,
-              emissive: 0x6b0080,
-              emissiveIntensity: 0.4,
-              shininess: 20
+            const thrusterGeometry = new THREE.CylinderGeometry(0.03, 0.05, 0.25, 8);
+            const thrusterMaterial = new THREE.MeshPhongMaterial({
+              color: 0x777777,
+              emissive: 0x222222,
+              emissiveIntensity: 0.2,
+              shininess: 60
             });
-            const tentacle = new THREE.Mesh(tentacleGeometry, tentacleMaterial);
+            const thruster = new THREE.Mesh(thrusterGeometry, thrusterMaterial);
             const angle = (j / 4) * Math.PI * 2;
-            tentacle.position.x = Math.cos(angle) * 0.25;
-            tentacle.position.z = Math.sin(angle) * 0.25;
-            tentacle.position.y = -0.1;
-            tentacle.rotation.z = Math.cos(angle) * 0.3;
-            tentacle.rotation.x = Math.sin(angle) * 0.3;
-            ship.add(tentacle);
+            thruster.position.x = Math.cos(angle) * 0.25;
+            thruster.position.z = Math.sin(angle) * 0.25;
+            thruster.position.y = -0.1;
+            thruster.rotation.z = Math.cos(angle) * 0.3;
+            thruster.rotation.x = Math.sin(angle) * 0.3;
+            ship.add(thruster);
             
-            // Tentacle tip
-            const tentacleTipGeometry = new THREE.SphereGeometry(0.04, 6, 6);
-            const tentacleTipMaterial = new THREE.MeshBasicMaterial({
-              color: 0x00ffff,
-              emissive: 0x00ffff,
+            // Thruster exhaust glow
+            const exhaustGeometry = new THREE.SphereGeometry(0.04, 6, 6);
+            const exhaustMaterial = new THREE.MeshBasicMaterial({
+              color: 0x00ff88, // Green exhaust
+              emissive: 0x00ff88,
               emissiveIntensity: 2
             });
-            const tentacleTip = new THREE.Mesh(tentacleTipGeometry, tentacleTipMaterial);
-            tentacleTip.position.copy(tentacle.position);
-            tentacleTip.position.y -= 0.15;
-            ship.add(tentacleTip);
+            const exhaust = new THREE.Mesh(exhaustGeometry, exhaustMaterial);
+            exhaust.position.copy(thruster.position);
+            exhaust.position.y -= 0.15;
+            ship.add(exhaust);
           }
           
-          // Central eye/observation window
-          const eyeGeometry = new THREE.SphereGeometry(0.08, 16, 16);
-          const eyeMaterial = new THREE.MeshPhongMaterial({
-            color: 0x00ffff,
-            emissive: 0x00ffff,
-            emissiveIntensity: 2,
+          // Central observation window - metallic frame
+          const windowFrameGeometry = new THREE.RingGeometry(0.06, 0.1, 16);
+          const windowFrameMaterial = new THREE.MeshPhongMaterial({
+            color: 0xaaaaaa,
+            emissive: 0x333333,
+            emissiveIntensity: 0.2,
+            shininess: 70,
+            side: THREE.DoubleSide
+          });
+          const windowFrame = new THREE.Mesh(windowFrameGeometry, windowFrameMaterial);
+          windowFrame.position.y = 0.15;
+          windowFrame.rotation.x = -Math.PI / 2;
+          ship.add(windowFrame);
+          
+          // Central window glass
+          const windowGeometry = new THREE.SphereGeometry(0.08, 16, 16);
+          const windowMaterial = new THREE.MeshPhongMaterial({
+            color: 0x00ff88, // Green tinted glass
+            emissive: 0x00aa55,
+            emissiveIntensity: 1,
             transparent: true,
-            opacity: 0.7
+            opacity: 0.6
           });
-          const eye = new THREE.Mesh(eyeGeometry, eyeMaterial);
-          eye.position.y = 0.15;
-          eye.scale.z = 0.5; // Flatten
-          ship.add(eye);
+          const window = new THREE.Mesh(windowGeometry, windowMaterial);
+          window.position.y = 0.15;
+          window.scale.z = 0.5; // Flatten
+          ship.add(window);
           
-          // Pulsing inner eye
-          const innerEyeGeometry = new THREE.SphereGeometry(0.04, 8, 8);
-          const innerEyeMaterial = new THREE.MeshBasicMaterial({
-            color: 0xffffff,
-            emissive: 0xffffff,
-            emissiveIntensity: 4
+          // Inner scanner/light
+          const scannerGeometry = new THREE.SphereGeometry(0.04, 8, 8);
+          const scannerMaterial = new THREE.MeshBasicMaterial({
+            color: 0x00ff88,
+            emissive: 0x00ff88,
+            emissiveIntensity: 3
           });
-          const innerEye = new THREE.Mesh(innerEyeGeometry, innerEyeMaterial);
-          innerEye.position.y = 0.15;
-          ship.add(innerEye);
+          const scanner = new THREE.Mesh(scannerGeometry, scannerMaterial);
+          scanner.position.y = 0.15;
+          ship.add(scanner);
           
-          // Glowing lights around body
+          // Metallic panel lights around body
           for (let k = 0; k < 6; k++) {
             const lightGeometry = new THREE.SphereGeometry(0.025, 6, 6);
             const lightMaterial = new THREE.MeshBasicMaterial({
-              color: 0x00ffff,
-              emissive: 0x00ffff,
-              emissiveIntensity: 3
+              color: 0x00ff88, // Green status lights
+              emissive: 0x00ff88,
+              emissiveIntensity: 2
             });
             const light = new THREE.Mesh(lightGeometry, lightMaterial);
             const lightAngle = (k / 6) * Math.PI * 2;
@@ -1371,7 +1386,7 @@
             bobSpeed: 0.02 + Math.random() * 0.02,
             bobAmount: 0.3 + Math.random() * 0.3,
             pulseSpeed: 0.05 + Math.random() * 0.05,
-            innerEye: innerEye
+            scanner: scanner
           };
           
           scene.add(ship);
