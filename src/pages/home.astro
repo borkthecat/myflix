@@ -489,6 +489,21 @@
           <h3>Technical Details</h3>
           <ul>
             <li><strong>Animation Loop:</strong> Uses <code>requestAnimationFrame</code> for smooth 60fps rendering</li>
+          </ul>
+
+          <h3>References & Citations</h3>
+          <div class="solar-info-citations">
+            <p><strong>Planetary Information:</strong></p>
+            <ul>
+              <li>NASA Solar System Exploration - <a href="https://solarsystem.nasa.gov" target="_blank" rel="noopener">solarsystem.nasa.gov</a></li>
+              <li>European Space Agency (ESA) - <a href="https://www.esa.int" target="_blank" rel="noopener">www.esa.int</a></li>
+              <li>National Geographic - Solar System Facts</li>
+            </ul>
+            <p><strong>3D Graphics Library:</strong></p>
+            <ul>
+              <li>Three.js Documentation - <a href="https://threejs.org" target="_blank" rel="noopener">threejs.org</a></li>
+            </ul>
+          </div>
             <li><strong>Orbital Mechanics:</strong> Planets move using circular orbital math: <code>x = cos(angle) * distance</code></li>
             <li><strong>Materials:</strong> Uses gradient materials for realistic planet surfaces and atmospheric effects</li>
             <li><strong>Lighting:</strong> Multiple light sources (ambient, directional, point) create depth and realism</li>
@@ -1222,49 +1237,64 @@
         }
         console.log('Shooting stars created with particle trails');
         
-        // Create alien ships at further distance
+        // Create alien ships at further distance - horizontal saucer design
         const alienShips = [];
         for (let i = 0; i < 3; i++) {
           const ship = new THREE.Group();
           
-          // Main body (saucer shape)
-          const bodyGeometry = new THREE.CylinderGeometry(0.15, 0.2, 0.08, 16);
-          const bodyMaterial = new THREE.MeshPhongMaterial({
+          // Bottom saucer disc (larger, flat)
+          const bottomDiscGeometry = new THREE.CylinderGeometry(0.25, 0.25, 0.05, 32);
+          const bottomDiscMaterial = new THREE.MeshPhongMaterial({
             color: 0x00ff00,
             emissive: 0x00aa00,
             emissiveIntensity: 0.5,
             shininess: 50
           });
-          const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
-          body.rotation.x = Math.PI / 2;
-          ship.add(body);
+          const bottomDisc = new THREE.Mesh(bottomDiscGeometry, bottomDiscMaterial);
+          bottomDisc.rotation.x = Math.PI / 2; // Horizontal
+          bottomDisc.position.y = -0.05;
+          ship.add(bottomDisc);
           
-          // Top dome
-          const domeGeometry = new THREE.SphereGeometry(0.12, 16, 8);
+          // Top saucer disc (smaller, slightly raised)
+          const topDiscGeometry = new THREE.CylinderGeometry(0.18, 0.18, 0.04, 32);
+          const topDiscMaterial = new THREE.MeshPhongMaterial({
+            color: 0x88ff88,
+            emissive: 0x00aa00,
+            emissiveIntensity: 0.4,
+            shininess: 50
+          });
+          const topDisc = new THREE.Mesh(topDiscGeometry, topDiscMaterial);
+          topDisc.rotation.x = Math.PI / 2; // Horizontal
+          topDisc.position.y = 0.02;
+          ship.add(topDisc);
+          
+          // Central dome (saucer cockpit)
+          const domeGeometry = new THREE.SphereGeometry(0.1, 16, 8);
           const domeMaterial = new THREE.MeshPhongMaterial({
             color: 0x88ff88,
             emissive: 0x00aa00,
             emissiveIntensity: 0.3,
             transparent: true,
-            opacity: 0.7
+            opacity: 0.8
           });
           const dome = new THREE.Mesh(domeGeometry, domeMaterial);
-          dome.position.y = 0.05;
+          dome.position.y = 0.08;
+          dome.scale.z = 0.6; // Flatten the dome
           ship.add(dome);
           
-          // Lights on the ship
-          for (let j = 0; j < 6; j++) {
-            const lightGeometry = new THREE.SphereGeometry(0.02, 8, 8);
+          // Lights around the rim
+          for (let j = 0; j < 8; j++) {
+            const lightGeometry = new THREE.SphereGeometry(0.03, 8, 8);
             const lightMaterial = new THREE.MeshBasicMaterial({
               color: 0x00ffff,
               emissive: 0x00ffff,
-              emissiveIntensity: 2
+              emissiveIntensity: 3
             });
             const light = new THREE.Mesh(lightGeometry, lightMaterial);
-            const angle = (j / 6) * Math.PI * 2;
-            light.position.x = Math.cos(angle) * 0.15;
-            light.position.z = Math.sin(angle) * 0.15;
-            light.position.y = 0.04;
+            const angle = (j / 8) * Math.PI * 2;
+            light.position.x = Math.cos(angle) * 0.22;
+            light.position.z = Math.sin(angle) * 0.22;
+            light.position.y = 0;
             ship.add(light);
           }
           
@@ -1275,6 +1305,10 @@
           ship.position.x = Math.cos(angle) * distance;
           ship.position.z = Math.sin(angle) * distance;
           ship.position.y = height;
+          
+          // Orient ship horizontally (flying saucer style)
+          ship.rotation.x = 0; // Keep horizontal
+          ship.rotation.z = 0;
           
           ship.userData = {
             distance: distance,
@@ -1443,6 +1477,13 @@
             if (intersects.length > 0) {
               const clickedPlanet = intersects[0].object;
               
+              // Close any existing planet modal first
+              const existingModal = document.getElementById('planet-info-modal');
+              if (existingModal && existingModal.style.display === 'flex') {
+                existingModal.style.display = 'none';
+                return; // Close modal on second click
+              }
+              
               // Find planet data
               const planetIndex = planets.indexOf(clickedPlanet);
               if (planetIndex !== -1 && planetData[planetIndex]) {
@@ -1456,8 +1497,11 @@
                 if (planetModal && planetModalTitle && planetModalContent) {
                   planetModalTitle.textContent = planetInfo.name;
                   
-                  // Create planet information content
+                  // Create planet information content with image support
                   let infoHTML = `<div class="planet-info-details">`;
+                  infoHTML += `<div class="planet-info-image-container">`;
+                  infoHTML += `<img src="/images/planets/${planetInfo.name.toLowerCase()}.jpg" alt="${planetInfo.name}" class="planet-info-image" onerror="this.style.display='none'">`;
+                  infoHTML += `</div>`;
                   infoHTML += `<p class="planet-info-description">${getPlanetDescription(planetInfo.name)}</p>`;
                   infoHTML += `<div class="planet-info-stats">`;
                   infoHTML += `<div class="planet-stat"><span class="stat-label">Distance from Sun:</span> <span class="stat-value">${planetInfo.distance.toFixed(1)} AU</span></div>`;

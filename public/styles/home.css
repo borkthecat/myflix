@@ -473,11 +473,32 @@ body {
   margin-top: 20px;
 }
 
+.planet-info-image-container {
+  width: 100%;
+  margin-bottom: 25px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+
+.planet-info-image {
+  width: 100%;
+  height: auto;
+  max-height: 300px;
+  object-fit: cover;
+  display: block;
+}
+
 .planet-info-description {
   font-size: 1.1rem;
   margin-bottom: 25px;
   color: #d0d0d0;
   line-height: 1.6;
+  padding: 0 5px;
 }
 
 .planet-info-stats {
@@ -485,14 +506,25 @@ body {
   flex-direction: column;
   gap: 15px;
   margin-top: 20px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .planet-stat {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 12px 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 6px;
+  transition: background 0.2s ease;
+}
+
+.planet-stat:hover {
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .planet-stat:last-child {
@@ -502,6 +534,7 @@ body {
 .stat-label {
   color: #b3b3b3;
   font-size: 0.95rem;
+  font-weight: 500;
 }
 
 .stat-value {
