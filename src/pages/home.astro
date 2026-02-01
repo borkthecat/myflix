@@ -871,9 +871,41 @@
           // Higher detail geometry
           const planetGeometry = new THREE.SphereGeometry(data.size, 64, 64);
           
-          // Special handling for Earth with green and blue
+          // Special handling for Earth with green and blue, Jupiter with stripes
           let planetMaterial;
-          if (data.name === 'Earth' && data.earthColors) {
+          if (data.name === 'Jupiter' && data.hasStripes) {
+            // Create Jupiter with horizontal stripes
+            const jupiterCanvas = document.createElement('canvas');
+            jupiterCanvas.width = 512;
+            jupiterCanvas.height = 512;
+            const ctx = jupiterCanvas.getContext('2d');
+            
+            // Create horizontal stripes
+            const stripeHeight = 512 / 12; // 12 stripes
+            for (let i = 0; i < 12; i++) {
+              const colorIndex = i % data.stripeColors.length;
+              const stripeColor = data.stripeColors[colorIndex];
+              ctx.fillStyle = `#${stripeColor.toString(16).padStart(6, '0')}`;
+              ctx.fillRect(0, i * stripeHeight, 512, stripeHeight);
+            }
+            
+            // Add some variation/blending
+            const gradient = ctx.createLinearGradient(0, 0, 0, 512);
+            gradient.addColorStop(0, 'rgba(255, 255, 255, 0.1)');
+            gradient.addColorStop(0.5, 'rgba(255, 140, 66, 0.1)');
+            gradient.addColorStop(1, 'rgba(212, 165, 116, 0.1)');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 512, 512);
+            
+            const jupiterTexture = new THREE.CanvasTexture(jupiterCanvas);
+            planetMaterial = new THREE.MeshPhongMaterial({
+              map: jupiterTexture,
+              shininess: 30,
+              specular: new THREE.Color(0x333333),
+              emissive: new THREE.Color(0xd8ca9d).multiplyScalar(0.15),
+              emissiveIntensity: 0.3
+            });
+          } else if (data.name === 'Earth' && data.earthColors) {
             // Create Earth with green continents and blue oceans
             const earthCanvas = document.createElement('canvas');
             earthCanvas.width = 512;
