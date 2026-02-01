@@ -181,10 +181,11 @@ body {
   height: 28px;
   filter: brightness(0) invert(1);
   transition: transform 0.3s ease;
+  display: block;
 }
 
 .solar-info-icon:hover img {
-  transform: rotate(180deg);
+  transform: rotate(180deg) scale(1.1);
 }
 
 .info-tooltip {
@@ -624,10 +625,13 @@ body {
 
 .top10-item-grid {
   position: relative;
-  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='20' r='18' fill='%23ffffff'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='28' font-weight='bold' fill='%23000000'%3E%3F%3C/text%3E%3C/svg%3E") 20 20, help;
   width: 260px;
   height: 150px;
   transition: all 0.3s ease;
+}
+
+.top10-item-grid:hover {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24'%3E%3Cpath fill='%23ffffff' d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z'/%3E%3C/svg%3E") 16 16, help;
 }
 
 .top10-item-grid::before {
@@ -735,17 +739,20 @@ body {
   height: 30px;
 }
 
-.top10-icon-horizontal .tech-icon {
-  width: 40px;
-  height: 40px;
-  object-fit: contain;
-  filter: brightness(0) invert(0.6);
-  transition: all 0.3s ease;
-}
-
-.top10-item-grid:hover .top10-icon-horizontal .tech-icon {
-  filter: brightness(0) invert(1);
-  transform: scale(1.1) rotate(5deg);
+/* Icon placeholders */
+.icon-placeholder {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(128, 128, 128, 0.2);
+  border-radius: 6px;
+  color: #b3b3b3;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .top10-item-grid.active .top10-icon-horizontal,
@@ -776,6 +783,7 @@ body {
     0 0 0 1px rgba(255, 255, 255, 0.05),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
   overflow: hidden;
+  cursor: default;
 }
 
 .top10-popup::before {
@@ -915,27 +923,20 @@ body {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-.tech-icon-badge img {
+.tech-icon-badge .icon-placeholder {
   width: 32px;
   height: 32px;
-  object-fit: contain;
-  filter: brightness(0) invert(0.8);
-  transition: all 0.3s ease;
-}
-
-.tech-icon-badge:hover img {
-  filter: brightness(0) invert(1);
-  transform: scale(1.1);
-}
-
-.tech-icon-badge svg {
-  width: 32px;
-  height: 32px;
+  background: rgba(128, 128, 128, 0.15);
+  border-radius: 6px;
   color: #b3b3b3;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
   transition: all 0.3s ease;
 }
 
-.tech-icon-badge:hover svg {
+.tech-icon-badge:hover .icon-placeholder {
+  background: rgba(128, 128, 128, 0.3);
   color: #fff;
   transform: scale(1.1);
 }
