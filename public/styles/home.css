@@ -2209,62 +2209,19 @@ body {
   height: 28px;
 }
 
-/* Icon color filters for brand colors */
-.tech-icon-badge img[alt="React"] {
-  filter: brightness(0) saturate(100%) invert(67%) sepia(100%) saturate(2000%) hue-rotate(160deg) brightness(1.1);
-}
+/* Icon color filters - only apply to icons that need color adjustment */
+/* Most icons already have their brand colors, so we only filter black/white icons */
 
-.tech-icon-badge img[alt="Next.js"] {
-  filter: brightness(0) invert(1);
-}
-
-.tech-icon-badge img[alt="TypeScript"] {
-  filter: brightness(0) saturate(100%) invert(40%) sepia(100%) saturate(2000%) hue-rotate(200deg) brightness(0.9);
-}
-
-.tech-icon-badge img[alt="Tailwind CSS"] {
-  filter: brightness(0) saturate(100%) invert(67%) sepia(100%) saturate(2000%) hue-rotate(160deg) brightness(1.1);
-}
-
-.tech-icon-badge img[alt="Node.js"] {
-  filter: brightness(0) saturate(100%) invert(48%) sepia(100%) saturate(2000%) hue-rotate(90deg) brightness(0.9);
-}
-
-.tech-icon-badge img[alt="Express"] {
-  filter: brightness(0) invert(1);
-}
-
-.tech-icon-badge img[alt="Python"] {
-  filter: brightness(0) saturate(100%) invert(40%) sepia(100%) saturate(2000%) hue-rotate(200deg) brightness(0.85);
-}
-
-.tech-icon-badge img[alt="RESTful APIs"] {
-  filter: brightness(0) invert(0.7);
-}
-
-.tech-icon-badge img[alt="Figma"] {
-  filter: brightness(0) saturate(100%) invert(50%) sepia(100%) saturate(2000%) hue-rotate(350deg) brightness(1.1);
-}
-
-.tech-icon-badge img[alt="Canva"] {
-  filter: brightness(0) saturate(100%) invert(67%) sepia(100%) saturate(2000%) hue-rotate(160deg) brightness(1.1);
-}
-
-.tech-icon-badge img[alt="MongoDB"] {
-  filter: brightness(0) saturate(100%) invert(48%) sepia(100%) saturate(2000%) hue-rotate(90deg) brightness(0.9);
-}
-
-.tech-icon-badge img[alt="Firebase"] {
-  filter: brightness(0) saturate(100%) invert(80%) sepia(100%) saturate(2000%) hue-rotate(10deg) brightness(1.1);
-}
-
-.tech-icon-badge img[alt="Presentation"] {
-  filter: brightness(0) invert(1);
-}
-
+/* Make black icons white for better visibility */
+.tech-icon-badge img[alt="Next.js"],
+.tech-icon-badge img[alt="Express"],
+.tech-icon-badge img[alt="RESTful APIs"],
+.tech-icon-badge img[alt="Presentation"],
 .tech-icon-badge img[alt="Active Listening"] {
   filter: brightness(0) invert(1);
 }
+
+/* Keep other icons with their natural colors - no filter needed */
 
   .tech-icon-badge span {
     font-size: 0.85rem;
