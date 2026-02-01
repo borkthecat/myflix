@@ -2144,6 +2144,31 @@
         }
       });
 
+      // Planet Information Modal
+      const planetInfoModal = document.getElementById("planet-info-modal");
+      const planetInfoClose = document.querySelector(".planet-info-close");
+      const planetInfoOverlay = document.querySelector(".planet-info-overlay");
+
+      function closePlanetModal() {
+        if (planetInfoModal) {
+          planetInfoModal.style.display = "none";
+        }
+      }
+
+      if (planetInfoClose) {
+        planetInfoClose.addEventListener("click", closePlanetModal);
+      }
+
+      if (planetInfoOverlay) {
+        planetInfoOverlay.addEventListener("click", closePlanetModal);
+      }
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && planetInfoModal && planetInfoModal.style.display === "flex") {
+          closePlanetModal();
+        }
+      });
+
       document.addEventListener("DOMContentLoaded", () => {
         const browseMenu = document.querySelector(".browse-menu");
         const browseBtn = document.querySelector(".browse-btn");
