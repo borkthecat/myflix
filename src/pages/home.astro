@@ -1878,6 +1878,29 @@
             }
           });
           
+          // Update alien ships - orbit, bob, and pulse
+          alienShips.forEach(ship => {
+            if (ship && ship.userData) {
+              ship.userData.angle += ship.userData.speed;
+              ship.position.x = Math.cos(ship.userData.angle) * ship.userData.distance;
+              ship.position.z = Math.sin(ship.userData.angle) * ship.userData.distance;
+              
+              // Bob up and down
+              ship.position.y = ship.userData.height + Math.sin(Date.now() * 0.001 * ship.userData.bobSpeed) * ship.userData.bobAmount;
+              
+              // Rotate ship
+              if (ship.rotation) {
+                ship.rotation.y += ship.userData.rotationSpeed;
+              }
+              
+              // Pulse scanner
+              if (ship.userData.scanner) {
+                const pulse = 0.8 + Math.sin(Date.now() * 0.002 * ship.userData.pulseSpeed) * 0.3;
+                ship.userData.scanner.scale.set(pulse, pulse, pulse);
+              }
+            }
+          });
+          
           // Update particle explosion effect
           clickedPlanetParticles.forEach((particle, index) => {
             if (particle && particle.userData) {
