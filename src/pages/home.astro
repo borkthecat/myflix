@@ -1726,7 +1726,8 @@
                   
                   let infoHTML = `<div class="planet-info-details">`;
                   infoHTML += `<div class="planet-info-image-container">`;
-                  infoHTML += `<img src="/images/planets/${planetInfo.name.toLowerCase()}.jpg" alt="${planetInfo.name}" class="planet-info-image" onerror="this.style.display='none'">`;
+                  const imageName = planetInfo.name.toLowerCase();
+                  infoHTML += `<img src="/images/${imageName}.jpg" alt="${planetInfo.name}" class="planet-info-image" onerror="this.onerror=null; this.src='/images/${imageName}.webp'; this.onerror=function(){this.style.display=\'none\'};">`;
                   infoHTML += `</div>`;
                   infoHTML += `<p class="planet-info-description">${planetFacts.description}</p>`;
                   infoHTML += `<div class="planet-info-stats">`;

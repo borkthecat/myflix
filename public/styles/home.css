@@ -449,10 +449,10 @@ body {
 .planet-info-modal-content {
   position: relative;
   background: #1a1a1a;
-  border-radius: 8px;
-  max-width: 700px;
-  width: 90%;
-  max-height: 85vh;
+  border-radius: 4px;
+  max-width: 500px;
+  width: 85%;
+  max-height: 80vh;
   overflow-y: auto;
   padding: 0;
   z-index: 1;
@@ -493,19 +493,19 @@ body {
 }
 
 .planet-info-modal-content h2 {
-  font-size: 2.5rem;
+  font-size: 1.8rem;
   margin: 0;
-  padding: 35px 40px 25px;
+  padding: 25px 30px 20px;
   color: #fff;
-  font-weight: 700;
+  font-weight: 400;
   text-align: center;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
 }
 
 .planet-info-body {
   color: #e5e5e5;
-  line-height: 1.7;
-  padding: 0 40px 40px;
+  line-height: 1.6;
+  padding: 0 30px 30px;
 }
 
 .planet-info-details {
@@ -516,46 +516,48 @@ body {
   width: 100%;
   margin: 0;
   overflow: hidden;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 250px;
+  min-height: 180px;
   grid-column: 1 / -1;
 }
 
 .planet-info-image {
   width: 100%;
   height: auto;
-  max-height: 350px;
+  max-height: 200px;
   object-fit: cover;
   display: block;
 }
 
 .planet-info-description {
-  font-size: 1.1rem;
-  margin: 0 0 30px 0;
-  color: #e0e0e0;
-  line-height: 1.8;
+  font-size: 0.9rem;
+  margin: 0 0 20px 0;
+  color: #d0d0d0;
+  line-height: 1.6;
   padding: 0;
-  text-align: justify;
+  text-align: left;
   grid-column: 1 / -1;
 }
 
 .planet-info-stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 15px;
-  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 0;
 }
 
 .planet-stat {
   display: flex;
-  flex-direction: column;
-  padding: 18px 0;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
   background: transparent;
-  transition: all 0.3s ease;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.2s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .planet-stat:last-child {
@@ -563,25 +565,24 @@ body {
 }
 
 .planet-stat:hover {
-  background: rgba(255, 255, 255, 0.03);
-  padding-left: 10px;
-  padding-right: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 .stat-label {
-  color: #b3b3b3;
-  font-size: 0.9rem;
-  font-weight: 500;
-  margin-bottom: 8px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  color: #999;
+  font-size: 0.8rem;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
 }
 
 .stat-value {
-  color: #fff;
-  font-weight: 700;
-  font-size: 1.3rem;
-  text-align: center;
+  color: #e0e0e0;
+  font-weight: 400;
+  font-size: 0.85rem;
+  text-align: right;
 }
 
 @media (max-width: 768px) {
