@@ -829,10 +829,13 @@
           // Higher detail geometry
           const planetGeometry = new THREE.SphereGeometry(data.size, 64, 64);
           
-          // Create planet material with gradient
-          const planetMaterial = createGradientMaterial(data.color, data.darkColor);
-          planetMaterial.shininess = 30;
-          planetMaterial.specular = new THREE.Color(0x222222);
+          // Create planet material with vibrant colors
+          const planetMaterial = new THREE.MeshPhongMaterial({
+            color: data.color,
+            shininess: 30,
+            specular: new THREE.Color(0x333333),
+            emissive: new THREE.Color(data.color).multiplyScalar(0.15)
+          });
           
           const planet = new THREE.Mesh(planetGeometry, planetMaterial);
           
@@ -953,7 +956,7 @@
         }
         console.log('Asteroid belt created with 200 asteroids');
         
-        // Create comets with bright, recognizable tails
+        // Create comets with bright, recognizable tails that orbit properly
         for (let i = 0; i < 3; i++) {
           const cometSize = 0.12;
           const cometGeometry = new THREE.SphereGeometry(cometSize, 16, 16);
@@ -971,8 +974,12 @@
           comet.position.y = (Math.random() - 0.5) * 4;
           
           // Create bright, visible comet tail with multiple layers
+          // Tail should point away from the sun (opposite to orbital direction)
           const tailLength = 1.2;
           const tailWidth = 0.15;
+          
+          // Create a group for the tail so we can orient it properly
+          const tailGroup = new THREE.Group();
           
           // Outer glow tail
           const outerTailGeometry = new THREE.ConeGeometry(tailWidth, tailLength, 16);
@@ -983,9 +990,9 @@
             side: THREE.DoubleSide
           });
           const outerTail = new THREE.Mesh(outerTailGeometry, outerTailMaterial);
-          outerTail.rotation.x = Math.PI;
-          outerTail.position.y = -tailLength / 2;
-          comet.add(outerTail);
+          outerTail.rotation.x = Math.PI / 2;
+          outerTail.position.z = -tailLength / 2;
+          tailGroup.add(outerTail);
           
           // Inner bright tail
           const innerTailGeometry = new THREE.ConeGeometry(tailWidth * 0.6, tailLength, 12);
@@ -998,15 +1005,21 @@
             side: THREE.DoubleSide
           });
           const innerTail = new THREE.Mesh(innerTailGeometry, innerTailMaterial);
-          innerTail.rotation.x = Math.PI;
-          innerTail.position.y = -tailLength / 2;
-          comet.add(innerTail);
+          innerTail.rotation.x = Math.PI / 2;
+          innerTail.position.z = -tailLength / 2;
+          tailGroup.add(innerTail);
+          
+          // Orient tail group to point away from sun (radial direction)
+          tailGroup.lookAt(0, comet.position.y, 0);
+          tailGroup.rotateY(Math.PI);
+          comet.add(tailGroup);
           
           comet.userData = {
             angle: angle,
             distance: distance,
             speed: 0.0015 + Math.random() * 0.001,
-            rotationSpeed: 0.03
+            rotationSpeed: 0.03,
+            tailGroup: tailGroup
           };
           
           scene.add(comet);
@@ -1417,12 +1430,29 @@
             sun.children[0].rotation.y -= 0.003;
           }
           
-          // Update comets
+          // Update comets - make them orbit and orient tail properly
           comets.forEach(comet => {
             if (comet && comet.userData) {
               comet.userData.angle += comet.userData.speed;
+              const oldX = comet.position.x;
+              const oldZ = comet.position.z;
               comet.position.x = Math.cos(comet.userData.angle) * comet.userData.distance;
               comet.position.z = Math.sin(comet.userData.angle) * comet.userData.distance;
+              
+              // Orient tail to point away from sun (opposite to velocity direction)
+              if (comet.userData.tailGroup) {
+                const velocityX = comet.position.x - oldX;
+                const velocityZ = comet.position.z - oldZ;
+                if (Math.abs(velocityX) > 0.001 || Math.abs(velocityZ) > 0.001) {
+                  comet.userData.tailGroup.lookAt(
+                    comet.position.x - velocityX * 10,
+                    comet.position.y,
+                    comet.position.z - velocityZ * 10
+                  );
+                  comet.userData.tailGroup.rotateY(Math.PI);
+                }
+              }
+              
               // Rotate comet
               if (comet.rotation) {
                 comet.rotation.y += comet.userData.rotationSpeed;
