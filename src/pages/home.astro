@@ -1237,64 +1237,116 @@
         }
         console.log('Shooting stars created with particle trails');
         
-        // Create alien ships at further distance - horizontal saucer design
+        // Create alien ships at further distance - more distinct alien design
         const alienShips = [];
         for (let i = 0; i < 3; i++) {
           const ship = new THREE.Group();
           
-          // Bottom saucer disc (larger, flat)
-          const bottomDiscGeometry = new THREE.CylinderGeometry(0.25, 0.25, 0.05, 32);
-          const bottomDiscMaterial = new THREE.MeshPhongMaterial({
-            color: 0x00ff00,
-            emissive: 0x00aa00,
-            emissiveIntensity: 0.5,
+          // Main body - organic, bulbous shape (more alien-like)
+          const bodyGeometry = new THREE.SphereGeometry(0.2, 16, 16);
+          const bodyMaterial = new THREE.MeshPhongMaterial({
+            color: 0x8b00ff, // Purple alien color
+            emissive: 0x4a0080,
+            emissiveIntensity: 0.6,
+            shininess: 30
+          });
+          const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+          body.scale.set(1.2, 0.8, 1.2); // Flatten and widen
+          ship.add(body);
+          
+          // Top antenna/head
+          const antennaGeometry = new THREE.ConeGeometry(0.05, 0.3, 8);
+          const antennaMaterial = new THREE.MeshPhongMaterial({
+            color: 0xff00ff, // Bright magenta
+            emissive: 0xff00ff,
+            emissiveIntensity: 1.5,
             shininess: 50
           });
-          const bottomDisc = new THREE.Mesh(bottomDiscGeometry, bottomDiscMaterial);
-          bottomDisc.rotation.x = Math.PI / 2; // Horizontal
-          bottomDisc.position.y = -0.05;
-          ship.add(bottomDisc);
+          const antenna = new THREE.Mesh(antennaGeometry, antennaMaterial);
+          antenna.position.y = 0.25;
+          antenna.rotation.z = Math.random() * 0.2 - 0.1; // Slight tilt
+          ship.add(antenna);
           
-          // Top saucer disc (smaller, slightly raised)
-          const topDiscGeometry = new THREE.CylinderGeometry(0.18, 0.18, 0.04, 32);
-          const topDiscMaterial = new THREE.MeshPhongMaterial({
-            color: 0x88ff88,
-            emissive: 0x00aa00,
-            emissiveIntensity: 0.4,
-            shininess: 50
+          // Antenna tip glow
+          const tipGeometry = new THREE.SphereGeometry(0.06, 8, 8);
+          const tipMaterial = new THREE.MeshBasicMaterial({
+            color: 0xff00ff,
+            emissive: 0xff00ff,
+            emissiveIntensity: 3
           });
-          const topDisc = new THREE.Mesh(topDiscGeometry, topDiscMaterial);
-          topDisc.rotation.x = Math.PI / 2; // Horizontal
-          topDisc.position.y = 0.02;
-          ship.add(topDisc);
+          const tip = new THREE.Mesh(tipGeometry, tipMaterial);
+          tip.position.y = 0.45;
+          ship.add(tip);
           
-          // Central dome (saucer cockpit)
-          const domeGeometry = new THREE.SphereGeometry(0.1, 16, 8);
-          const domeMaterial = new THREE.MeshPhongMaterial({
-            color: 0x88ff88,
-            emissive: 0x00aa00,
-            emissiveIntensity: 0.3,
+          // Side tentacles/appendages (4 around the body)
+          for (let j = 0; j < 4; j++) {
+            const tentacleGeometry = new THREE.CylinderGeometry(0.03, 0.05, 0.25, 8);
+            const tentacleMaterial = new THREE.MeshPhongMaterial({
+              color: 0x9b00ff,
+              emissive: 0x6b0080,
+              emissiveIntensity: 0.4,
+              shininess: 20
+            });
+            const tentacle = new THREE.Mesh(tentacleGeometry, tentacleMaterial);
+            const angle = (j / 4) * Math.PI * 2;
+            tentacle.position.x = Math.cos(angle) * 0.25;
+            tentacle.position.z = Math.sin(angle) * 0.25;
+            tentacle.position.y = -0.1;
+            tentacle.rotation.z = Math.cos(angle) * 0.3;
+            tentacle.rotation.x = Math.sin(angle) * 0.3;
+            ship.add(tentacle);
+            
+            // Tentacle tip
+            const tentacleTipGeometry = new THREE.SphereGeometry(0.04, 6, 6);
+            const tentacleTipMaterial = new THREE.MeshBasicMaterial({
+              color: 0x00ffff,
+              emissive: 0x00ffff,
+              emissiveIntensity: 2
+            });
+            const tentacleTip = new THREE.Mesh(tentacleTipGeometry, tentacleTipMaterial);
+            tentacleTip.position.copy(tentacle.position);
+            tentacleTip.position.y -= 0.15;
+            ship.add(tentacleTip);
+          }
+          
+          // Central eye/observation window
+          const eyeGeometry = new THREE.SphereGeometry(0.08, 16, 16);
+          const eyeMaterial = new THREE.MeshPhongMaterial({
+            color: 0x00ffff,
+            emissive: 0x00ffff,
+            emissiveIntensity: 2,
             transparent: true,
-            opacity: 0.8
+            opacity: 0.7
           });
-          const dome = new THREE.Mesh(domeGeometry, domeMaterial);
-          dome.position.y = 0.08;
-          dome.scale.z = 0.6; // Flatten the dome
-          ship.add(dome);
+          const eye = new THREE.Mesh(eyeGeometry, eyeMaterial);
+          eye.position.y = 0.15;
+          eye.scale.z = 0.5; // Flatten
+          ship.add(eye);
           
-          // Lights around the rim
-          for (let j = 0; j < 8; j++) {
-            const lightGeometry = new THREE.SphereGeometry(0.03, 8, 8);
+          // Pulsing inner eye
+          const innerEyeGeometry = new THREE.SphereGeometry(0.04, 8, 8);
+          const innerEyeMaterial = new THREE.MeshBasicMaterial({
+            color: 0xffffff,
+            emissive: 0xffffff,
+            emissiveIntensity: 4
+          });
+          const innerEye = new THREE.Mesh(innerEyeGeometry, innerEyeMaterial);
+          innerEye.position.y = 0.15;
+          ship.add(innerEye);
+          
+          // Glowing lights around body
+          for (let k = 0; k < 6; k++) {
+            const lightGeometry = new THREE.SphereGeometry(0.025, 6, 6);
             const lightMaterial = new THREE.MeshBasicMaterial({
               color: 0x00ffff,
               emissive: 0x00ffff,
               emissiveIntensity: 3
             });
             const light = new THREE.Mesh(lightGeometry, lightMaterial);
-            const angle = (j / 8) * Math.PI * 2;
-            light.position.x = Math.cos(angle) * 0.22;
-            light.position.z = Math.sin(angle) * 0.22;
-            light.position.y = 0;
+            const lightAngle = (k / 6) * Math.PI * 2;
+            light.position.x = Math.cos(lightAngle) * 0.22;
+            light.position.z = Math.sin(lightAngle) * 0.22;
+            light.position.y = (Math.random() - 0.5) * 0.2;
             ship.add(light);
           }
           
@@ -1306,9 +1358,9 @@
           ship.position.z = Math.sin(angle) * distance;
           ship.position.y = height;
           
-          // Orient ship horizontally (flying saucer style)
-          ship.rotation.x = 0; // Keep horizontal
-          ship.rotation.z = 0;
+          // Slight tilt for more dynamic look
+          ship.rotation.x = Math.random() * 0.2 - 0.1;
+          ship.rotation.z = Math.random() * 0.2 - 0.1;
           
           ship.userData = {
             distance: distance,
@@ -1317,7 +1369,9 @@
             rotationSpeed: 0.01 + Math.random() * 0.01,
             height: height,
             bobSpeed: 0.02 + Math.random() * 0.02,
-            bobAmount: 0.3 + Math.random() * 0.3
+            bobAmount: 0.3 + Math.random() * 0.3,
+            pulseSpeed: 0.05 + Math.random() * 0.05,
+            innerEye: innerEye
           };
           
           scene.add(ship);
