@@ -827,13 +827,10 @@
           // Higher detail geometry
           const planetGeometry = new THREE.SphereGeometry(data.size, 64, 64);
           
-          // Create planet material with vibrant colors
-          const planetMaterial = new THREE.MeshPhongMaterial({
-            color: data.color,
-            shininess: 30,
-            specular: new THREE.Color(0x333333),
-            emissive: new THREE.Color(data.color).multiplyScalar(0.15)
-          });
+          // Create planet material with gradient for better color distinction
+          const planetMaterial = createGradientMaterial(data.color, data.darkColor);
+          planetMaterial.shininess = 30;
+          planetMaterial.specular = new THREE.Color(0x222222);
           
           const planet = new THREE.Mesh(planetGeometry, planetMaterial);
           
@@ -882,17 +879,19 @@
           scene.add(planet);
           planets.push(planet);
           
-          // Add moons
+          // Add moons/satellites - make them more visible
           if (data.hasMoon) {
-            const moonGeometry = new THREE.SphereGeometry(data.size * 0.15, 16, 16);
+            const moonGeometry = new THREE.SphereGeometry(data.size * 0.2, 16, 16);
             const moonMaterial = new THREE.MeshPhongMaterial({
-              color: 0x888888,
-              shininess: 5
+              color: 0xcccccc,
+              emissive: 0x888888,
+              emissiveIntensity: 0.5,
+              shininess: 10
             });
             const moon = new THREE.Mesh(moonGeometry, moonMaterial);
             moon.userData = {
               parentPlanet: planet,
-              distance: data.size * 1.5,
+              distance: data.size * 1.8,
               angle: Math.random() * Math.PI * 2,
               speed: data.speed * 3
             };
@@ -900,15 +899,17 @@
             moons.push(moon);
           } else if (data.hasMoons) {
             for (let i = 0; i < data.moonCount; i++) {
-              const moonGeometry = new THREE.SphereGeometry(data.size * 0.1, 16, 16);
+              const moonGeometry = new THREE.SphereGeometry(data.size * 0.15, 16, 16);
               const moonMaterial = new THREE.MeshPhongMaterial({
-                color: 0x888888,
-                shininess: 5
+                color: 0xcccccc,
+                emissive: 0x888888,
+                emissiveIntensity: 0.5,
+                shininess: 10
               });
               const moon = new THREE.Mesh(moonGeometry, moonMaterial);
               moon.userData = {
                 parentPlanet: planet,
-                distance: data.size * (1.5 + i * 0.3),
+                distance: data.size * (1.8 + i * 0.4),
                 angle: (i / data.moonCount) * Math.PI * 2,
                 speed: data.speed * (2 + i * 0.5)
               };
@@ -1015,7 +1016,7 @@
           comet.userData = {
             angle: angle,
             distance: distance,
-            speed: 0.0015 + Math.random() * 0.001,
+            speed: 0.003 + Math.random() * 0.002, // Faster movement
             rotationSpeed: 0.03,
             tailGroup: tailGroup
           };
@@ -1025,32 +1026,38 @@
         }
         console.log('Comets created with bright tails');
         
-        // Create shooting stars with visible trails
+        // Create shooting stars with better appearance - slower and more visible
         for (let i = 0; i < 2; i++) {
-          const trailLength = 0.8;
-          const trailGeometry = new THREE.BufferGeometry();
-          const trailMaterial = new THREE.LineBasicMaterial({
-            color: 0xffffff,
-            transparent: true,
-            opacity: 0.9
-          });
+          // Create shooting star as a group
+          const shootingStar = new THREE.Group();
           
-          // Create trail vertices
-          const trailVertices = [];
-          for (let j = 0; j < 20; j++) {
-            const t = j / 19;
-            trailVertices.push(0, 0, -t * trailLength);
+          // Create a visible trail using multiple particles
+          const trailParticles = [];
+          const trailLength = 1.5;
+          const particleCount = 15;
+          
+          for (let j = 0; j < particleCount; j++) {
+            const particleSize = 0.06 * (1 - j / particleCount);
+            const particleGeometry = new THREE.SphereGeometry(particleSize, 8, 8);
+            const particleMaterial = new THREE.MeshBasicMaterial({
+              color: 0xffffff,
+              emissive: 0xaaccff,
+              emissiveIntensity: 2,
+              transparent: true,
+              opacity: 1 - (j / particleCount) * 0.7
+            });
+            const particle = new THREE.Mesh(particleGeometry, particleMaterial);
+            particle.position.z = -j * (trailLength / particleCount);
+            shootingStar.add(particle);
+            trailParticles.push(particle);
           }
-          trailGeometry.setAttribute('position', new THREE.Float32BufferAttribute(trailVertices, 3));
-          
-          const shootingStar = new THREE.Line(trailGeometry, trailMaterial);
           
           // Add bright head
-          const headGeometry = new THREE.SphereGeometry(0.08, 8, 8);
+          const headGeometry = new THREE.SphereGeometry(0.12, 8, 8);
           const headMaterial = new THREE.MeshBasicMaterial({
             color: 0xffffff,
             emissive: 0xffffff,
-            emissiveIntensity: 5
+            emissiveIntensity: 4
           });
           const head = new THREE.Mesh(headGeometry, headMaterial);
           shootingStar.add(head);
@@ -1076,15 +1083,16 @@
           
           shootingStar.userData = {
             direction: direction,
-            speed: 0.4 + Math.random() * 0.3,
+            speed: 0.15 + Math.random() * 0.1, // Much slower
             life: 0,
-            maxLife: 150 + Math.random() * 100
+            maxLife: 200 + Math.random() * 150,
+            trailParticles: trailParticles
           };
           
           scene.add(shootingStar);
           shootingStars.push(shootingStar);
         }
-        console.log('Shooting stars created with visible trails');
+        console.log('Shooting stars created with particle trails');
         
         // Store for compatibility
         let earth = planets[2];
@@ -1458,7 +1466,7 @@
             }
           });
           
-          // Update shooting stars
+          // Update shooting stars with particle trails
           shootingStars.forEach((star, index) => {
             if (star && star.userData) {
               star.userData.life++;
@@ -1482,16 +1490,36 @@
                   star.position.z + star.userData.direction.z
                 );
                 star.rotateX(Math.PI / 2);
+                
+                // Reset trail particle opacities
+                if (star.userData.trailParticles) {
+                  star.userData.trailParticles.forEach((particle, i) => {
+                    const opacity = 1 - (i / star.userData.trailParticles.length) * 0.7;
+                    if (particle.material) particle.material.opacity = opacity;
+                  });
+                }
               } else {
                 // Move shooting star
                 star.position.add(
                   star.userData.direction.clone().multiplyScalar(star.userData.speed)
                 );
                 // Fade out as it travels
-                const opacity = 1 - (star.userData.life / star.userData.maxLife);
-                if (star.material) star.material.opacity = opacity * 0.9;
-                if (star.children[0] && star.children[0].material) {
-                  star.children[0].material.opacity = opacity;
+                const lifeProgress = star.userData.life / star.userData.maxLife;
+                const opacity = 1 - lifeProgress;
+                
+                // Update head opacity
+                if (star.children && star.children[star.children.length - 1] && star.children[star.children.length - 1].material) {
+                  star.children[star.children.length - 1].material.opacity = opacity;
+                }
+                
+                // Update trail particle opacities
+                if (star.userData.trailParticles) {
+                  star.userData.trailParticles.forEach((particle, i) => {
+                    const baseOpacity = 1 - (i / star.userData.trailParticles.length) * 0.7;
+                    if (particle.material) {
+                      particle.material.opacity = baseOpacity * opacity;
+                    }
+                  });
                 }
               }
             }
