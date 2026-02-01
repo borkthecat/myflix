@@ -365,6 +365,39 @@ body {
   font-size: 0.85rem;
 }
 
+.solar-info-citations {
+  margin-top: 30px;
+  padding-top: 25px;
+  border-top: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.solar-info-citations p {
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.solar-info-citations ul {
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+.solar-info-citations li {
+  margin-bottom: 8px;
+  color: #d0d0d0;
+}
+
+.solar-info-citations a {
+  color: #4a9eff;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.solar-info-citations a:hover {
+  color: #6bb0ff;
+  text-decoration: underline;
+}
+
 .solar-info-modal-content::-webkit-scrollbar {
   width: 8px;
 }
