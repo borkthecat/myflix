@@ -1469,17 +1469,23 @@
             }
           });
           
-          // Rotate moons around their planets
-          moons.forEach(moon => {
-            if (moon && moon.userData && moon.userData.parentPlanet) {
-              const parent = moon.userData.parentPlanet;
-              moon.userData.angle += moon.userData.speed;
-              moon.position.x = parent.position.x + Math.cos(moon.userData.angle) * moon.userData.distance;
-              moon.position.z = parent.position.z + Math.sin(moon.userData.angle) * moon.userData.distance;
-              moon.position.y = parent.position.y;
-              // Rotate moon on its own axis
-              if (moon.rotation) {
-                moon.rotation.y += 0.02;
+          // Rotate satellites around their planets
+          moons.forEach(satellite => {
+            if (satellite && satellite.userData && satellite.userData.parentPlanet) {
+              const parent = satellite.userData.parentPlanet;
+              satellite.userData.angle += satellite.userData.speed;
+              satellite.position.x = parent.position.x + Math.cos(satellite.userData.angle) * satellite.userData.distance;
+              satellite.position.z = parent.position.z + Math.sin(satellite.userData.angle) * satellite.userData.distance;
+              satellite.position.y = parent.position.y;
+              // Rotate satellite on its own axis
+              if (satellite.rotation) {
+                satellite.rotation.y += 0.02;
+                // Tilt solar panels slightly for realism
+                if (satellite.children && satellite.children.length > 1) {
+                  const time = Date.now() * 0.0005;
+                  if (satellite.children[1]) satellite.children[1].rotation.y = Math.sin(time) * 0.1; // Left panel
+                  if (satellite.children[2]) satellite.children[2].rotation.y = -Math.sin(time) * 0.1; // Right panel
+                }
               }
             }
           });
