@@ -677,6 +677,8 @@
         let planets = [];
         let moons = [];
         let asteroids = [];
+        let comets = [];
+        let shootingStars = [];
         let sun;
         
         // Helper function to create gradient material
@@ -950,6 +952,128 @@
           asteroids.push(asteroid);
         }
         console.log('Asteroid belt created with 200 asteroids');
+        
+        // Create comets with bright, recognizable tails
+        for (let i = 0; i < 3; i++) {
+          const cometSize = 0.12;
+          const cometGeometry = new THREE.SphereGeometry(cometSize, 16, 16);
+          const cometMaterial = new THREE.MeshBasicMaterial({
+            color: 0xffffff,
+            emissive: 0xaaccff,
+            emissiveIntensity: 3
+          });
+          const comet = new THREE.Mesh(cometGeometry, cometMaterial);
+          
+          const distance = 18 + Math.random() * 8;
+          const angle = Math.random() * Math.PI * 2;
+          comet.position.x = Math.cos(angle) * distance;
+          comet.position.z = Math.sin(angle) * distance;
+          comet.position.y = (Math.random() - 0.5) * 4;
+          
+          // Create bright, visible comet tail with multiple layers
+          const tailLength = 1.2;
+          const tailWidth = 0.15;
+          
+          // Outer glow tail
+          const outerTailGeometry = new THREE.ConeGeometry(tailWidth, tailLength, 16);
+          const outerTailMaterial = new THREE.MeshBasicMaterial({
+            color: 0x88ccff,
+            transparent: true,
+            opacity: 0.4,
+            side: THREE.DoubleSide
+          });
+          const outerTail = new THREE.Mesh(outerTailGeometry, outerTailMaterial);
+          outerTail.rotation.x = Math.PI;
+          outerTail.position.y = -tailLength / 2;
+          comet.add(outerTail);
+          
+          // Inner bright tail
+          const innerTailGeometry = new THREE.ConeGeometry(tailWidth * 0.6, tailLength, 12);
+          const innerTailMaterial = new THREE.MeshBasicMaterial({
+            color: 0xffffff,
+            emissive: 0xffffff,
+            emissiveIntensity: 2,
+            transparent: true,
+            opacity: 0.8,
+            side: THREE.DoubleSide
+          });
+          const innerTail = new THREE.Mesh(innerTailGeometry, innerTailMaterial);
+          innerTail.rotation.x = Math.PI;
+          innerTail.position.y = -tailLength / 2;
+          comet.add(innerTail);
+          
+          comet.userData = {
+            angle: angle,
+            distance: distance,
+            speed: 0.0015 + Math.random() * 0.001,
+            rotationSpeed: 0.03
+          };
+          
+          scene.add(comet);
+          comets.push(comet);
+        }
+        console.log('Comets created with bright tails');
+        
+        // Create shooting stars with visible trails
+        for (let i = 0; i < 2; i++) {
+          const trailLength = 0.8;
+          const trailGeometry = new THREE.BufferGeometry();
+          const trailMaterial = new THREE.LineBasicMaterial({
+            color: 0xffffff,
+            transparent: true,
+            opacity: 0.9
+          });
+          
+          // Create trail vertices
+          const trailVertices = [];
+          for (let j = 0; j < 20; j++) {
+            const t = j / 19;
+            trailVertices.push(0, 0, -t * trailLength);
+          }
+          trailGeometry.setAttribute('position', new THREE.Float32BufferAttribute(trailVertices, 3));
+          
+          const shootingStar = new THREE.Line(trailGeometry, trailMaterial);
+          
+          // Add bright head
+          const headGeometry = new THREE.SphereGeometry(0.08, 8, 8);
+          const headMaterial = new THREE.MeshBasicMaterial({
+            color: 0xffffff,
+            emissive: 0xffffff,
+            emissiveIntensity: 5
+          });
+          const head = new THREE.Mesh(headGeometry, headMaterial);
+          shootingStar.add(head);
+          
+          const startX = (Math.random() - 0.5) * 40;
+          const startY = (Math.random() - 0.5) * 40;
+          const startZ = (Math.random() - 0.5) * 40;
+          shootingStar.position.set(startX, startY, startZ);
+          
+          const direction = new THREE.Vector3(
+            (Math.random() - 0.5) * 2,
+            (Math.random() - 0.5) * 2,
+            (Math.random() - 0.5) * 2
+          ).normalize();
+          
+          // Orient the shooting star along its direction
+          shootingStar.lookAt(
+            shootingStar.position.x + direction.x,
+            shootingStar.position.y + direction.y,
+            shootingStar.position.z + direction.z
+          );
+          shootingStar.rotateX(Math.PI / 2);
+          
+          shootingStar.userData = {
+            direction: direction,
+            speed: 0.4 + Math.random() * 0.3,
+            life: 0,
+            maxLife: 150 + Math.random() * 100
+          };
+          
+          scene.add(shootingStar);
+          shootingStars.push(shootingStar);
+        }
+        console.log('Shooting stars created with visible trails');
         
         // Store for compatibility
         let earth = planets[2];
@@ -1292,6 +1416,58 @@
           if (sun && sun.children[0] && sun.children[0].rotation) {
             sun.children[0].rotation.y -= 0.003;
           }
+          
+          // Update comets
+          comets.forEach(comet => {
+            if (comet && comet.userData) {
+              comet.userData.angle += comet.userData.speed;
+              comet.position.x = Math.cos(comet.userData.angle) * comet.userData.distance;
+              comet.position.z = Math.sin(comet.userData.angle) * comet.userData.distance;
+              // Rotate comet
+              if (comet.rotation) {
+                comet.rotation.y += comet.userData.rotationSpeed;
+              }
+            }
+          });
+          
+          // Update shooting stars
+          shootingStars.forEach((star, index) => {
+            if (star && star.userData) {
+              star.userData.life++;
+              if (star.userData.life > star.userData.maxLife) {
+                // Reset shooting star
+                star.userData.life = 0;
+                const startX = (Math.random() - 0.5) * 40;
+                const startY = (Math.random() - 0.5) * 40;
+                const startZ = (Math.random() - 0.5) * 40;
+                star.position.set(startX, startY, startZ);
+                star.userData.direction = new THREE.Vector3(
+                  (Math.random() - 0.5) * 2,
+                  (Math.random() - 0.5) * 2,
+                  (Math.random() - 0.5) * 2
+                ).normalize();
+                
+                // Re-orient the shooting star
+                star.lookAt(
+                  star.position.x + star.userData.direction.x,
+                  star.position.y + star.userData.direction.y,
+                  star.position.z + star.userData.direction.z
+                );
+                star.rotateX(Math.PI / 2);
+              } else {
+                // Move shooting star
+                star.position.add(
+                  star.userData.direction.clone().multiplyScalar(star.userData.speed)
+                );
+                // Fade out as it travels
+                const opacity = 1 - (star.userData.life / star.userData.maxLife);
+                if (star.material) star.material.opacity = opacity * 0.9;
+                if (star.children[0] && star.children[0].material) {
+                  star.children[0].material.opacity = opacity;
+                }
+              }
+            }
+          });
           
           // Update particle explosion effect
           clickedPlanetParticles.forEach((particle, index) => {
