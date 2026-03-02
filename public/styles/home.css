@@ -1333,6 +1333,38 @@ body {
   opacity: 1;
 }
 
+.project-card-filler {
+  cursor: default;
+  border: 1px dashed rgba(255, 255, 255, 0.12);
+  background: transparent;
+}
+
+.project-card-filler::before {
+  display: none;
+}
+
+.project-card-filler:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.project-filler-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.project-filler-content p {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.25);
+  letter-spacing: 0.05em;
+  font-style: italic;
+}
+
 .project-hover h3 {
   margin: 0 0 5px 0;
   font-size: 1.1rem;
