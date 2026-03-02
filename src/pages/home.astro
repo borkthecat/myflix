@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Portfolio</title>
     <link rel="stylesheet" href="/styles/home.css" />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
   </head>
 
   <body>
@@ -135,15 +136,8 @@
 
         <div class="project-card" data-project="p4">
           <div class="project-hover">
-            <h3>Project 4</h3>
-            <p>Python • Pytorch</p>
-          </div>
-        </div>
-
-        <div class="project-card" data-project="p5">
-          <div class="project-hover">
-            <h3>Project 5</h3>
-            <p>Data Science • LLM</p>
+            <h3>MyFlix</h3>
+            <p>Astro • Portfolio</p>
           </div>
         </div>
       </div>
@@ -572,12 +566,6 @@
               </svg>
               View Code
             </a>
-            <button class="btn btn-icon" aria-label="Add to list">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="12" y1="5" x2="12" y2="19"></line>
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-              </svg>
-            </button>
           </div>
 
           <p class="modal-desc" id="modal-desc"></p>
@@ -2304,49 +2292,99 @@
           stack: "Python, Node.js, Mineflayer, Express.js, Ollama, qwen2.5:7b, OpenAI-compatible API, Minecraft Java Edition 1.21.4",
           status: "In Progress",
           owner: "Arai Nanami Rachel",
+          github: "https://github.com/borkthecat/ollamaminecraftbot",
           btnLabel: "Learn More",
           details: `
-            <h3>Architecture</h3>
-            <ul>
-              <li><strong>3-tier system:</strong> Minecraft server → Node.js bridge that exposes game actions as an HTTP API → Python agent that uses an LLM to make decisions</li>
-              <li><strong>Full game state observation:</strong> Health, inventory, nearby blocks, nearby mobs, equipment, position, time of day — all formatted into an intelligent LLM prompt</li>
-              <li><strong>Multi-turn conversation:</strong> Every action result feeds back to the LLM. It sees "that failed" or "that worked" and adapts its next move, building context over time</li>
-              <li><strong>Goal regression:</strong> If the bot dies and loses items, the planner detects that completed goals are no longer valid and resets them intelligently</li>
-              <li><strong>Combat handling:</strong> When hostile mobs are nearby, the prompt alerts the LLM which decides whether to fight or flee based on health</li>
-              <li><strong>100% local execution:</strong> No cloud API needed. Uses Ollama with qwen2.5:7b on an RTX 3060 Ti. Fully self-contained</li>
-              <li><strong>Stuck detection:</strong> If the bot keeps failing the same action, the Python agent overrides the LLM and forces exploration to new coordinates, then clears conversation history for a fresh start</li>
-            </ul>
-            <h3>Key Files</h3>
-            <table>
-              <thead><tr><th>File</th><th>What it shows</th></tr></thead>
-              <tbody>
-                <tr><td><code>prompt_builder.py</code></td><td>How raw game data becomes an intelligent LLM prompt</td></tr>
-                <tr><td><code>agent.py</code></td><td>Multi-turn LLM conversation with learning loop</td></tr>
-                <tr><td><code>main.py</code></td><td>Control loop with stuck detection, goal regression</td></tr>
-                <tr><td><code>planner.py</code></td><td>Goal tree with inventory-aware regression</td></tr>
-                <tr><td><code>goals.py</code></td><td>Full 16-goal progression from wood to Ender Dragon</td></tr>
-                <tr><td><code>bot/index.js</code></td><td>Mineflayer bridge with auto-equip, smart mining, combat</td></tr>
-              </tbody>
-            </table>
+            <div class="diagram">
+              <div class="layer layer-minecraft">
+                <div class="layer-num">Layer 01</div>
+                <div class="layer-header">
+                  <span class="layer-name">Minecraft Server</span>
+                  <span class="layer-tech">Java / Bedrock</span>
+                </div>
+                <div class="layer-desc">The game world. Hosts the simulation environment — terrain, mobs, physics, inventory, chat, and all game state. Acts as the ground truth source for all observations.</div>
+                <div class="tags">
+                  <span class="tag">game world</span>
+                  <span class="tag">terrain + mobs</span>
+                  <span class="tag">physics engine</span>
+                  <span class="tag">inventory</span>
+                  <span class="tag">chat events</span>
+                  <span class="tag">ground truth</span>
+                </div>
+              </div>
+              <div class="connector connector-1">
+                <div class="conn-labels">
+                  <div class="conn-label"><span class="arrow">\u2193</span> game events / state stream</div>
+                  <div class="conn-label">actions / commands <span class="arrow">\u2191</span></div>
+                  <div class="conn-center-line">
+                    <div class="conn-line"><div class="dot"></div></div>
+                  </div>
+                </div>
+              </div>
+              <div class="layer layer-bridge">
+                <div class="layer-num">Layer 02</div>
+                <div class="layer-header">
+                  <span class="layer-name">Mineflayer Bridge</span>
+                  <span class="layer-tech">Node.js</span>
+                </div>
+                <div class="layer-desc">The control interface. Connects to the Minecraft server as a bot, observes all world events in real-time, and exposes a clean HTTP API so the Python agent can read state and dispatch actions.</div>
+                <div class="tags">
+                  <span class="tag">bot client</span>
+                  <span class="tag">event listener</span>
+                  <span class="tag">HTTP API</span>
+                  <span class="tag">action executor</span>
+                  <span class="tag">state serializer</span>
+                  <span class="tag">mineflayer</span>
+                </div>
+              </div>
+              <div class="connector connector-2">
+                <div class="conn-labels">
+                  <div class="conn-label"><span class="arrow">\u2193</span> serialized game state</div>
+                  <div class="conn-label">action commands <span class="arrow">\u2191</span></div>
+                  <div class="conn-center-line">
+                    <div class="conn-line"><div class="dot"></div></div>
+                  </div>
+                </div>
+              </div>
+              <div class="layer layer-agent" style="position:relative;">
+                <div class="layer-num">Layer 03</div>
+                <div class="layer-header">
+                  <span class="layer-name">Python Agent</span>
+                  <span class="layer-tech">Python \u00b7 LLM</span>
+                </div>
+                <div class="layer-desc">The brain. Receives game state from the bridge, constructs prompts and sends them to an LLM for decision-making, parses returned actions, dispatches them back, and logs results for reinforcement learning.</div>
+                <div class="tags">
+                  <span class="tag">state \u2192 prompt</span>
+                  <span class="tag">LLM inference</span>
+                  <span class="tag">action parser</span>
+                  <span class="tag">reward signal</span>
+                  <span class="tag">replay buffer</span>
+                  <span class="tag">RL loop</span>
+                </div>
+                <div class="llm-bubble">
+                  <span class="llm-title">\u2b21 LLM</span>
+                  Receives game state prompt \u2192 Returns structured decision \u2192 Feeds reward signal back for training
+                </div>
+              </div>
+            </div>
+            <div class="legend">
+              <div class="legend-item"><div class="legend-dot" style="background:#00ff00"></div> Minecraft Server</div>
+              <div class="legend-item"><div class="legend-dot" style="background:#ff0000"></div> Mineflayer Bridge</div>
+              <div class="legend-item"><div class="legend-dot" style="background:#0088ff"></div> Python Agent</div>
+              <div class="legend-item"><div class="legend-dot" style="background:#ff0000"></div> LLM Core</div>
+            </div>
           `,
         },
         p4: {
-          title: "Project 4",
-          tech: "Python • PyTorch",
-          desc: "Example description for Project 4.",
+          title: "MyFlix",
+          tech: "Astro • Portfolio",
+          desc: "A Netflix-themed personal portfolio website built with Astro. Features an interactive Three.js solar system hero, project showcases with modals, skills section, GitHub integration, and a cinematic profile picker experience.",
           type: "Project",
-          stack: "Python, PyTorch",
-          status: "In Progress",
-          owner: "Your Name",
-        },
-        p5: {
-          title: "Project 5",
-          tech: "Data Science • LLM",
-          desc: "Example description for Project 5.",
-          type: "Project",
-          stack: "Python, Pandas, LLM",
-          status: "In Progress",
-          owner: "Your Name",
+          stack: "Astro, CSS, JavaScript, Three.js",
+          status: "Live",
+          owner: "Arai Nanami Rachel",
+          url: "https://myflix.vercel.app/",
+          github: "https://github.com/borkthecat/myflix",
         },
       };
 
@@ -2373,10 +2411,11 @@
           modalType.textContent = p.type;
           modalStack.textContent = p.stack;
           modalStatus.textContent = p.status;
+          modalStatus.classList.remove("status-live", "status-in-progress");
           if (p.status === "Live") {
             modalStatus.classList.add("status-live");
-          } else {
-            modalStatus.classList.remove("status-live");
+          } else if (p.status === "In Progress") {
+            modalStatus.classList.add("status-in-progress");
           }
           modalOwner.textContent = p.owner;
           
