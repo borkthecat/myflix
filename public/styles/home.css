@@ -1875,8 +1875,8 @@ body {
 }
 
 .modal-hero.modal-hero-video-active {
-  height: 85vh;
-  max-height: 900px;
+  height: 90vh;
+  max-height: 1000px;
 }
 
 .modal-hero-image {
@@ -2845,7 +2845,8 @@ body {
   }
 
   .modal-hero.modal-hero-video-active {
-    height: 280px;
+    height: 70vh;
+    max-height: 600px;
   }
 
   .modal-body {
