@@ -2665,9 +2665,29 @@ body {
   }
 
   .top10-popup {
-    left: 20px;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
     width: calc(100vw - 40px);
     max-width: 90vw;
+  }
+
+  .top10-popup.active {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  .hero-title {
+    font-size: 2rem;
+    margin-bottom: 4px;
+  }
+
+  .hero-desc {
+    font-size: 0.95rem;
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+
+  .hero-content {
+    padding-top: 20px;
   }
 
   .popup-header {
