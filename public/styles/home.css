@@ -1305,6 +1305,20 @@ body {
   display: none;
 }
 
+.card-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.project-card:has(.card-video)::before {
+  display: none;
+}
+
 .project-hover {
   position: relative;
   width: 100%;
@@ -2021,7 +2035,7 @@ body {
   width: 100%;
   border: 1px solid;
   border-radius: 6px;
-  padding: 28px 32px;
+  padding: 36px 40px;
   position: relative;
   opacity: 0;
   transform: translateY(20px);
@@ -2282,6 +2296,100 @@ body {
 
 @media (max-width: 700px) {
   .modal-details .llm-bubble { display: none; }
+  .modal-details .layer { padding: 24px 20px; }
+}
+
+/* Details Section (below diagram) */
+.modal-details .details-section {
+  margin-top: 48px;
+  font-family: inherit;
+}
+
+.modal-details .details-heading {
+  font-size: 1.3rem;
+  color: #fff;
+  margin: 40px 0 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.modal-details .details-heading:first-child {
+  margin-top: 0;
+}
+
+.modal-details .detail-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.modal-details .detail-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 20px 22px;
+  transition: border-color 0.3s ease;
+}
+
+.modal-details .detail-card:hover {
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.modal-details .detail-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 8px;
+  letter-spacing: 0.02em;
+}
+
+.modal-details .detail-card p {
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: #999;
+  margin: 0;
+}
+
+.modal-details .details-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8px;
+}
+
+.modal-details .details-table thead tr {
+  border-bottom: 2px solid rgba(255, 255, 255, 0.12);
+}
+
+.modal-details .details-table th {
+  text-align: left;
+  padding: 10px 14px;
+  font-size: 0.8rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.modal-details .details-table td {
+  padding: 12px 14px;
+  font-size: 0.9rem;
+  color: #bbb;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.modal-details .details-table td code {
+  background: rgba(0, 136, 255, 0.1);
+  color: #5cb8ff;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.82rem;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+}
+
+@media (max-width: 600px) {
+  .modal-details .detail-cards {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Modal Info */

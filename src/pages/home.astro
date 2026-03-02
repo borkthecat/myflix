@@ -128,13 +128,16 @@
         </div>
 
         <div class="project-card" data-project="p3">
+          <video class="card-video" autoplay loop muted playsinline>
+            <source src="/video/mcvideo.mp4" type="video/mp4">
+          </video>
           <div class="project-hover">
             <h3>AI Minecraft Bot</h3>
             <p>Python • LLM • Mineflayer</p>
           </div>
         </div>
 
-        <div class="project-card" data-project="p4">
+        <div class="project-card" data-project="p4" style="background-image: url('/images/netflixbg.png'); background-size: cover; background-position: center;">
           <div class="project-hover">
             <h3>MyFlix</h3>
             <p>Astro • Portfolio</p>
@@ -2373,12 +2376,53 @@
               <div class="legend-item"><div class="legend-dot" style="background:#0088ff"></div> Python Agent</div>
               <div class="legend-item"><div class="legend-dot" style="background:#ff0000"></div> LLM Core</div>
             </div>
+            <div class="details-section">
+              <h3 class="details-heading">How It Works</h3>
+              <div class="detail-cards">
+                <div class="detail-card">
+                  <span class="detail-label">Multi-turn Conversation</span>
+                  <p>Every action result feeds back to the LLM. It sees "that failed" or "that worked" and adapts its next move, building context over time.</p>
+                </div>
+                <div class="detail-card">
+                  <span class="detail-label">Goal Regression</span>
+                  <p>If the bot dies and loses items, the planner detects that completed goals are no longer valid and resets them intelligently.</p>
+                </div>
+                <div class="detail-card">
+                  <span class="detail-label">Combat Handling</span>
+                  <p>When hostile mobs are nearby, the prompt alerts the LLM which decides whether to fight or flee based on health.</p>
+                </div>
+                <div class="detail-card">
+                  <span class="detail-label">100% Local Execution</span>
+                  <p>No cloud API needed. Uses Ollama with qwen2.5:7b on an RTX 3060 Ti. Fully self-contained.</p>
+                </div>
+                <div class="detail-card">
+                  <span class="detail-label">Stuck Detection</span>
+                  <p>If the bot keeps failing the same action, the Python agent overrides the LLM and forces exploration to new coordinates, then clears conversation history for a fresh start.</p>
+                </div>
+                <div class="detail-card">
+                  <span class="detail-label">Full Game State Observation</span>
+                  <p>Health, inventory, nearby blocks, nearby mobs, equipment, position, time of day \u2014 all formatted into an intelligent LLM prompt.</p>
+                </div>
+              </div>
+              <h3 class="details-heading">Key Files</h3>
+              <table class="details-table">
+                <thead><tr><th>File</th><th>What it shows</th></tr></thead>
+                <tbody>
+                  <tr><td><code>prompt_builder.py</code></td><td>How raw game data becomes an intelligent LLM prompt</td></tr>
+                  <tr><td><code>agent.py</code></td><td>Multi-turn LLM conversation with learning loop</td></tr>
+                  <tr><td><code>main.py</code></td><td>Control loop with stuck detection, goal regression</td></tr>
+                  <tr><td><code>planner.py</code></td><td>Goal tree with inventory-aware regression</td></tr>
+                  <tr><td><code>goals.py</code></td><td>Full 16-goal progression from wood to Ender Dragon</td></tr>
+                  <tr><td><code>bot/index.js</code></td><td>Mineflayer bridge with auto-equip, smart mining, combat</td></tr>
+                </tbody>
+              </table>
+            </div>
           `,
         },
         p4: {
           title: "MyFlix",
           tech: "Astro • Portfolio",
-          desc: "A Netflix-themed personal portfolio website built with Astro. Features an interactive Three.js solar system hero, project showcases with modals, skills section, GitHub integration, and a cinematic profile picker experience.",
+          desc: "Of course, this website! A Netflix-themed personal portfolio built with Astro. Features an interactive Three.js solar system hero, project showcases with modals, skills section, GitHub integration, and a cinematic profile picker experience.",
           type: "Project",
           stack: "Astro, CSS, JavaScript, Three.js",
           status: "Live",
