@@ -7,6 +7,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/images/netflix_logo_icon_170919.svg" />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <title>Intro Test</title>
     <style>
       body {
@@ -21,6 +22,27 @@
         justify-content: center;
         height: 100vh;
         width: 100vw;
+      }
+
+      body {
+        cursor: none;
+      }
+
+      .cursor-label {
+        position: fixed;
+        pointer-events: none;
+        z-index: 9999;
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 1.2rem;
+        color: #e50914;
+        letter-spacing: 0.05em;
+        transform: translate(15px, 15px);
+        opacity: 0;
+        transition: opacity 0.2s ease;
+      }
+
+      .cursor-label.visible {
+        opacity: 1;
       }
 
       .logo-img {
@@ -52,12 +74,23 @@
   </head>
 
   <body>
+    <div class="cursor-label" id="cursor-label">Click!</div>
     <div class="logo-wrapper">
       <img src="/images/title.png" alt="Intro Logo" class="logo-img" />
       <audio id="introSound" src="/tadum.mp3" preload="auto"></audio>
     </div>
 
     <script>
+      const cursorLabel = document.getElementById("cursor-label");
+      document.addEventListener("mousemove", (e) => {
+        cursorLabel.style.left = e.clientX + "px";
+        cursorLabel.style.top = e.clientY + "px";
+        cursorLabel.classList.add("visible");
+      });
+      document.addEventListener("mouseleave", () => {
+        cursorLabel.classList.remove("visible");
+      });
+
       const audio = document.getElementById("introSound");
       const logo = document.querySelector(".logo-img");
 
@@ -73,7 +106,9 @@
             console.warn("Playback blocked:", err);
           }
 
-          // trigger animation
+          cursorLabel.classList.remove("visible");
+          document.body.style.cursor = "default";
+
           logo.classList.add("animate");
 
           // redirect after animation
