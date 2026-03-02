@@ -119,17 +119,17 @@
           </div>
         </div>
 
-        <div class="project-card" data-project="p2">
+        <div class="project-card" data-project="p2" style="background-image: url('/images/monsterbg.png'); background-size: cover; background-position: center;">
           <div class="project-hover">
-            <h3>Project 2</h3>
-            <p>Next.js • TypeScript</p>
+            <h3>Monster</h3>
+            <p>Astro • Manga Analysis</p>
           </div>
         </div>
 
         <div class="project-card" data-project="p3">
           <div class="project-hover">
-            <h3>Project 3</h3>
-            <p>React • Tailwind</p>
+            <h3>AI Minecraft Bot</h3>
+            <p>Python • LLM • Mineflayer</p>
           </div>
         </div>
 
@@ -566,12 +566,12 @@
               </svg>
               Visit Project
             </a>
-            <button class="btn btn-secondary">
+            <a href="#" id="view-code-btn" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
               </svg>
               View Code
-            </button>
+            </a>
             <button class="btn btn-icon" aria-label="Add to list">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <line x1="12" y1="5" x2="12" y2="19"></line>
@@ -581,6 +581,8 @@
           </div>
 
           <p class="modal-desc" id="modal-desc"></p>
+
+          <div class="modal-details" id="modal-details" style="display:none;"></div>
 
           <div class="modal-info">
             <div class="info-item">
@@ -2280,25 +2282,53 @@
           status: "Live",
           owner: "Arai Nanami Rachel",
           url: "https://myvinyl.vercel.app/",
+          github: "https://github.com/borkthecat/myvinyl",
           image: "/images/myvinylcover.png",
         },
         p2: {
-          title: "Project 2",
-          tech: "Next.js • TypeScript",
-          desc: "Example description for Project 2.",
+          title: "Monster",
+          tech: "Astro • Manga Analysis",
+          desc: "A website detailing the analysis of the manga Monster and its leading characters. A deep psychological inquiry into Naoki Urasawa's masterpiece — exploring the themes, motivations, and moral complexities of its cast.",
           type: "Project",
-          stack: "Next.js, TypeScript",
-          status: "Beta",
-          owner: "Your Name",
+          stack: "Astro, CSS, JavaScript",
+          status: "In Progress",
+          owner: "Arai Nanami Rachel",
+          github: "https://github.com/borkthecat/monster",
+          image: "/images/monsterbg.png",
         },
         p3: {
-          title: "Project 3",
-          tech: "React • Tailwind",
-          desc: "Example description for Project 3.",
+          title: "AI Minecraft Bot",
+          tech: "Python • LLM • Mineflayer",
+          desc: "A self-playing Minecraft bot that uses a local LLM (via Ollama) to observe the game world, reason about what to do, and continuously learn from its successes and failures.",
           type: "Project",
-          stack: "React, Tailwind",
-          status: "Live",
-          owner: "Your Name",
+          stack: "Python, Node.js, Mineflayer, Express.js, Ollama, qwen2.5:7b, OpenAI-compatible API, Minecraft Java Edition 1.21.4",
+          status: "In Progress",
+          owner: "Arai Nanami Rachel",
+          btnLabel: "Learn More",
+          details: `
+            <h3>Architecture</h3>
+            <ul>
+              <li><strong>3-tier system:</strong> Minecraft server → Node.js bridge that exposes game actions as an HTTP API → Python agent that uses an LLM to make decisions</li>
+              <li><strong>Full game state observation:</strong> Health, inventory, nearby blocks, nearby mobs, equipment, position, time of day — all formatted into an intelligent LLM prompt</li>
+              <li><strong>Multi-turn conversation:</strong> Every action result feeds back to the LLM. It sees "that failed" or "that worked" and adapts its next move, building context over time</li>
+              <li><strong>Goal regression:</strong> If the bot dies and loses items, the planner detects that completed goals are no longer valid and resets them intelligently</li>
+              <li><strong>Combat handling:</strong> When hostile mobs are nearby, the prompt alerts the LLM which decides whether to fight or flee based on health</li>
+              <li><strong>100% local execution:</strong> No cloud API needed. Uses Ollama with qwen2.5:7b on an RTX 3060 Ti. Fully self-contained</li>
+              <li><strong>Stuck detection:</strong> If the bot keeps failing the same action, the Python agent overrides the LLM and forces exploration to new coordinates, then clears conversation history for a fresh start</li>
+            </ul>
+            <h3>Key Files</h3>
+            <table>
+              <thead><tr><th>File</th><th>What it shows</th></tr></thead>
+              <tbody>
+                <tr><td><code>prompt_builder.py</code></td><td>How raw game data becomes an intelligent LLM prompt</td></tr>
+                <tr><td><code>agent.py</code></td><td>Multi-turn LLM conversation with learning loop</td></tr>
+                <tr><td><code>main.py</code></td><td>Control loop with stuck detection, goal regression</td></tr>
+                <tr><td><code>planner.py</code></td><td>Goal tree with inventory-aware regression</td></tr>
+                <tr><td><code>goals.py</code></td><td>Full 16-goal progression from wood to Ender Dragon</td></tr>
+                <tr><td><code>bot/index.js</code></td><td>Mineflayer bridge with auto-equip, smart mining, combat</td></tr>
+              </tbody>
+            </table>
+          `,
         },
         p4: {
           title: "Project 4",
@@ -2329,7 +2359,9 @@
       const modalStatus = document.getElementById("modal-status");
       const modalOwner = document.getElementById("modal-owner");
       const modalHeroImage = document.getElementById("modal-hero-image");
+      const modalDetails = document.getElementById("modal-details");
       const visitProjectBtn = document.getElementById("visit-project-btn");
+      const viewCodeBtn = document.getElementById("view-code-btn");
       const closeBtn = document.querySelector(".close");
 
       document.querySelectorAll(".project-card").forEach((card) => {
@@ -2348,11 +2380,44 @@
           }
           modalOwner.textContent = p.owner;
           
-          // Set visit project button URL
-          if (visitProjectBtn && p.url) {
-            visitProjectBtn.href = p.url;
-          } else if (visitProjectBtn) {
-            visitProjectBtn.href = "#";
+          // Set visit project button URL and label
+          if (visitProjectBtn) {
+            const btnText = visitProjectBtn.querySelector('.btn-text') || visitProjectBtn.lastChild;
+            if (p.url) {
+              visitProjectBtn.href = p.url;
+              visitProjectBtn.removeAttribute('onclick');
+              btnText.textContent = " Visit Project";
+            } else if (p.btnLabel) {
+              visitProjectBtn.href = "#";
+              visitProjectBtn.onclick = (e) => { e.preventDefault(); modalDetails.scrollIntoView({ behavior: 'smooth' }); };
+              btnText.textContent = ` ${p.btnLabel}`;
+            } else {
+              visitProjectBtn.href = "#";
+              visitProjectBtn.removeAttribute('onclick');
+              btnText.textContent = " Visit Project";
+            }
+          }
+
+          // Set view code button URL
+          if (viewCodeBtn) {
+            if (p.github) {
+              viewCodeBtn.href = p.github;
+              viewCodeBtn.style.display = "inline-flex";
+            } else {
+              viewCodeBtn.href = "#";
+              viewCodeBtn.style.display = "none";
+            }
+          }
+
+          // Set details section
+          if (modalDetails) {
+            if (p.details) {
+              modalDetails.innerHTML = p.details;
+              modalDetails.style.display = "block";
+            } else {
+              modalDetails.innerHTML = "";
+              modalDetails.style.display = "none";
+            }
           }
           
           // Set hero image background

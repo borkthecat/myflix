@@ -1998,6 +1998,86 @@ body {
   margin: 0 0 30px;
 }
 
+/* Modal Details */
+.modal-details {
+  margin: 0 0 30px;
+  color: #e5e5e5;
+  line-height: 1.7;
+}
+
+.modal-details h3 {
+  font-size: 1.2rem;
+  color: #fff;
+  margin: 24px 0 12px;
+  font-weight: 600;
+}
+
+.modal-details h3:first-child {
+  margin-top: 0;
+}
+
+.modal-details ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.modal-details ul li {
+  position: relative;
+  padding: 8px 0 8px 20px;
+  font-size: 0.95rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.modal-details ul li:last-child {
+  border-bottom: none;
+}
+
+.modal-details ul li::before {
+  content: "▸";
+  position: absolute;
+  left: 0;
+  color: #e50914;
+}
+
+.modal-details ul li strong {
+  color: #fff;
+}
+
+.modal-details table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8px;
+}
+
+.modal-details table thead tr {
+  border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+}
+
+.modal-details table th {
+  text-align: left;
+  padding: 10px 12px;
+  font-size: 0.85rem;
+  color: #808080;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.modal-details table td {
+  padding: 10px 12px;
+  font-size: 0.95rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.modal-details table td code {
+  background: rgba(229, 9, 20, 0.15);
+  color: #ff6b6b;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-family: 'Courier New', monospace;
+}
+
 /* Modal Info */
 .modal-info {
   display: grid;
