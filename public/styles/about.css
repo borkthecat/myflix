@@ -1861,14 +1861,17 @@ body {
 }
 
 .parallax-text {
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   font-weight: 500;
   color: #fff;
   text-align: center;
   margin: 0;
-  padding: 0;
-  letter-spacing: 0.5px;
-  line-height: 1.6;
+  padding: 10px;
+  letter-spacing: 0.3px;
+  line-height: 1.5;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
   width: 100%;
   box-sizing: border-box;
   word-wrap: break-word;

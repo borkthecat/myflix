@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/images/netflix_logo_icon_170919.svg" />
     <title>My Portfolio</title>
     <link rel="stylesheet" href="/styles/home.css" />
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
@@ -443,6 +444,7 @@
     <!-- Achievements Section -->
     <section class="achievements-section">
       <h2 class="row-title">Achievements</h2>
+      <p class="row-subtitle">Certifications, awards & contributions</p>
       <div class="achievements-showcase">
         <div class="showcase-item">
           <div class="showcase-ring">
@@ -461,6 +463,18 @@
           </div>
           <h3>SOC Codeout 2021</h3>
           <p>Silver Award</p>
+        </div>
+        <div class="showcase-item">
+          <div class="showcase-ring">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/>
+              <polyline points="14 2 14 8 20 8" fill="none" stroke="currentColor" stroke-width="1"/>
+              <line x1="16" y1="13" x2="8" y2="13" stroke="currentColor" stroke-width="1"/>
+              <line x1="16" y1="17" x2="8" y2="17" stroke="currentColor" stroke-width="1"/>
+            </svg>
+          </div>
+          <h3>CDC Website</h3>
+          <p>Contributed to new CDC website development as a developer</p>
         </div>
       </div>
     </section>
@@ -543,9 +557,10 @@
       <div class="modal-content">
         <button class="close">&times;</button>
         
-        <!-- Hero Image Section -->
+        <!-- Hero Image/Video Section -->
         <div class="modal-hero">
           <div class="modal-hero-image" id="modal-hero-image"></div>
+          <video class="modal-hero-video" id="modal-hero-video" autoplay loop muted playsinline style="display:none;"></video>
           <div class="modal-hero-overlay"></div>
         </div>
 
@@ -2296,6 +2311,7 @@
           status: "In Progress",
           owner: "Arai Nanami Rachel",
           github: "https://github.com/borkthecat/ollamaminecraftbot",
+          video: "/video/mcvideo.mp4",
           btnLabel: "Learn More",
           details: `
             <div class="diagram">
@@ -2429,6 +2445,7 @@
           owner: "Arai Nanami Rachel",
           url: "https://myflix.vercel.app/",
           github: "https://github.com/borkthecat/myflix",
+          image: "/images/netflixbg.png",
         },
       };
 
@@ -2441,6 +2458,7 @@
       const modalStatus = document.getElementById("modal-status");
       const modalOwner = document.getElementById("modal-owner");
       const modalHeroImage = document.getElementById("modal-hero-image");
+      const modalHeroVideo = document.getElementById("modal-hero-video");
       const modalDetails = document.getElementById("modal-details");
       const visitProjectBtn = document.getElementById("visit-project-btn");
       const viewCodeBtn = document.getElementById("view-code-btn");
@@ -2503,22 +2521,41 @@
             }
           }
           
-          // Set hero image background
-          if (modalHeroImage && p.image) {
-            modalHeroImage.style.backgroundImage = `url(${p.image})`;
-            modalHeroImage.style.backgroundSize = "cover";
-            modalHeroImage.style.backgroundPosition = "center";
-          } else if (modalHeroImage) {
-            modalHeroImage.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+          // Set hero image or video
+          if (p.video && modalHeroVideo) {
+            modalHeroVideo.src = p.video;
+            modalHeroVideo.style.display = "block";
+            modalHeroVideo.play();
+            if (modalHeroImage) modalHeroImage.style.display = "none";
+          } else {
+            if (modalHeroVideo) {
+              modalHeroVideo.pause();
+              modalHeroVideo.src = "";
+              modalHeroVideo.style.display = "none";
+            }
+            if (modalHeroImage) {
+              modalHeroImage.style.display = "block";
+              if (p.image) {
+                modalHeroImage.style.backgroundImage = `url(${p.image})`;
+                modalHeroImage.style.backgroundSize = "cover";
+                modalHeroImage.style.backgroundPosition = "center";
+              } else {
+                modalHeroImage.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+              }
+            }
           }
           
           modal.style.display = "flex";
         });
       });
 
-      closeBtn.addEventListener("click", () => (modal.style.display = "none"));
+      function closeModal() {
+        modal.style.display = "none";
+        if (modalHeroVideo) { modalHeroVideo.pause(); modalHeroVideo.src = ""; }
+      }
+      closeBtn.addEventListener("click", closeModal);
       window.addEventListener("click", (e) => {
-        if (e.target === modal) modal.style.display = "none";
+        if (e.target === modal) closeModal();
       });
 
       // Skills popup functionality
