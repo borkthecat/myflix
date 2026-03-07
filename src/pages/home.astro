@@ -607,6 +607,8 @@
           <p class="modal-desc" id="modal-desc"></p>
 
           <div class="modal-details" id="modal-details" style="display:none;"></div>
+          
+          <div id="clipper-widget-container" style="display:none; margin-top: 20px; min-height: 400px;"></div>
 
           <div class="modal-info">
             <div class="info-item">
@@ -2480,6 +2482,7 @@
       const modalHeroImage = document.getElementById("modal-hero-image");
       const modalHeroVideo = document.getElementById("modal-hero-video");
       const modalDetails = document.getElementById("modal-details");
+      const clipperWidgetContainer = document.getElementById("clipper-widget-container");
       const visitProjectBtn = document.getElementById("visit-project-btn");
       const viewCodeBtn = document.getElementById("view-code-btn");
       const closeBtn = document.querySelector(".close");
@@ -2489,19 +2492,47 @@
           const p = projects[card.dataset.project];
           modalTitle.textContent = p.title;
           modalTech.textContent = p.tech;
-          if (p.desc) {
-            modalDesc.innerHTML = p.desc;
-            // Inject embed script for Clipper
+          // Show/hide Clipper widget container
+          if (clipperWidgetContainer) {
             if (p.title === "Clipper") {
+              clipperWidgetContainer.style.display = "block";
+              modalDesc.innerHTML = p.desc;
+              // Inject embed script for Clipper widget
               setTimeout(() => {
+                // Remove any existing script
+                const existingScript = document.querySelector('script[src*="clipper-dashboard-five.vercel.app/widget.js"]');
+                if (existingScript) {
+                  existingScript.remove();
+                }
+                
+                // Create and inject the script
                 const script = document.createElement('script');
                 script.src = 'https://clipper-dashboard-five.vercel.app/widget.js';
                 script.setAttribute('data-api-url', 'https://clipper-dashboard-five.vercel.app');
                 document.body.appendChild(script);
+                
+                // Wait for widget to initialize and move it to container
+                setTimeout(() => {
+                  const widget = document.querySelector('[data-clipper-widget]') || document.querySelector('.clipper-widget') || document.querySelector('#clipper-widget');
+                  if (widget && clipperWidgetContainer) {
+                    clipperWidgetContainer.appendChild(widget);
+                  }
+                }, 500);
               }, 100);
+            } else {
+              clipperWidgetContainer.style.display = "none";
+              if (p.desc) {
+                modalDesc.innerHTML = p.desc;
+              } else {
+                modalDesc.textContent = "";
+              }
             }
           } else {
-            modalDesc.textContent = "";
+            if (p.desc) {
+              modalDesc.innerHTML = p.desc;
+            } else {
+              modalDesc.textContent = "";
+            }
           }
           modalType.textContent = p.type;
           modalStack.textContent = p.stack;
