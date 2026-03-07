@@ -2309,6 +2309,7 @@
           stack: "Astro, CSS, JavaScript",
           status: "In Progress",
           owner: "Arai Nanami Rachel",
+          url: "https://monster-analysis.vercel.app/",
           github: "https://github.com/borkthecat/monster",
           image: "/images/monsterbg.png",
         },
@@ -2448,12 +2449,13 @@
         p4: {
           title: "Clipper",
           tech: "Chrome Extension • Bug Reporting",
-          desc: "A Google Chrome extension that enables non-technical clients to easily capture screenshots and send comprehensive bug reports. The extension automatically captures console errors, network requests, and page information, making it simple for clients to report issues. When they submit a bug report with their email, I receive all the technical details needed to fix the issue and can respond directly via email.",
+          desc: "A Google Chrome extension that enables non-technical clients to easily capture screenshots and send comprehensive bug reports. The extension automatically captures console errors, network requests, and page information, making it simple for clients to report issues. When they submit a bug report with their email, I receive all the technical details needed to fix the issue and can respond directly via email. <script src=\"https://clipper-dashboard-five.vercel.app/widget.js\" data-api-url=\"https://clipper-dashboard-five.vercel.app\"></script>",
           type: "Project",
           stack: "JavaScript, HTML, CSS, Chrome Extension API",
           status: "Live",
           owner: "Arai Nanami Rachel",
-          url: "https://github.com/borkthecat/clipper",
+          url: "https://clipper-dashboard-five.vercel.app/",
+          github: "https://github.com/borkthecat/clipper",
           image: "/images/clipperthumbnail.png",
         },
         p5: {
@@ -2487,7 +2489,11 @@
           const p = projects[card.dataset.project];
           modalTitle.textContent = p.title;
           modalTech.textContent = p.tech;
-          modalDesc.textContent = p.desc;
+          if (p.desc) {
+            modalDesc.innerHTML = p.desc;
+          } else {
+            modalDesc.textContent = "";
+          }
           modalType.textContent = p.type;
           modalStack.textContent = p.stack;
           modalStatus.textContent = p.status;
