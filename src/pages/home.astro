@@ -2449,7 +2449,8 @@
         p4: {
           title: "Clipper",
           tech: "Chrome Extension • Bug Reporting",
-          desc: "A Google Chrome extension that enables non-technical clients to easily capture screenshots and send comprehensive bug reports. The extension automatically captures console errors, network requests, and page information, making it simple for clients to report issues. When they submit a bug report with their email, I receive all the technical details needed to fix the issue and can respond directly via email. <script src=\"https://clipper-dashboard-five.vercel.app/widget.js\" data-api-url=\"https://clipper-dashboard-five.vercel.app\"></script>",
+          desc: "A Google Chrome extension that enables non-technical clients to easily capture screenshots and send comprehensive bug reports. The extension automatically captures console errors, network requests, and page information, making it simple for clients to report issues. When they submit a bug report with their email, I receive all the technical details needed to fix the issue and can respond directly via email.",
+          embedScript: '<script src="https://clipper-dashboard-five.vercel.app/widget.js" data-api-url="https://clipper-dashboard-five.vercel.app"></script>',
           type: "Project",
           stack: "JavaScript, HTML, CSS, Chrome Extension API",
           status: "Live",
@@ -2491,6 +2492,15 @@
           modalTech.textContent = p.tech;
           if (p.desc) {
             modalDesc.innerHTML = p.desc;
+            // Inject embed script if it exists (for Clipper)
+            if (p.embedScript) {
+              setTimeout(() => {
+                const script = document.createElement('script');
+                script.src = 'https://clipper-dashboard-five.vercel.app/widget.js';
+                script.setAttribute('data-api-url', 'https://clipper-dashboard-five.vercel.app');
+                document.body.appendChild(script);
+              }, 100);
+            }
           } else {
             modalDesc.textContent = "";
           }
