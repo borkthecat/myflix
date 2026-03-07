@@ -2499,25 +2499,28 @@
           }
           modalOwner.textContent = p.owner;
           
-          // Set visit project button URL and label
+          // Set visit project button URL - only show if url exists
           if (visitProjectBtn) {
-            const btnText = visitProjectBtn.querySelector('.btn-text') || visitProjectBtn.lastChild;
             if (p.url) {
               visitProjectBtn.href = p.url;
-              visitProjectBtn.removeAttribute('onclick');
-              btnText.textContent = " Visit Project";
-            } else if (p.btnLabel) {
-              visitProjectBtn.href = "#";
-              visitProjectBtn.onclick = (e) => { e.preventDefault(); modalDetails.scrollIntoView({ behavior: 'smooth' }); };
-              btnText.textContent = ` ${p.btnLabel}`;
+              visitProjectBtn.style.display = "inline-flex";
+              const btnText = visitProjectBtn.childNodes[visitProjectBtn.childNodes.length - 1];
+              if (btnText && btnText.nodeType === 3) {
+                btnText.textContent = " Visit Project";
+              } else {
+                const textNode = visitProjectBtn.querySelector('text') || visitProjectBtn.lastChild;
+                if (textNode && textNode.nodeType === 3) {
+                  textNode.textContent = " Visit Project";
+                } else {
+                  visitProjectBtn.innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg> Visit Project`;
+                }
+              }
             } else {
-              visitProjectBtn.href = "#";
-              visitProjectBtn.removeAttribute('onclick');
-              btnText.textContent = " Visit Project";
+              visitProjectBtn.style.display = "none";
             }
           }
 
-          // Set view code button URL
+          // Set view code button URL - only show if github exists
           if (viewCodeBtn) {
             if (p.github) {
               viewCodeBtn.href = p.github;
