@@ -606,6 +606,10 @@
 
           <p class="modal-desc" id="modal-desc"></p>
 
+          <div class="clipper-try-section" id="clipper-try-section" style="display:none;">
+            <button class="clipper-try-btn" id="clipper-try-btn">Try me!</button>
+          </div>
+
           <div class="modal-details" id="modal-details" style="display:none;"></div>
           
           <div class="modal-info">
@@ -627,9 +631,6 @@
             </div>
           </div>
 
-          <div class="clipper-try-section" id="clipper-try-section" style="display:none;">
-            <button class="clipper-try-btn" id="clipper-try-btn">Try me!</button>
-          </div>
         </div>
       </div>
     </div>
@@ -2578,10 +2579,14 @@
       function closeModal() {
         modal.style.display = "none";
         if (modalHeroVideo) { modalHeroVideo.pause(); modalHeroVideo.src = ""; }
+      }
+      function cleanupClipper() {
         const widgetBtn = document.getElementById('clipper-widget-btn');
         const widgetOverlay = document.getElementById('clipper-overlay');
+        const widgetScript = document.querySelector('script[src*="clipper-dashboard-five.vercel.app/widget.js"]');
         if (widgetBtn) widgetBtn.remove();
         if (widgetOverlay) widgetOverlay.remove();
+        if (widgetScript) widgetScript.remove();
         window.__clipperWidgetLoaded = false;
       }
       closeBtn.addEventListener("click", closeModal);
@@ -2593,13 +2598,7 @@
       if (clipperTryBtn) {
         clipperTryBtn.addEventListener('click', () => {
           closeModal();
-          const existing = document.querySelector('script[src*="clipper-dashboard-five.vercel.app/widget.js"]');
-          if (existing) existing.remove();
-          const btn = document.getElementById('clipper-widget-btn');
-          const ov = document.getElementById('clipper-overlay');
-          if (btn) btn.remove();
-          if (ov) ov.remove();
-          window.__clipperWidgetLoaded = false;
+          cleanupClipper();
           const s = document.createElement('script');
           s.src = 'https://clipper-dashboard-five.vercel.app/widget.js';
           s.setAttribute('data-api-url', 'https://clipper-dashboard-five.vercel.app');
