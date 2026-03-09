@@ -631,10 +631,10 @@
 
           <div class="report-bug-section">
             <button class="report-bug-toggle" id="report-bug-toggle">report bug</button>
-            <div class="report-bug-form" id="report-bug-form" style="display:none;">
-              <textarea id="report-bug-text" placeholder="describe the issue..." rows="3"></textarea>
-              <button class="report-bug-submit" id="report-bug-submit">send</button>
-              <span class="report-bug-status" id="report-bug-status"></span>
+            <div class="clipper-form" id="clipper-form" style="display:none;">
+              <textarea id="clipper-desc" placeholder="what went wrong? (optional)" rows="2"></textarea>
+              <button class="clipper-capture-btn" id="clipper-capture">capture & report</button>
+              <span class="clipper-status" id="clipper-status"></span>
             </div>
           </div>
         </div>
@@ -2631,41 +2631,231 @@
       function closeModal() {
         modal.style.display = "none";
         if (modalHeroVideo) { modalHeroVideo.pause(); modalHeroVideo.src = ""; }
-        const bugForm = document.getElementById('report-bug-form');
-        const bugStatus = document.getElementById('report-bug-status');
-        const bugText = document.getElementById('report-bug-text');
-        if (bugForm) bugForm.style.display = 'none';
-        if (bugStatus) bugStatus.textContent = '';
-        if (bugText) bugText.value = '';
+        const cf = document.getElementById('clipper-form');
+        const cs = document.getElementById('clipper-status');
+        const cd = document.getElementById('clipper-desc');
+        if (cf) cf.style.display = 'none';
+        if (cs) cs.textContent = '';
+        if (cd) cd.value = '';
       }
       closeBtn.addEventListener("click", closeModal);
       window.addEventListener("click", (e) => {
         if (e.target === modal) closeModal();
       });
 
-      const reportToggle = document.getElementById('report-bug-toggle');
-      const reportForm = document.getElementById('report-bug-form');
-      const reportSubmit = document.getElementById('report-bug-submit');
-      const reportStatus = document.getElementById('report-bug-status');
+      // clipper - screenshot capture + annotation
+      const clipperLogs = [];
+      const clipperOrigConsole = { log: console.log, info: console.info, warn: console.warn, error: console.error };
+      ['log', 'info', 'warn', 'error'].forEach(type => {
+        console[type] = function (...args) {
+          const msg = args.map(a => a instanceof Error ? a.message : String(a)).join(' ');
+          clipperLogs.push({ type, message: msg, timestamp: new Date().toISOString() });
+          clipperOrigConsole[type].apply(console, args);
+        };
+      });
 
-      if (reportToggle) {
-        reportToggle.addEventListener('click', () => {
-          reportForm.style.display = reportForm.style.display === 'none' ? 'flex' : 'none';
-          reportStatus.textContent = '';
+      const clipperToggle = document.getElementById('report-bug-toggle');
+      const clipperForm = document.getElementById('clipper-form');
+      const clipperCaptureBtn = document.getElementById('clipper-capture');
+      const clipperStatusEl = document.getElementById('clipper-status');
+
+      if (clipperToggle) {
+        clipperToggle.addEventListener('click', () => {
+          clipperForm.style.display = clipperForm.style.display === 'none' ? 'flex' : 'none';
+          clipperStatusEl.textContent = '';
         });
       }
 
-      if (reportSubmit) {
-        reportSubmit.addEventListener('click', () => {
-          const text = document.getElementById('report-bug-text').value.trim();
-          if (!text) { reportStatus.textContent = 'please describe the issue'; return; }
-          const project = modalTitle.textContent;
-          const subject = encodeURIComponent(`bug report: ${project}`);
-          const body = encodeURIComponent(`project: ${project}\n\n${text}`);
-          window.open(`mailto:nanami_arai@mymail.sutd.edu.sg?subject=${subject}&body=${body}`, '_self');
-          reportStatus.textContent = 'opening mail client...';
-          document.getElementById('report-bug-text').value = '';
-          setTimeout(() => { reportForm.style.display = 'none'; reportStatus.textContent = ''; }, 2000);
+      async function loadHtml2Canvas() {
+        if (window.html2canvas) return;
+        const s = document.createElement('script');
+        s.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+        await new Promise((res, rej) => { s.onload = res; s.onerror = rej; document.head.appendChild(s); });
+      }
+
+      function showAnnotator(screenshotDataUrl, desc) {
+        const overlay = document.createElement('div');
+        overlay.className = 'clipper-overlay';
+
+        const annos = [];
+        let tool = 'arrow';
+        let start = null;
+        let current = null;
+
+        const img = new Image();
+        img.onload = () => {
+          const scale = Math.min(1, (window.innerWidth - 48) / img.width, (window.innerHeight - 140) / img.height);
+          const dispW = Math.round(img.width * scale);
+          const dispH = Math.round(img.height * scale);
+
+          const toolsDiv = document.createElement('div');
+          toolsDiv.className = 'clipper-tools';
+          ['arrow', 'circle', 'highlight'].forEach(t => {
+            const b = document.createElement('button');
+            b.textContent = t;
+            b.className = 'clipper-tool-btn' + (t === tool ? ' active' : '');
+            b.onclick = () => {
+              tool = t;
+              toolsDiv.querySelectorAll('button').forEach(x => x.classList.remove('active'));
+              b.classList.add('active');
+            };
+            toolsDiv.appendChild(b);
+          });
+
+          const wrap = document.createElement('div');
+          wrap.style.cssText = `position:relative;width:${dispW}px;height:${dispH}px;flex-shrink:0;`;
+
+          const baseCanvas = document.createElement('canvas');
+          baseCanvas.width = img.width;
+          baseCanvas.height = img.height;
+          baseCanvas.getContext('2d').drawImage(img, 0, 0);
+
+          const annCanvas = document.createElement('canvas');
+          annCanvas.width = img.width;
+          annCanvas.height = img.height;
+
+          const dispCanvas = document.createElement('canvas');
+          dispCanvas.width = dispW;
+          dispCanvas.height = dispH;
+          dispCanvas.style.cssText = 'max-width:100%;height:auto;display:block;';
+
+          const drawCanvas = document.createElement('canvas');
+          drawCanvas.width = dispW;
+          drawCanvas.height = dispH;
+          drawCanvas.style.cssText = 'position:absolute;left:0;top:0;width:100%;height:100%;cursor:crosshair;';
+
+          wrap.appendChild(dispCanvas);
+          wrap.appendChild(drawCanvas);
+
+          const annCtx = annCanvas.getContext('2d');
+          const dispCtx = dispCanvas.getContext('2d');
+          const drawCtx = drawCanvas.getContext('2d');
+
+          function toImgCoords(cx, cy) {
+            const rect = drawCanvas.getBoundingClientRect();
+            return { x: (cx - rect.left) * (img.width / rect.width), y: (cy - rect.top) * (img.height / rect.height) };
+          }
+
+          function drawAnno(ctx, a) {
+            ctx.strokeStyle = '#dc2626'; ctx.fillStyle = '#dc2626'; ctx.lineWidth = 3;
+            if (a.type === 'circle') {
+              ctx.beginPath();
+              const cx = (a.x1 + a.x2) / 2, cy = (a.y1 + a.y2) / 2;
+              const r = Math.sqrt((a.x2 - a.x1) ** 2 + (a.y2 - a.y1) ** 2) / 2;
+              ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.stroke();
+            } else if (a.type === 'arrow') {
+              ctx.beginPath(); ctx.moveTo(a.x1, a.y1); ctx.lineTo(a.x2, a.y2); ctx.stroke();
+              const angle = Math.atan2(a.y2 - a.y1, a.x2 - a.x1);
+              ctx.beginPath(); ctx.moveTo(a.x2, a.y2);
+              ctx.lineTo(a.x2 - 12 * Math.cos(angle - 0.4), a.y2 - 12 * Math.sin(angle - 0.4));
+              ctx.lineTo(a.x2 - 12 * Math.cos(angle + 0.4), a.y2 - 12 * Math.sin(angle + 0.4));
+              ctx.closePath(); ctx.fill();
+            } else if (a.type === 'highlight') {
+              ctx.fillStyle = 'rgba(255, 212, 0, 0.4)';
+              ctx.fillRect(a.x1, a.y1, a.x2 - a.x1, a.y2 - a.y1);
+            }
+          }
+
+          function composite() {
+            dispCtx.save(); dispCtx.scale(scale, scale);
+            dispCtx.drawImage(baseCanvas, 0, 0);
+            dispCtx.drawImage(annCanvas, 0, 0);
+            dispCtx.restore();
+            drawCtx.clearRect(0, 0, dispW, dispH);
+            if (start && current) {
+              const s = { x: (start.x / img.width) * dispW, y: (start.y / img.height) * dispH };
+              const c = { x: (current.x / img.width) * dispW, y: (current.y / img.height) * dispH };
+              drawAnno(drawCtx, { type: tool, x1: s.x, y1: s.y, x2: c.x, y2: c.y });
+            }
+          }
+
+          let rafId = null;
+          function scheduleComposite() { if (rafId) return; rafId = requestAnimationFrame(() => { composite(); rafId = null; }); }
+
+          function onDown(e) {
+            e.preventDefault();
+            const cx = e.touches ? e.touches[0].clientX : e.clientX;
+            const cy = e.touches ? e.touches[0].clientY : e.clientY;
+            start = toImgCoords(cx, cy); current = start;
+          }
+          function onMove(e) {
+            if (!start) return;
+            const cx = e.touches ? e.touches[0].clientX : e.clientX;
+            const cy = e.touches ? e.touches[0].clientY : e.clientY;
+            current = toImgCoords(cx, cy); scheduleComposite();
+          }
+          function onUp(e) {
+            if (!start) return; e.preventDefault();
+            const cx = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
+            const cy = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
+            const end = toImgCoords(cx, cy);
+            annos.push({ type: tool, x1: start.x, y1: start.y, x2: end.x, y2: end.y });
+            start = null; current = null;
+            annCtx.clearRect(0, 0, img.width, img.height);
+            annos.forEach(a => drawAnno(annCtx, a));
+            scheduleComposite();
+          }
+
+          drawCanvas.addEventListener('mousedown', onDown);
+          drawCanvas.addEventListener('mousemove', onMove);
+          drawCanvas.addEventListener('mouseup', onUp);
+          drawCanvas.addEventListener('mouseleave', e => { if (e.buttons) onUp(e); });
+          drawCanvas.addEventListener('touchstart', onDown, { passive: false });
+          drawCanvas.addEventListener('touchmove', onMove, { passive: true });
+          drawCanvas.addEventListener('touchend', onUp, { passive: false });
+
+          const btnRow = document.createElement('div');
+          btnRow.className = 'clipper-btn-row';
+          const doneBtn = document.createElement('button');
+          doneBtn.textContent = 'done';
+          doneBtn.className = 'clipper-done-btn';
+          const cancelBtn = document.createElement('button');
+          cancelBtn.textContent = 'cancel';
+          cancelBtn.className = 'clipper-cancel-btn';
+          btnRow.appendChild(doneBtn);
+          btnRow.appendChild(cancelBtn);
+
+          overlay.appendChild(toolsDiv);
+          overlay.appendChild(wrap);
+          overlay.appendChild(btnRow);
+          document.body.appendChild(overlay);
+          composite();
+
+          cancelBtn.onclick = () => overlay.remove();
+          doneBtn.onclick = () => {
+            overlay.remove();
+            const toast = document.createElement('div');
+            toast.className = 'clipper-toast';
+            toast.textContent = 'report captured';
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+          };
+        };
+        img.src = screenshotDataUrl;
+      }
+
+      if (clipperCaptureBtn) {
+        clipperCaptureBtn.addEventListener('click', async () => {
+          clipperCaptureBtn.disabled = true;
+          clipperStatusEl.textContent = 'capturing...';
+          const desc = document.getElementById('clipper-desc').value.trim();
+
+          try {
+            await loadHtml2Canvas();
+            closeModal();
+            await new Promise(r => setTimeout(r, 300));
+            const canvas = await html2canvas(document.body, { useCORS: true, logging: false });
+            const screenshot = canvas.toDataURL('image/png');
+            showAnnotator(screenshot, desc);
+          } catch (e) {
+            clipperStatusEl.textContent = 'capture failed';
+            clipperStatusEl.style.color = '#dc2626';
+          } finally {
+            clipperCaptureBtn.disabled = false;
+            clipperStatusEl.textContent = '';
+            document.getElementById('clipper-desc').value = '';
+            clipperForm.style.display = 'none';
+          }
         });
       }
 
