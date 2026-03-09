@@ -597,8 +597,14 @@
               </svg>
               Visit Project
             </a>
+            <a href="#" id="clipper-try-btn" class="btn btn-primary" onclick="return false;" style="display:none;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+              Try me!
+            </a>
             <a href="#" id="view-code-btn" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
               </svg>
               View Code
@@ -606,15 +612,6 @@
           </div>
 
           <p class="modal-desc" id="modal-desc"></p>
-
-          <div class="clipper-try-section" id="clipper-try-section" style="display:none;">
-            <a href="#" id="clipper-try-btn" class="btn btn-primary" onclick="return false;" style="display:inline-flex;">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M8 5v14l11-7z"/>
-              </svg>
-              Try me!
-            </a>
-          </div>
 
           <div class="modal-details" id="modal-details" style="display:none;"></div>
           
@@ -2472,7 +2469,7 @@
         p5: {
           title: "LinkIt",
           tech: "Chrome Extension • AI Lead Finder",
-          desc: "An AI-powered LinkedIn prospecting tool built as a Chrome extension. LinkIt transforms LinkedIn into an intelligent lead generation platform — automatically scoring prospects based on seniority, industry, and fit, discovering contact emails via pattern inference and Hunter.io, and generating personalized outreach messages. Features a real-time sidebar that activates on any LinkedIn profile, a built-in lead database with CSV export, and a Node.js backend powered by OpenAI.",
+          desc: "An AI powered LinkedIn prospecting tool built as a Chrome extension. LinkIt transforms LinkedIn into an intelligent lead generation platform, automatically scoring prospects based on seniority, industry and fit, discovering contact emails and generating personalized outreach messages. It features a real time sidebar that activates on any LinkedIn profile, a built in lead database with CSV export and a Node.js backend powered by OpenAI.",
           type: "Project",
           stack: "JavaScript, Node.js, Express, OpenAI, Chrome Extension API, Hunter.io",
           status: "In Progress",
@@ -2583,9 +2580,9 @@
             }
           }
           
-          const trySection = document.getElementById('clipper-try-section');
-          if (trySection) {
-            trySection.style.display = p.title === 'Clipper' ? 'block' : 'none';
+          const tryBtn = document.getElementById('clipper-try-btn');
+          if (tryBtn) {
+            tryBtn.style.display = p.title === 'Clipper' ? 'inline-flex' : 'none';
           }
 
           modal.style.display = "flex";
