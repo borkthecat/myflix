@@ -628,6 +628,15 @@
               <span class="info-value" id="modal-owner"></span>
             </div>
           </div>
+
+          <div class="report-bug-section">
+            <button class="report-bug-toggle" id="report-bug-toggle">report bug</button>
+            <div class="report-bug-form" id="report-bug-form" style="display:none;">
+              <textarea id="report-bug-text" placeholder="describe the issue..." rows="3"></textarea>
+              <button class="report-bug-submit" id="report-bug-submit">send</button>
+              <span class="report-bug-status" id="report-bug-status"></span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -2622,11 +2631,43 @@
       function closeModal() {
         modal.style.display = "none";
         if (modalHeroVideo) { modalHeroVideo.pause(); modalHeroVideo.src = ""; }
+        const bugForm = document.getElementById('report-bug-form');
+        const bugStatus = document.getElementById('report-bug-status');
+        const bugText = document.getElementById('report-bug-text');
+        if (bugForm) bugForm.style.display = 'none';
+        if (bugStatus) bugStatus.textContent = '';
+        if (bugText) bugText.value = '';
       }
       closeBtn.addEventListener("click", closeModal);
       window.addEventListener("click", (e) => {
         if (e.target === modal) closeModal();
       });
+
+      const reportToggle = document.getElementById('report-bug-toggle');
+      const reportForm = document.getElementById('report-bug-form');
+      const reportSubmit = document.getElementById('report-bug-submit');
+      const reportStatus = document.getElementById('report-bug-status');
+
+      if (reportToggle) {
+        reportToggle.addEventListener('click', () => {
+          reportForm.style.display = reportForm.style.display === 'none' ? 'flex' : 'none';
+          reportStatus.textContent = '';
+        });
+      }
+
+      if (reportSubmit) {
+        reportSubmit.addEventListener('click', () => {
+          const text = document.getElementById('report-bug-text').value.trim();
+          if (!text) { reportStatus.textContent = 'please describe the issue'; return; }
+          const project = modalTitle.textContent;
+          const subject = encodeURIComponent(`bug report: ${project}`);
+          const body = encodeURIComponent(`project: ${project}\n\n${text}`);
+          window.open(`mailto:nanami_arai@mymail.sutd.edu.sg?subject=${subject}&body=${body}`, '_self');
+          reportStatus.textContent = 'opening mail client...';
+          document.getElementById('report-bug-text').value = '';
+          setTimeout(() => { reportForm.style.display = 'none'; reportStatus.textContent = ''; }, 2000);
+        });
+      }
 
       // Skills popup functionality
       const popupOverlay = document.getElementById("popup-overlay");

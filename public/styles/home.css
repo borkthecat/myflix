@@ -2517,6 +2517,73 @@ body {
   border: 1px solid rgba(251, 146, 60, 0.4);
 }
 
+.report-bug-section {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.report-bug-toggle {
+  background: none;
+  border: none;
+  color: #666;
+  font-size: 0.8rem;
+  cursor: pointer;
+  padding: 0;
+  letter-spacing: 0.04em;
+  transition: color 0.2s;
+}
+
+.report-bug-toggle:hover {
+  color: #e50914;
+}
+
+.report-bug-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.report-bug-form textarea {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  color: #e5e5e5;
+  font-family: inherit;
+  font-size: 0.85rem;
+  padding: 10px 12px;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.report-bug-form textarea:focus {
+  border-color: rgba(229, 9, 20, 0.5);
+}
+
+.report-bug-submit {
+  align-self: flex-start;
+  background: rgba(229, 9, 20, 0.15);
+  border: 1px solid rgba(229, 9, 20, 0.3);
+  color: #e50914;
+  font-size: 0.8rem;
+  padding: 6px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  transition: background 0.2s;
+}
+
+.report-bug-submit:hover {
+  background: rgba(229, 9, 20, 0.25);
+}
+
+.report-bug-status {
+  font-size: 0.75rem;
+  color: #888;
+}
+
 /* Footer */
 .footer {
   background: #141414;
