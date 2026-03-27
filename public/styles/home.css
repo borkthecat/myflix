@@ -1780,6 +1780,13 @@ body {
   position: relative;
   padding: 20px;
   transition: transform 0.3s ease;
+  text-decoration: none;
+  color: inherit;
+  cursor: default;
+}
+
+.showcase-item[href] {
+  cursor: pointer;
 }
 
 .showcase-item:hover {
