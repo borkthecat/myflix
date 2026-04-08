@@ -138,10 +138,10 @@
           </div>
         </div>
 
-        <div class="project-card" data-project="p4" style="background-image: url('/images/clipperthumbnail.png'); background-size: cover; background-position: center;">
+        <div class="project-card" data-project="p4" style="background-image: url('/images/clipperv2thumb.png'); background-size: cover; background-position: center;">
           <div class="project-hover">
-            <h3>Clipper</h3>
-            <p>Chrome Extension • Bug Reporting</p>
+            <h3>Clipper v2</h3>
+            <p>SaaS • Bug reporting & embed widget</p>
           </div>
         </div>
 
@@ -657,12 +657,6 @@
                 <path d="M8 5v14l11-7z"/>
               </svg>
               Visit Project
-            </a>
-            <a href="#" id="clipper-try-btn" class="btn btn-primary" onclick="return false;" style="display:none;">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M8 5v14l11-7z"/>
-              </svg>
-              Try me!
             </a>
             <a href="#" id="view-code-btn" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2516,16 +2510,16 @@
           `,
         },
         p4: {
-          title: "Clipper",
-          tech: "Chrome Extension • Bug Reporting",
-          desc: "A Google Chrome extension that enables non-technical clients to easily capture screenshots and send comprehensive bug reports. The extension automatically captures console errors, network requests, and page information, making it simple for clients to report issues. When they submit a bug report with their email, I receive all the technical details needed to fix the issue and can respond directly via email. Try it out by adding the embed script to your page!",
+          title: "Clipper v2",
+          tech: "SaaS • Bug reporting & embed widget",
+          desc: "A working SaaS product for bug reports that actually help: a one-line embed widget so visitors can report issues without installing anything—screenshots, console logs, and network captures included. A Chrome extension covers full-page capture with annotations. Built for developers with structured reports and export to GitHub, Slack, and Jira. Still in active development.",
           type: "Project",
-          stack: "JavaScript, HTML, CSS, Chrome Extension API",
-          status: "Live",
+          stack: "TypeScript, Next.js, JavaScript, Chrome Extension API",
+          status: "In Progress",
           owner: "Arai Nanami Rachel",
-          url: "https://clipper-dashboard-five.vercel.app/",
+          url: "https://clipperv2-seven.vercel.app/",
           github: "https://github.com/borkthecat/clipper",
-          image: "/images/clipperthumbnail.png",
+          image: "/images/clipperv2thumb.png",
         },
         p5: {
           title: "LinkIt",
@@ -2675,11 +2669,6 @@
                 modalHeroImage.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
               }
             }
-          }
-          
-          const tryBtn = document.getElementById('clipper-try-btn');
-          if (tryBtn) {
-            tryBtn.style.display = p.title === 'Clipper' ? 'inline-flex' : 'none';
           }
 
           modal.style.display = "flex";
