@@ -822,8 +822,18 @@ body {
 /* Uniform Card Grid - matches project cards */
 .project-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-auto-flow: column;
+  grid-auto-columns: 260px;
   gap: 20px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 10px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.project-grid > .project-card {
+  scroll-snap-align: start;
 }
 
 /* Skills Section - Top 10 Grid Style with Click Popups */
