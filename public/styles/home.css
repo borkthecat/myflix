@@ -811,6 +811,10 @@ body {
   padding: 40px;
 }
 
+.projects {
+  overflow: visible; /* allow project-card hover scale to paint outside the row */
+}
+
 .skills-section h2,
 .languages-section h2,
 .education-section h2,
@@ -838,6 +842,8 @@ body {
   z-index: 1;
   width: 100%;
   max-width: 100%;
+  box-sizing: border-box;
+  padding: 0 56px;
   overflow-x: auto;
   overflow-y: visible;
   scrollbar-width: none;
@@ -856,8 +862,8 @@ body {
   width: 100%;
   max-width: 100%;
   overflow: visible;
-  padding: 32px 0;
-  margin: -32px 0;
+  padding: 40px 0;
+  margin: -40px 0;
 }
 
 .carousel-nav {
@@ -865,7 +871,7 @@ body {
   top: 50%;
   left: auto;
   right: auto;
-  z-index: 30;
+  z-index: 100;
   width: 46px;
   height: 46px;
   pointer-events: auto;
@@ -907,11 +913,11 @@ body {
 }
 
 .carousel-nav-left {
-  left: 6px;
+  left: 10px;
 }
 
 .carousel-nav-right {
-  right: 6px;
+  right: 10px;
 }
 
 .carousel-nav span {
@@ -2784,6 +2790,10 @@ body {
   .projects .project-grid {
     grid-auto-columns: min(55vw, 220px);
     gap: 12px;
+  }
+
+  .projects .project-carousel-viewport {
+    padding: 0 44px;
   }
 
   .top10-grid {
