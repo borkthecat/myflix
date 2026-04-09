@@ -113,21 +113,41 @@
 
     <section class="projects" id="projects">
       <h2>Projects</h2>
+<<<<<<< HEAD
       <div class="project-grid">
         <div class="project-card" data-project="p1" style="background-image: url('/images/myvinylcover.png'); background-size: cover; background-position: center;">
           <div class="project-hover">
             <h3>MyVinyl</h3>
             <p>Astro • Music Player</p>
+=======
+      <div class="project-carousel" aria-label="projects carousel">
+        <button class="carousel-nav carousel-nav-left" type="button" aria-label="previous projects">
+          <span aria-hidden="true">‹</span>
+        </button>
+        <div class="project-grid">
+          <div class="project-card" data-project="p1">
+            <div class="project-hover">
+              <h3>Project 1</h3>
+              <p>Python • OpenAI • Whisper</p>
+            </div>
+>>>>>>> 5b11a74 (add projects carousel nav arrows)
           </div>
-        </div>
 
+<<<<<<< HEAD
         <div class="project-card" data-project="p2" style="background-image: url('/images/monsterbg.png'); background-size: cover; background-position: center;">
           <div class="project-hover">
             <h3>Monster</h3>
             <p>Astro • Manga Analysis</p>
+=======
+          <div class="project-card" data-project="p2">
+            <div class="project-hover">
+              <h3>Project 2</h3>
+              <p>Next.js • TypeScript</p>
+            </div>
+>>>>>>> 5b11a74 (add projects carousel nav arrows)
           </div>
-        </div>
 
+<<<<<<< HEAD
         <div class="project-card" data-project="p3">
           <video class="card-video" autoplay loop muted playsinline>
             <source src="/video/mcvideo.mp4" type="video/mp4">
@@ -135,16 +155,30 @@
           <div class="project-hover">
             <h3>AI Minecraft Bot</h3>
             <p>Python • LLM • Mineflayer</p>
+=======
+          <div class="project-card" data-project="p3">
+            <div class="project-hover">
+              <h3>Project 3</h3>
+              <p>React • Tailwind</p>
+            </div>
+>>>>>>> 5b11a74 (add projects carousel nav arrows)
           </div>
-        </div>
 
+<<<<<<< HEAD
         <div class="project-card" data-project="p4" style="background-image: url('/images/clipperv2thumb.png'); background-size: cover; background-position: center;">
           <div class="project-hover">
             <h3>Clipper v2</h3>
             <p>SaaS • Bug reporting & embed widget</p>
+=======
+          <div class="project-card" data-project="p4">
+            <div class="project-hover">
+              <h3>Project 4</h3>
+              <p>Python • Pytorch</p>
+            </div>
+>>>>>>> 5b11a74 (add projects carousel nav arrows)
           </div>
-        </div>
 
+<<<<<<< HEAD
         <div class="project-card" data-project="p5">
           <div class="project-hover">
             <h3>LinkIt</h3>
@@ -180,8 +214,18 @@
           <div class="project-hover">
             <h3>The Winter Oath</h3>
             <p>Godot • Pixel Art • Historical Strategy</p>
+=======
+          <div class="project-card" data-project="p5">
+            <div class="project-hover">
+              <h3>Project 5</h3>
+              <p>Data Science • LLM</p>
+            </div>
+>>>>>>> 5b11a74 (add projects carousel nav arrows)
           </div>
         </div>
+        <button class="carousel-nav carousel-nav-right" type="button" aria-label="next projects">
+          <span aria-hidden="true">›</span>
+        </button>
       </div>
     </section>
 
@@ -2827,6 +2871,22 @@
           }
         });
       });
+
+      // Projects carousel nav
+      const projectsScroller = document.querySelector(".project-carousel .project-grid");
+      const projectsLeft = document.querySelector(".carousel-nav-left");
+      const projectsRight = document.querySelector(".carousel-nav-right");
+      if (projectsScroller && projectsLeft && projectsRight) {
+        const getStep = () =>
+          Math.max(260, Math.floor(projectsScroller.clientWidth * 0.75));
+
+        projectsLeft.addEventListener("click", () => {
+          projectsScroller.scrollBy({ left: -getStep(), behavior: "smooth" });
+        });
+        projectsRight.addEventListener("click", () => {
+          projectsScroller.scrollBy({ left: getStep(), behavior: "smooth" });
+        });
+      }
     </script>
   </body>
 </html>
