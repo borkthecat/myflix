@@ -836,16 +836,21 @@ body {
   flex-shrink: 0;
 }
 
-/* Horizontal scroll lives here; vertical overflow visible so card hover zoom isn’t clipped */
+/*
+ * Horizontal scroll needs overflow-x: auto. With overflow-y: visible, CSS forces overflow-y
+ * to compute to auto, which clips the top/bottom of scaled cards. Use overflow-y: clip plus
+ * overflow-clip-margin so the row can still scroll horizontally without clipping hover zoom.
+ */
 .project-carousel-viewport {
   position: relative;
   z-index: 1;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  padding: 0 56px;
+  padding: 52px 56px 60px 56px;
   overflow-x: auto;
-  overflow-y: visible;
+  overflow-y: clip;
+  overflow-clip-margin: 64px 56px 72px 56px;
   scrollbar-width: none;
   -ms-overflow-style: none;
   touch-action: pan-y;
@@ -862,8 +867,8 @@ body {
   width: 100%;
   max-width: 100%;
   overflow: visible;
-  padding: 40px 0;
-  margin: -40px 0;
+  padding: 52px 0;
+  margin: -52px 0;
 }
 
 .carousel-nav {
@@ -1392,6 +1397,11 @@ body {
   transform: scale(1.15) translateY(-20px);
   z-index: 20;
   box-shadow: 0 12px 40px rgba(0,0,0,0.8);
+}
+
+/* Carousel previews (e.g. live thumbs) must not be clipped by the card box on hover */
+.projects .project-card:hover {
+  overflow: visible;
 }
 
 .project-card::before {
@@ -2793,7 +2803,8 @@ body {
   }
 
   .projects .project-carousel-viewport {
-    padding: 0 44px;
+    padding: 44px 44px 52px 44px;
+    overflow-clip-margin: 48px 44px 56px 44px;
   }
 
   .top10-grid {
