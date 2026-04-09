@@ -825,15 +825,87 @@ body {
   grid-auto-flow: column;
   grid-auto-columns: 260px;
   gap: 20px;
-  overflow-x: auto;
+  overflow-x: hidden;
   overflow-y: hidden;
-  padding-bottom: 10px;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
+  padding-bottom: 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  touch-action: pan-y;
+}
+
+.project-grid::-webkit-scrollbar {
+  display: none;
 }
 
 .project-grid > .project-card {
-  scroll-snap-align: start;
+  flex-shrink: 0;
+}
+
+/* Projects row — Netflix-style arrows (no visible scrollbar; buttons only) */
+.project-carousel {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+}
+
+.carousel-nav {
+  position: absolute;
+  top: 50%;
+  left: auto;
+  right: auto;
+  z-index: 3;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border: 2px solid rgba(255, 255, 255, 0.22);
+  border-radius: 50%;
+  background: rgba(20, 20, 20, 0.65);
+  color: #fff;
+  font-size: 1.85rem;
+  font-weight: 300;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.55);
+  transform: translateY(-50%);
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.carousel-nav:hover {
+  background: rgba(42, 42, 42, 0.92);
+  border-color: rgba(255, 255, 255, 0.45);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.65);
+  transform: translateY(-50%) scale(1.07);
+}
+
+.carousel-nav:active {
+  transform: translateY(-50%) scale(0.98);
+}
+
+.carousel-nav:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+.carousel-nav-left {
+  left: 6px;
+}
+
+.carousel-nav-right {
+  right: 6px;
+}
+
+.carousel-nav span {
+  display: block;
+  margin-top: -3px;
+  user-select: none;
+  pointer-events: none;
 }
 
 /* Skills Section - Top 10 Grid Style with Click Popups */
@@ -2690,11 +2762,15 @@ body {
     margin-bottom: 15px;
   }
 
-  .project-grid,
   .skills-grid,
   .languages-grid {
     grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
     gap: 15px;
+  }
+
+  .projects .project-grid {
+    grid-auto-columns: min(55vw, 220px);
+    gap: 12px;
   }
 
   .top10-grid {
@@ -2881,9 +2957,12 @@ body {
 }
 
 @media (max-width: 480px) {
-  .card-grid,
-  .project-grid {
+  .card-grid {
     grid-template-columns: 1fr;
+  }
+
+  .projects .project-grid {
+    grid-auto-columns: min(78vw, 220px);
   }
 
   .skill-card,
